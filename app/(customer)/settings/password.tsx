@@ -5,7 +5,9 @@ import {
   TextInput,
   Pressable,
   ActivityIndicator,
+  StatusBar,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ChevronLeft, Lock, Eye, EyeOff } from "lucide-react-native";
@@ -188,19 +190,33 @@ export default function ChangePasswordScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#F9FAFB" }} edges={["top", "bottom"]}>
+      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
       {/* Header */}
-      <View className="flex-row items-center px-4 py-4 bg-white border-b border-gray-200">
-        <Pressable
-          onPress={() => router.back()}
-          className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center mr-3"
-        >
-          <ChevronLeft size={24} color="#374151" />
-        </Pressable>
-        <Text className="text-xl font-bold text-gray-800">
-          Change Password
-        </Text>
-      </View>
+      <LinearGradient
+        colors={["#2E7D32", "#1B5E20"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Pressable
+            onPress={() => router.back()}
+            style={{
+              width: 40,
+              height: 40,
+              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+              borderRadius: 20,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginRight: 12
+            }}
+          >
+            <ChevronLeft size={24} color="#FFFFFF" />
+          </Pressable>
+          <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#FFFFFF' }}>Change Password</Text>
+        </View>
+      </LinearGradient>
 
       <KeyboardAwareScrollView
         contentContainerStyle={{ padding: 16 }}

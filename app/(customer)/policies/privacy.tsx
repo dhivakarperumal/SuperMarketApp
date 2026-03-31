@@ -1,4 +1,5 @@
-import { View, Text, ScrollView, Pressable } from "react-native";
+import { View, Text, ScrollView, Pressable, StatusBar } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ChevronLeft, Shield } from "lucide-react-native";
 import { router } from "expo-router";
@@ -6,21 +7,26 @@ import { router } from "expo-router";
 export default function PrivacyPolicyScreen() {
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
+      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
       {/* Header */}
-      <View className="flex-row items-center justify-between px-4 py-4 bg-white border-b border-gray-200">
+      <LinearGradient
+        colors={["#2E7D32", "#1B5E20"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
+      >
         <View className="flex-row items-center">
           <Pressable
             onPress={() => router.back()}
-            className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center mr-3"
+            className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-3"
           >
-            <ChevronLeft size={24} color="#374151" />
+            <ChevronLeft size={24} color="#FFFFFF" />
           </Pressable>
-          <Text className="text-xl font-bold text-gray-800">
+          <Text className="text-xl font-bold text-white">
             Privacy Policy
           </Text>
         </View>
-        <Shield size={24} color="#3B82F6" />
-      </View>
+      </LinearGradient>
 
       <ScrollView
         className="flex-1"

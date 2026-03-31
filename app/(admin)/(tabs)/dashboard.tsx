@@ -27,6 +27,7 @@ import {
   ScrollView,
   Text,
   View,
+  StatusBar,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../../../src/context/AuthContext";
@@ -154,7 +155,8 @@ export default function DashboardScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-100" edges={['top']}>
+    <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
+      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120 }}

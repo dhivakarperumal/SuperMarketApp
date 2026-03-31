@@ -6,7 +6,9 @@ import {
   TextInput,
   ActivityIndicator,
   Image,
+  StatusBar,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FlashList } from "@shopify/flash-list";
 import {
@@ -152,18 +154,24 @@ export default function InventoryScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={["top"]}>
+      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
       {/* Header */}
-      <View className="px-4 py-4 bg-gray-100 border-b border-gray-200">
+      <LinearGradient
+        colors={["#2E7D32", "#1B5E20"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
+      >
         <View className="flex-row items-center mb-4">
           <Pressable
             onPress={() => router.back()}
-            className="w-10 h-10 bg-white rounded-full items-center justify-center mr-3"
+            className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-3"
           >
-            <ChevronLeft size={24} color="#374151" />
+            <ChevronLeft size={24} color="#FFFFFF" />
           </Pressable>
           <View className="flex-1">
-            <Text className="text-2xl font-bold text-gray-800">Inventory</Text>
-            <Text className="text-gray-500 text-sm">{inventory.length} products</Text>
+            <Text className="text-2xl font-bold text-white">Inventory</Text>
+            <Text className="text-white/80 text-sm">{inventory.length} products</Text>
           </View>
         </View>
 
@@ -287,7 +295,7 @@ export default function InventoryScreen() {
             </Pressable>
           )}
         </View>
-      </View>
+      </LinearGradient>
 
       {/* Inventory List */}
       <FlashList

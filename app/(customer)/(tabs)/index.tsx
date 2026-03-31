@@ -138,8 +138,12 @@ export default function HomeScreen() {
     : [];
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top"]}>
-      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
+<SafeAreaView
+  className="flex-1 bg-gray-50"
+  edges={["top", "bottom"]}
+>
+  <StatusBar barStyle="light-content" backgroundColor="#217325ff" />
+
 
       {/* Header */}
       <LinearGradient

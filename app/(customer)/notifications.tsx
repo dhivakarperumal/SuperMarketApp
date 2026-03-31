@@ -1,4 +1,5 @@
-import { View, Text, Pressable, ScrollView, Image } from "react-native";
+import { View, Text, Pressable, ScrollView, Image, StatusBar } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   ChevronLeft,
@@ -72,32 +73,40 @@ export default function NotificationsScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
+      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
       {/* Header */}
-      <View className="flex-row items-center justify-between px-4 py-4 bg-white border-b border-gray-100">
-        <View className="flex-row items-center">
-          <Pressable
-            onPress={() => router.back()}
-            className="p-2 -ml-2 rounded-full active:bg-gray-100"
-          >
-            <ChevronLeft size={24} color="#374151" />
-          </Pressable>
-          <Text className="text-xl font-bold text-gray-800 ml-2">
-            Notifications
-          </Text>
-          {unreadCount > 0 && (
-            <View className="bg-primary/10 px-2 py-1 rounded-full ml-2">
-              <Text className="text-primary font-semibold text-xs">
-                {unreadCount} new
-              </Text>
-            </View>
-          )}
+      <LinearGradient
+        colors={["#2E7D32", "#1B5E20"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
+      >
+        <View className="flex-row items-center justify-between">
+          <View className="flex-row items-center">
+            <Pressable
+              onPress={() => router.back()}
+              className="p-2 -ml-2 bg-white/20 rounded-full active:bg-white/30"
+            >
+              <ChevronLeft size={24} color="#FFFFFF" />
+            </Pressable>
+            <Text className="text-xl font-bold text-white ml-2">
+              Notifications
+            </Text>
+            {unreadCount > 0 && (
+              <View className="bg-white/20 px-2 py-1 rounded-full ml-2">
+                <Text className="text-white font-semibold text-xs">
+                  {unreadCount} new
+                </Text>
+              </View>
+            )}
+          </View>
+          <Image
+            source={Logo}
+            style={{ width: 40, height: 40, tintColor: '#FFFFFF' }}
+            resizeMode="contain"
+          />
         </View>
-        <Image
-          source={Logo}
-          style={{ width: 40, height: 40 }}
-          resizeMode="contain"
-        />
-      </View>
+      </LinearGradient>
 
       {notifications.length === 0 ? (
         <View className="flex-1 items-center justify-center px-6">

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { View, Text, Pressable, ScrollView, Image } from "react-native";
+import { View, Text, Pressable, ScrollView, Image, StatusBar } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 const Logo = require("../../../assets/images/logo.png");
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -103,24 +104,32 @@ export default function AccountScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
+      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
-        <View className="flex-row items-center justify-between px-4 py-4 bg-white border-b border-gray-200">
-          <View className="flex-row items-center">
-            <Pressable
-              onPress={() => router.back()}
-              className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center mr-3"
-            >
-              <ChevronLeft size={24} color="#374151" />
-            </Pressable>
-            <Text className="text-2xl font-bold text-gray-800">My Account</Text>
+        <LinearGradient
+          colors={["#2E7D32", "#1B5E20"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
+        >
+          <View className="flex-row items-center justify-between">
+            <View className="flex-row items-center">
+              <Pressable
+                onPress={() => router.back()}
+                className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-3"
+              >
+                <ChevronLeft size={24} color="#FFFFFF" />
+              </Pressable>
+              <Text className="text-2xl font-bold text-white">My Account</Text>
+            </View>
+            <Image
+              source={Logo}
+              style={{ width: 45, height: 45, tintColor: '#FFFFFF' }}
+              resizeMode="contain"
+            />
           </View>
-          <Image
-            source={Logo}
-            style={{ width: 45, height: 45 }}
-            resizeMode="contain"
-          />
-        </View>
+        </LinearGradient>
 
         {/* Profile Section */}
         <View className="bg-white mx-4 my-4 p-4 rounded-xl">

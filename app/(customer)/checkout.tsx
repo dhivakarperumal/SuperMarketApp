@@ -8,7 +8,9 @@ import {
   Image,
   ActivityIndicator,
   Modal,
+  StatusBar,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { router } from "expo-router";
@@ -1213,19 +1215,27 @@ export default function CheckoutScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={["top"]}>
+      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
       {/* Header */}
-      <View className="flex-row items-center justify-between px-4 py-4 bg-white border-b border-gray-200">
-        <View className="flex-row items-center">
-          <Pressable
-            onPress={handleBack}
-            className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center mr-3"
-          >
-            <ChevronLeft size={24} color="#374151" />
-          </Pressable>
-          <Text className="text-xl font-bold text-gray-800">Checkout</Text>
+      <LinearGradient
+        colors={["#2E7D32", "#1B5E20"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
+      >
+        <View className="flex-row items-center justify-between">
+          <View className="flex-row items-center">
+            <Pressable
+              onPress={handleBack}
+              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-3"
+            >
+              <ChevronLeft size={24} color="#FFFFFF" />
+            </Pressable>
+            <Text className="text-xl font-bold text-white">Checkout</Text>
+          </View>
+          <Image source={Logo} style={{ width: 40, height: 40, tintColor: '#FFFFFF' }} resizeMode="contain" />
         </View>
-        <Image source={Logo} style={{ width: 40, height: 40 }} resizeMode="contain" />
-      </View>
+      </LinearGradient>
 
       {/* Offline Banner */}
       {isOffline && <OfflineBanner />}

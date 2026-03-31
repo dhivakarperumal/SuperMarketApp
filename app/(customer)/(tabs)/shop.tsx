@@ -9,8 +9,10 @@ import {
   Switch,
   ScrollView,
   Image,
+  StatusBar,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { LinearGradient } from "expo-linear-gradient";
 import { FlashList } from "@shopify/flash-list";
 import {
   Search,
@@ -158,40 +160,46 @@ export default function ShopScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
+      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
       {/* Header */}
-      <View className="px-4 py-4 bg-white border-b border-gray-200">
+      <LinearGradient
+        colors={["#2E7D32", "#1B5E20"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
+      >
         <View className="flex-row items-center justify-between mb-4">
           <View className="flex-row items-center">
             <Pressable
               onPress={() => router.back()}
-              className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center mr-3"
+              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-3"
             >
-              <ChevronLeft size={24} color="#374151" />
+              <ChevronLeft size={24} color="#FFFFFF" />
             </Pressable>
-            <Text className="text-2xl font-bold text-gray-800">Shop</Text>
+            <Text className="text-2xl font-bold text-white">Shop</Text>
           </View>
           <View className="flex-row items-center">
             {/* View Mode Toggle */}
             <Pressable
               onPress={() => setViewMode(viewMode === "grid" ? "table" : "grid")}
-              className="w-10 h-10 bg-white rounded-full items-center justify-center mr-2"
+              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-2"
             >
               {viewMode === "grid" ? (
-                <List size={20} color="#374151" />
+                <List size={20} color="#FFFFFF" />
               ) : (
-                <Grid3X3 size={20} color="#374151" />
+                <Grid3X3 size={20} color="#FFFFFF" />
               )}
             </Pressable>
             {/* Filter Button */}
             <Pressable
               onPress={() => setShowFilters(true)}
-              className="relative w-10 h-10 bg-white rounded-full items-center justify-center"
+              className="relative w-10 h-10 bg-white/20 rounded-full items-center justify-center"
             >
-              <SlidersHorizontal size={20} color="#374151" />
+              <SlidersHorizontal size={20} color="#FFFFFF" />
               {activeFilterCount > 0 && (
                 <View
-                  className="absolute -top-1 -right-1 bg-primary rounded-full items-center justify-center"
-                  style={{ minWidth: 18, height: 18, paddingHorizontal: 4 }}
+                  className="absolute -top-1 -right-1 bg-red-500 rounded-full items-center justify-center"
+                  style={{ minWidth: 18, height: 18, paddingHorizontal: 4, borderWidth: 2, borderColor: "#FFFFFF" }}
                 >
                   <Text className="text-white text-xs font-bold">{activeFilterCount}</Text>
                 </View>
@@ -201,25 +209,23 @@ export default function ShopScreen() {
         </View>
 
         {/* Search Bar */}
-        <View className="flex-row items-center">
-          <View className="flex-1 flex-row items-center bg-white rounded-xl px-4 py-3">
-            <Search size={20} color="#9CA3AF" />
-            <TextInput
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-              placeholder="Search products..."
-              placeholderTextColor="#9CA3AF"
-              className="flex-1 ml-3 text-gray-800"
-              style={{ fontSize: 15 }}
-            />
-            {searchQuery.length > 0 && (
-              <Pressable onPress={() => setSearchQuery("")}>
-                <X size={18} color="#9CA3AF" />
-              </Pressable>
-            )}
-          </View>
+        <View className="flex-row items-center bg-white rounded-2xl px-4" style={{ height: 50 }}>
+          <Search size={20} color="#9CA3AF" />
+          <TextInput
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            placeholder="Search products..."
+            placeholderTextColor="#9CA3AF"
+            className="flex-1 ml-3 text-gray-800"
+            style={{ fontSize: 15 }}
+          />
+          {searchQuery.length > 0 && (
+            <Pressable onPress={() => setSearchQuery("")}>
+              <X size={18} color="#9CA3AF" />
+            </Pressable>
+          )}
         </View>
-      </View>
+      </LinearGradient>
 
       {/* Active Filters & Results Count */}
       {(searchQuery || activeFilterCount > 0) && (

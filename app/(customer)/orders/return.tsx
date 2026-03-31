@@ -7,7 +7,9 @@ import {
   ActivityIndicator,
   Image,
   TextInput,
+  StatusBar,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, router } from "expo-router";
 import {
@@ -226,22 +228,30 @@ export default function ReturnRequestScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
+      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
       {/* Header */}
-      <View className="flex-row items-center px-4 py-4 bg-white border-b border-gray-200">
-        <Pressable
-          onPress={() => (step > 1 ? setStep(step - 1) : router.back())}
-          className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center mr-3"
-        >
-          <ChevronLeft size={24} color="#374151" />
-        </Pressable>
-        <View className="flex-1">
-          <Text className="text-xl font-bold text-gray-800">Request Return</Text>
-          <Text className="text-gray-500 text-sm">
-            Step {step} of 3 -{" "}
-            {step === 1 ? "Select Items" : step === 2 ? "Choose Reasons" : "Confirm"}
-          </Text>
+      <LinearGradient
+        colors={["#2E7D32", "#1B5E20"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
+      >
+        <View className="flex-row items-center">
+          <Pressable
+            onPress={() => (step > 1 ? setStep(step - 1) : router.back())}
+            className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-3"
+          >
+            <ChevronLeft size={24} color="#FFFFFF" />
+          </Pressable>
+          <View className="flex-1">
+            <Text className="text-xl font-bold text-white">Request Return</Text>
+            <Text className="text-white/80 text-sm">
+              Step {step} of 3 -{" "}
+              {step === 1 ? "Select Items" : step === 2 ? "Choose Reasons" : "Confirm"}
+            </Text>
+          </View>
         </View>
-      </View>
+      </LinearGradient>
 
       {/* Progress Bar */}
       <View className="flex-row px-4 py-3 bg-white">

@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
-import { View, Text, Pressable, TextInput, ActivityIndicator, Image, ScrollView } from "react-native";
+import { View, Text, Pressable, TextInput, ActivityIndicator, Image, ScrollView, StatusBar } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { FlashList } from "@shopify/flash-list";
 import { Search, Plus, Package, Edit, Trash2, FolderPlus, X, Printer } from "lucide-react-native";
@@ -244,21 +245,27 @@ export default function ProductsScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
+      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
       {/* Header */}
-      <View className="px-4 py-4 bg-gray-100 border-b border-gray-200">
+      <LinearGradient
+        colors={["#2E7D32", "#1B5E20"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
+      >
         <View className="flex-row items-center justify-between mb-4">
-          <Text className="text-2xl font-bold text-gray-800">Products</Text>
+          <Text className="text-2xl font-bold text-white">Products</Text>
           <View className="flex-row items-center">
-            <Text className="text-gray-500 mr-3">{filteredProducts.length} items</Text>
+            <Text className="text-white/80 mr-3">{filteredProducts.length} items</Text>
             <Pressable
               onPress={printAllBarcodes}
               disabled={printing}
-              className="p-2 bg-white rounded-lg border border-gray-200"
+              className="p-2 bg-white/20 rounded-lg border border-white/30"
             >
               {printing ? (
-                <ActivityIndicator size={20} color="#2E7D32" />
+                <ActivityIndicator size={20} color="#FFFFFF" />
               ) : (
-                <Printer size={20} color="#2E7D32" />
+                <Printer size={20} color="#FFFFFF" />
               )}
             </Pressable>
           </View>
@@ -288,13 +295,13 @@ export default function ProductsScreen() {
             onPress={() => setSelectedCategory("all")}
             className={`px-4 py-2 rounded-xl mr-2 ${
               selectedCategory === "all"
-                ? "bg-primary"
-                : "bg-white border border-gray-200"
+                ? "bg-white"
+                : "bg-white/20 border border-white/30"
             }`}
           >
             <Text
               className={`font-medium ${
-                selectedCategory === "all" ? "text-white" : "text-gray-600"
+                selectedCategory === "all" ? "text-primary font-bold" : "text-white"
               }`}
             >
               All
@@ -308,13 +315,13 @@ export default function ProductsScreen() {
               onPress={() => setSelectedCategory(cat.id)}
               className={`px-4 py-2 rounded-xl mr-2 ${
                 selectedCategory === cat.id
-                  ? "bg-primary"
-                  : "bg-white border border-gray-200"
+                  ? "bg-white"
+                  : "bg-white/20 border border-white/30"
               }`}
             >
               <Text
                 className={`font-medium ${
-                  selectedCategory === cat.id ? "text-white" : "text-gray-600"
+                  selectedCategory === cat.id ? "text-primary font-bold" : "text-white"
                 }`}
               >
                 {cat.cname}
@@ -322,7 +329,7 @@ export default function ProductsScreen() {
             </Pressable>
           ))}
         </ScrollView>
-      </View>
+      </LinearGradient>
 
       {/* Products List */}
       {loading ? (

@@ -8,7 +8,9 @@ import {
   Image,
   Switch,
   Modal,
+  StatusBar,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import {
@@ -753,38 +755,44 @@ export default function BillingScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
+      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
       {/* Header */}
-      <View className="px-4 py-4 bg-gray-100 border-b border-gray-200">
+      <LinearGradient
+        colors={["#2E7D32", "#1B5E20"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
+      >
         <View className="flex-row items-center justify-between mb-4">
           <View>
-            <Text className="text-2xl font-bold text-gray-800">Billing</Text>
+            <Text className="text-2xl font-bold text-white">Billing</Text>
             {isCashier && userProfile?.displayName && (
-              <Text className="text-sm text-gray-500">{userProfile.displayName}</Text>
+              <Text className="text-sm text-white/80">{userProfile.displayName}</Text>
             )}
           </View>
           <View className="flex-row">
             <Pressable
               onPress={() => printerSheetRef.current?.expand()}
               className={`p-2 rounded-lg mr-2 ${
-                isConnected ? "bg-green-100" : "bg-white"
+                isConnected ? "bg-green-100" : "bg-white/20 border border-white/30"
               }`}
             >
-              <Printer size={20} color={isConnected ? "#66BB6A" : "#9CA3AF"} />
+              <Printer size={20} color={isConnected ? "#66BB6A" : "#FFFFFF"} />
             </Pressable>
             {cart.length > 0 && (
               <Pressable
                 onPress={clearCart}
-                className="p-2 bg-red-50 rounded-lg mr-2"
+                className="p-2 bg-white/20 border border-white/30 rounded-lg mr-2"
               >
-                <Trash2 size={20} color="#EF4444" />
+                <Trash2 size={20} color="#FFFFFF" />
               </Pressable>
             )}
             {isCashier && (
               <Pressable
                 onPress={handleLogout}
-                className="p-2 bg-red-100 rounded-lg"
+                className="p-2 bg-red-500/20 border border-red-500/30 rounded-lg"
               >
-                <LogOut size={20} color="#EF4444" />
+                <LogOut size={20} color="#FFFFFF" />
               </Pressable>
             )}
           </View>
@@ -792,7 +800,7 @@ export default function BillingScreen() {
 
         {/* Manual Input */}
         <View className="flex-row items-center">
-          <View className="flex-1 flex-row items-center bg-white rounded-xl px-4 py-3">
+          <View className="flex-1 flex-row items-center bg-white rounded-xl px-4 py-3 shadow-sm">
             <TextInput
               value={manualCode}
               onChangeText={setManualCode}
@@ -801,21 +809,18 @@ export default function BillingScreen() {
               className="flex-1 text-gray-800"
               onSubmitEditing={handleManualSearch}
             />
+            <Pressable onPress={handleManualSearch} className="ml-2">
+              <Search size={22} color="#2E7D32" />
+            </Pressable>
           </View>
           <Pressable
-            onPress={handleManualSearch}
-            className="ml-2 p-3 bg-primary rounded-xl"
-          >
-            <Plus size={20} color="#fff" />
-          </Pressable>
-          <Pressable
             onPress={() => setScanning(true)}
-            className="ml-2 p-3 bg-blue-500 rounded-xl"
+            className="ml-3 w-12 h-12 bg-white rounded-xl items-center justify-center shadow-sm"
           >
-            <Scan size={20} color="#fff" />
+            <Scan size={24} color="#2E7D32" />
           </Pressable>
         </View>
-      </View>
+      </LinearGradient>
 
       {/* Scanner Section */}
       {scanning && (

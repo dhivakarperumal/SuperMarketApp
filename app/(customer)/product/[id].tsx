@@ -13,7 +13,9 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  StatusBar,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { useLocalSearchParams, router } from "expo-router";
 import {
@@ -485,36 +487,44 @@ export default function ProductDetailScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white" edges={["top"]}>
+      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
       {/* Header */}
-      <View className="flex-row items-center justify-between px-4 py-2 bg-white">
-        <Pressable
-          onPress={() => router.back()}
-          className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center"
-        >
-          <ChevronLeft size={22} color="#374151" />
-        </Pressable>
-        <Text className="flex-1 text-center font-bold text-gray-900 text-lg" numberOfLines={1}>
-          Product Details
-        </Text>
-        <View className="flex-row" style={{ gap: 10 }}>
+      <LinearGradient
+        colors={["#2E7D32", "#1B5E20"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
+      >
+        <View className="flex-row items-center justify-between">
           <Pressable
-            onPress={handleShare}
-            className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center"
+            onPress={() => router.back()}
+            className="w-10 h-10 bg-white/20 rounded-full items-center justify-center"
           >
-            <Share2 size={20} color="#374151" />
+            <ChevronLeft size={22} color="#FFFFFF" />
           </Pressable>
-          <Pressable
-            onPress={handleToggleFavorite}
-            className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center"
-          >
-            <Heart
-              size={20}
-              color={isFavorite ? "#EF4444" : "#374151"}
-              fill={isFavorite ? "#EF4444" : "transparent"}
-            />
-          </Pressable>
+          <Text className="flex-1 text-center font-bold text-white text-lg" numberOfLines={1}>
+            Product Details
+          </Text>
+          <View className="flex-row" style={{ gap: 10 }}>
+            <Pressable
+              onPress={handleShare}
+              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center"
+            >
+              <Share2 size={20} color="#FFFFFF" />
+            </Pressable>
+            <Pressable
+              onPress={handleToggleFavorite}
+              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center"
+            >
+              <Heart
+                size={20}
+                color={isFavorite ? "#EF4444" : "#FFFFFF"}
+                fill={isFavorite ? "#EF4444" : "transparent"}
+              />
+            </Pressable>
+          </View>
         </View>
-      </View>
+      </LinearGradient>
 
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Product Images */}

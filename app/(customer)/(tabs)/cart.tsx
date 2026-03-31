@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
-import { View, Text, Pressable, ScrollView, Image, Modal, ActivityIndicator } from "react-native";
+import { View, Text, Pressable, ScrollView, Image, Modal, ActivityIndicator, StatusBar } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { Trash2, Plus, Minus, ShoppingBag, AlertTriangle, ChevronLeft, AlertCircle, Truck, Gift, Tag, Ticket } from "lucide-react-native";
 import { router } from "expo-router";
@@ -163,17 +164,23 @@ export default function CartScreen() {
   if (cart.length === 0) {
     return (
       <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
-        <View className="px-4 py-4 bg-white border-b border-gray-200">
+        <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
+        <LinearGradient
+          colors={["#2E7D32", "#1B5E20"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
+        >
           <View className="flex-row items-center">
             <Pressable
               onPress={() => router.back()}
-              className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center mr-3"
+              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-3"
             >
-              <ChevronLeft size={24} color="#374151" />
+              <ChevronLeft size={24} color="#FFFFFF" />
             </Pressable>
-            <Text className="text-2xl font-bold text-gray-800">My Cart</Text>
+            <Text className="text-2xl font-bold text-white">My Cart</Text>
           </View>
-        </View>
+        </LinearGradient>
         <View className="flex-1 items-center justify-center px-4">
           <View className="bg-gray-100 p-6 rounded-full mb-4">
             <ShoppingBag size={48} color="#9CA3AF" />
@@ -197,29 +204,35 @@ export default function CartScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
+      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
       {/* Header */}
-      <View className="px-4 py-4 bg-white border-b border-gray-200">
+      <LinearGradient
+        colors={["#2E7D32", "#1B5E20"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
+      >
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
             <Pressable
               onPress={() => router.back()}
-              className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center mr-3"
+              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-3"
             >
-              <ChevronLeft size={24} color="#374151" />
+              <ChevronLeft size={24} color="#FFFFFF" />
             </Pressable>
             <View>
-              <Text className="text-2xl font-bold text-gray-800">My Cart</Text>
-              <Text className="text-gray-500">{cartCount} items</Text>
+              <Text className="text-2xl font-bold text-white">My Cart</Text>
+              <Text className="text-white/80">{cartCount} items</Text>
             </View>
           </View>
           <Pressable
             onPress={handleClearAllPress}
-            className="px-3 py-2 bg-red-50 rounded-full"
+            className="px-3 py-2 bg-white/20 rounded-full"
           >
-            <Text className="text-red-500 font-medium">Clear All</Text>
+            <Text className="text-white font-medium">Clear All</Text>
           </Pressable>
         </View>
-      </View>
+      </LinearGradient>
 
       {/* Cart Items */}
       <ScrollView
