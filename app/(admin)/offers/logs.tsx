@@ -37,7 +37,7 @@ import { db } from "../../../src/services/firebase/config";
 import { OfferLog, OfferType, OFFER_TYPE_LABELS } from "../../../src/types/offers";
 
 const typeConfig: Record<string, { icon: any; color: string; bg: string }> = {
-  discount: { icon: Percent, color: "#2E7D32", bg: "#E8F5E9" },
+  discount: { icon: Percent, color: "#1D5A34", bg: "#E8F5E9" },
   bogo: { icon: Gift, color: "#9333EA", bg: "#F3E8FF" },
   combo: { icon: Package, color: "#3B82F6", bg: "#DBEAFE" },
   coupon: { icon: Ticket, color: "#F59E0B", bg: "#FEF3C7" },
@@ -231,7 +231,7 @@ export default function OfferLogsScreen() {
   if (loading) {
     return (
       <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center" edges={["top", "bottom"]}>
-        <ActivityIndicator size="large" color="#2E7D32" />
+        <ActivityIndicator size="large" color="#1D5A34" />
         <Text className="text-gray-500 mt-4">Loading offer logs...</Text>
       </SafeAreaView>
     );

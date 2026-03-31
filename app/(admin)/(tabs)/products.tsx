@@ -245,10 +245,10 @@ export default function ProductsScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
-      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
+      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
       <LinearGradient
-        colors={["#2E7D32", "#1B5E20"]}
+        colors={["#1D5A34", "#164829"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
@@ -334,7 +334,7 @@ export default function ProductsScreen() {
       {/* Products List */}
       {loading ? (
         <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color="#2E7D32" />
+          <ActivityIndicator size="large" color="#1D5A34" />
         </View>
       ) : (
         <FlashList
@@ -472,7 +472,7 @@ export default function ProductsScreen() {
             fabOpen ? "bg-gray-700" : "bg-primary"
           }`}
           style={{
-            shadowColor: fabOpen ? "#374151" : "#2E7D32",
+            shadowColor: fabOpen ? "#374151" : "#1D5A34",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 8,

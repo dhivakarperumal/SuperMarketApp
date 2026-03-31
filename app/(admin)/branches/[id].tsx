@@ -193,7 +193,7 @@ export default function EditBranchScreen() {
   if (isLoading) {
     return (
       <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center">
-        <ActivityIndicator size="large" color="#2E7D32" />
+        <ActivityIndicator size="large" color="#1D5A34" />
       </SafeAreaView>
     );
   }

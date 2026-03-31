@@ -266,7 +266,7 @@ export default function AddReelScreen() {
         {/* Video Upload Section */}
         <View className="bg-white rounded-xl p-4 mb-4">
           <View className="flex-row items-center mb-3">
-            <Video size={20} color="#2E7D32" />
+            <Video size={20} color="#1D5A34" />
             <Text className="text-gray-800 font-semibold ml-2">Video *</Text>
           </View>
 
@@ -291,7 +291,7 @@ export default function AddReelScreen() {
           ) : videoUrl ? (
             <View className="bg-gray-100 rounded-xl p-4">
               <View className="flex-row items-center">
-                <Link2 size={20} color="#2E7D32" />
+                <Link2 size={20} color="#1D5A34" />
                 <Text className="text-gray-700 ml-2 flex-1" numberOfLines={1}>
                   {videoUrl}
                 </Text>
@@ -306,7 +306,7 @@ export default function AddReelScreen() {
               className="bg-gray-100 rounded-xl p-6 items-center border-2 border-dashed border-gray-300"
             >
               <View className="w-16 h-16 bg-primary/10 rounded-full items-center justify-center mb-3">
-                <Upload size={28} color="#2E7D32" />
+                <Upload size={28} color="#1D5A34" />
               </View>
               <Text className="text-gray-800 font-semibold">Add Video</Text>
               <Text className="text-gray-500 text-sm mt-1">
@@ -336,7 +336,7 @@ export default function AddReelScreen() {
         <View className="bg-white rounded-xl p-4 mb-4">
           <View className="flex-row items-center justify-between mb-3">
             <View className="flex-row items-center">
-              <ImageIcon size={20} color="#2E7D32" />
+              <ImageIcon size={20} color="#1D5A34" />
               <Text className="text-gray-800 font-semibold ml-2">Thumbnail</Text>
             </View>
             {thumbnailBase64 && (
@@ -387,7 +387,7 @@ export default function AddReelScreen() {
         {/* Hashtags */}
         <View className="bg-white rounded-xl p-4 mb-4">
           <View className="flex-row items-center mb-3">
-            <Tag size={20} color="#2E7D32" />
+            <Tag size={20} color="#1D5A34" />
             <Text className="text-gray-800 font-semibold ml-2">Hashtags</Text>
           </View>
           <TextInput
@@ -407,7 +407,7 @@ export default function AddReelScreen() {
         <View className="bg-white rounded-xl p-4 mb-4">
           <View className="flex-row items-center justify-between mb-3">
             <View className="flex-row items-center">
-              <ShoppingBag size={20} color="#2E7D32" />
+              <ShoppingBag size={20} color="#1D5A34" />
               <Text className="text-gray-800 font-semibold ml-2">Link Product</Text>
             </View>
             {selectedProduct && (

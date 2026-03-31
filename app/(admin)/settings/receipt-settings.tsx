@@ -163,7 +163,7 @@ const ToggleSection = memo(({
     <Switch
       value={value}
       onValueChange={onValueChange}
-      trackColor={{ false: colors.border, true: "#2E7D32" }}
+      trackColor={{ false: colors.border, true: "#1D5A34" }}
       thumbColor="#FFFFFF"
     />
   </View>
@@ -196,18 +196,18 @@ const OptionButton = memo(({
         ? isDark ? "#14532D" : "#E8F5E9"
         : colors.surface,
       borderWidth: 1,
-      borderColor: selected ? "#2E7D32" : colors.border,
+      borderColor: selected ? "#1D5A34" : colors.border,
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
     }}
   >
     {selected && (
-      <Check size={16} color="#2E7D32" style={{ marginRight: 6 }} />
+      <Check size={16} color="#1D5A34" style={{ marginRight: 6 }} />
     )}
     <Text
       style={{
-        color: selected ? "#2E7D32" : colors.text,
+        color: selected ? "#1D5A34" : colors.text,
         fontWeight: selected ? "600" : "500",
         fontSize: 14,
       }}
@@ -244,13 +244,13 @@ const GSTRateButton = memo(({
         ? isDark ? "#14532D" : "#E8F5E9"
         : colors.surface,
       borderWidth: 1,
-      borderColor: selected ? "#2E7D32" : colors.border,
+      borderColor: selected ? "#1D5A34" : colors.border,
       alignItems: "center",
     }}
   >
     <Text
       style={{
-        color: selected ? "#2E7D32" : colors.text,
+        color: selected ? "#1D5A34" : colors.text,
         fontWeight: "600",
         fontSize: 16,
       }}
@@ -875,7 +875,7 @@ export default function ReceiptSettingsScreen() {
                       backgroundColor: colors.surface,
                       borderRadius: 10,
                       borderWidth: 1,
-                      borderColor: useCustomGst ? "#2E7D32" : colors.border,
+                      borderColor: useCustomGst ? "#1D5A34" : colors.border,
                       paddingHorizontal: 12,
                     }}
                   >
@@ -991,7 +991,7 @@ export default function ReceiptSettingsScreen() {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
-            shadowColor: "#2E7D32",
+            shadowColor: "#1D5A34",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 8,

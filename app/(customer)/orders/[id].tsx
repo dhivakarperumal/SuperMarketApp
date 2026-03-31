@@ -144,14 +144,14 @@ export default function OrderDetailScreen() {
       case "Cancelled":
         return "#EF4444";
       default:
-        return "#2E7D32";
+        return "#1D5A34";
     }
   };
 
   if (loading) {
     return (
       <SafeAreaView className="flex-1 bg-white items-center justify-center">
-        <ActivityIndicator size="large" color="#2E7D32" />
+        <ActivityIndicator size="large" color="#1D5A34" />
       </SafeAreaView>
     );
   }
@@ -190,10 +190,10 @@ export default function OrderDetailScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
-      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
+      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
       <LinearGradient
-        colors={["#2E7D32", "#1B5E20"]}
+        colors={["#1D5A34", "#164829"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
@@ -252,7 +252,7 @@ export default function OrderDetailScreen() {
                         isCompleted ? "bg-primary" : "bg-gray-200"
                       }`}
                       style={isCurrent ? {
-                        shadowColor: "#2E7D32",
+                        shadowColor: "#1D5A34",
                         shadowOffset: { width: 0, height: 2 },
                         shadowOpacity: 0.3,
                         shadowRadius: 4,
@@ -299,7 +299,7 @@ export default function OrderDetailScreen() {
         {/* Delivery Address */}
         <View className="bg-white mx-4 p-4 rounded-xl mb-4">
           <View className="flex-row items-center mb-3">
-            <MapPin size={20} color="#2E7D32" />
+            <MapPin size={20} color="#1D5A34" />
             <Text className="ml-2 font-bold text-gray-800">Delivery Address</Text>
           </View>
           <Text className="text-gray-800 font-medium">
@@ -322,7 +322,7 @@ export default function OrderDetailScreen() {
         {/* Payment Method */}
         <View className="bg-white mx-4 p-4 rounded-xl mb-4">
           <View className="flex-row items-center">
-            <CreditCard size={20} color="#2E7D32" />
+            <CreditCard size={20} color="#1D5A34" />
             <Text className="ml-2 font-bold text-gray-800">Payment Method</Text>
           </View>
           <Text className="text-gray-600 mt-2">
@@ -424,7 +424,7 @@ export default function OrderDetailScreen() {
             {returnEligibility.eligible ? (
               <>
                 <View className="flex-row items-center mb-3">
-                  <RotateCcw size={20} color="#2E7D32" />
+                  <RotateCcw size={20} color="#1D5A34" />
                   <Text className="ml-2 font-bold text-gray-800">Need to Return?</Text>
                 </View>
                 <Text className="text-gray-600 text-sm mb-3">
@@ -455,7 +455,7 @@ export default function OrderDetailScreen() {
                   className="flex-row items-center"
                 >
                   <Text className="text-primary font-medium">View Return Status</Text>
-                  <ChevronRight size={16} color="#2E7D32" />
+                  <ChevronRight size={16} color="#1D5A34" />
                 </Pressable>
               </>
             ) : (

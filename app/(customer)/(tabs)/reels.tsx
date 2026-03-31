@@ -436,7 +436,7 @@ export default function ReelsScreen() {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#2E7D32" />
+        <ActivityIndicator size="large" color="#1D5A34" />
         <Text style={styles.loadingText}>Loading reels...</Text>
       </View>
     );
@@ -514,7 +514,7 @@ export default function ReelsScreen() {
             {/* Comments List */}
             {loadingComments ? (
               <View style={styles.commentsLoading}>
-                <ActivityIndicator size="large" color="#2E7D32" />
+                <ActivityIndicator size="large" color="#1D5A34" />
               </View>
             ) : comments.length === 0 ? (
               <View style={styles.noComments}>
@@ -731,7 +731,7 @@ const styles = StyleSheet.create({
   profilePlaceholder: {
     width: "100%",
     height: "100%",
-    backgroundColor: "#2E7D32",
+    backgroundColor: "#1D5A34",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -895,7 +895,7 @@ const styles = StyleSheet.create({
   commentAvatarPlaceholder: {
     width: "100%",
     height: "100%",
-    backgroundColor: "#2E7D32",
+    backgroundColor: "#1D5A34",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -950,7 +950,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: "#2E7D32",
+    backgroundColor: "#1D5A34",
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 8,

@@ -28,7 +28,7 @@ export default function Index() {
   if (isLoading || onboardingCompleted === null) {
     return (
       <LinearGradient
-        colors={["#2E7D32", "#1B5E20"]}
+        colors={["#1D5A34", "#164829"]}
         style={{ flex: 1, alignItems: "center", justifyContent: "center", padding: 24 }}
       >
         <View

@@ -318,7 +318,7 @@ export default function AddCategoryScreen() {
           disabled={loading}
           className="bg-primary py-4 rounded-xl"
           style={{
-            shadowColor: "#2E7D32",
+            shadowColor: "#1D5A34",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 8,

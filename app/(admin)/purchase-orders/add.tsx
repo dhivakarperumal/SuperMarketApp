@@ -223,7 +223,7 @@ export default function AddPurchaseOrderScreen() {
             ) : (
               <Text className="text-gray-400">Select supplier</Text>
             )}
-            <ChevronDown size={20} color={selectedSupplier ? "#2E7D32" : "#9CA3AF"} />
+            <ChevronDown size={20} color={selectedSupplier ? "#1D5A34" : "#9CA3AF"} />
           </Pressable>
 
           {suppliers.length === 0 && !suppliersLoading && (
@@ -231,7 +231,7 @@ export default function AddPurchaseOrderScreen() {
               onPress={() => router.push("/(admin)/suppliers/add")}
               className="flex-row items-center justify-center mt-3 py-2"
             >
-              <Plus size={16} color="#2E7D32" />
+              <Plus size={16} color="#1D5A34" />
               <Text className="text-primary font-medium ml-1">Add New Supplier</Text>
             </Pressable>
           )}
@@ -242,7 +242,7 @@ export default function AddPurchaseOrderScreen() {
           <View className="flex-row items-center justify-between mb-3">
             <Text className="text-gray-700 font-semibold">Items</Text>
             <Pressable onPress={addItem} className="flex-row items-center">
-              <Plus size={16} color="#2E7D32" />
+              <Plus size={16} color="#1D5A34" />
               <Text className="text-primary font-medium ml-1">Add Item</Text>
             </Pressable>
           </View>
@@ -321,7 +321,7 @@ export default function AddPurchaseOrderScreen() {
           className="bg-primary py-4 rounded-xl"
           style={{
             opacity: loading ? 0.7 : 1,
-            shadowColor: "#2E7D32",
+            shadowColor: "#1D5A34",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 8,
@@ -389,7 +389,7 @@ export default function AddPurchaseOrderScreen() {
             {/* Supplier List */}
             {suppliersLoading ? (
               <View className="items-center py-8">
-                <ActivityIndicator size="large" color="#2E7D32" />
+                <ActivityIndicator size="large" color="#1D5A34" />
               </View>
             ) : filteredSuppliers.length === 0 ? (
               <View className="items-center py-8">

@@ -160,10 +160,10 @@ export default function ShopScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
-      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
+      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
       <LinearGradient
-        colors={["#2E7D32", "#1B5E20"]}
+        colors={["#1D5A34", "#164829"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
@@ -326,7 +326,7 @@ export default function ShopScreen() {
       {/* Products */}
       {loading ? (
         <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color="#2E7D32" />
+          <ActivityIndicator size="large" color="#1D5A34" />
         </View>
       ) : viewMode === "grid" ? (
         <FlashList
@@ -444,7 +444,7 @@ export default function ShopScreen() {
                           }}
                           className="p-2"
                         >
-                          <Minus size={16} color="#2E7D32" />
+                          <Minus size={16} color="#1D5A34" />
                         </Pressable>
                         <Text className="px-3 font-semibold text-gray-800">{quantity}</Text>
                         <Pressable
@@ -454,7 +454,7 @@ export default function ShopScreen() {
                           }}
                           className="p-2"
                         >
-                          <Plus size={16} color="#2E7D32" />
+                          <Plus size={16} color="#1D5A34" />
                         </Pressable>
                       </View>
                     ) : (
@@ -629,7 +629,7 @@ export default function ShopScreen() {
                   <Switch
                     value={inStockOnly}
                     onValueChange={setInStockOnly}
-                    trackColor={{ false: "#E5E7EB", true: "#2E7D32" }}
+                    trackColor={{ false: "#E5E7EB", true: "#1D5A34" }}
                     thumbColor="#fff"
                   />
                 </View>
@@ -645,7 +645,7 @@ export default function ShopScreen() {
                   <Switch
                     value={showCategoryFilter}
                     onValueChange={setShowCategoryFilter}
-                    trackColor={{ false: "#E5E7EB", true: "#2E7D32" }}
+                    trackColor={{ false: "#E5E7EB", true: "#1D5A34" }}
                     thumbColor="#fff"
                   />
                 </View>

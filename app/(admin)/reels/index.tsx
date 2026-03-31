@@ -270,7 +270,7 @@ export default function AdminReelsScreen() {
       {/* Content */}
       {loading ? (
         <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color="#2E7D32" />
+          <ActivityIndicator size="large" color="#1D5A34" />
         </View>
       ) : reels.length === 0 ? (
         <View className="flex-1 items-center justify-center p-8">
@@ -299,8 +299,8 @@ export default function AdminReelsScreen() {
             <RefreshControl
               refreshing={refreshing}
               onRefresh={onRefresh}
-              tintColor="#2E7D32"
-              colors={["#2E7D32"]}
+              tintColor="#1D5A34"
+              colors={["#1D5A34"]}
             />
           }
         />

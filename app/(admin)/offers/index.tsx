@@ -36,7 +36,7 @@ import { formatOfferValidity } from "../../../src/services/offers/OfferEngine";
 import { ConfirmationModal } from "../../../src/components/ConfirmationModal";
 
 const typeConfig: Record<string, { icon: any; color: string; bg: string }> = {
-  discount: { icon: Percent, color: "#2E7D32", bg: "#E8F5E9" },
+  discount: { icon: Percent, color: "#1D5A34", bg: "#E8F5E9" },
   bogo: { icon: Gift, color: "#9333EA", bg: "#F3E8FF" },
   combo: { icon: Package, color: "#3B82F6", bg: "#DBEAFE" },
   coupon: { icon: Ticket, color: "#F59E0B", bg: "#FEF3C7" },
@@ -199,7 +199,7 @@ export default function OffersScreen() {
                 <Switch
                   value={offer.isActive}
                   onValueChange={() => handleToggleStatus(offer)}
-                  trackColor={{ false: "#E5E7EB", true: "#2E7D32" }}
+                  trackColor={{ false: "#E5E7EB", true: "#1D5A34" }}
                   thumbColor="#FFFFFF"
                   style={{ transform: [{ scale: 0.8 }] }}
                 />
@@ -289,7 +289,7 @@ export default function OffersScreen() {
   if (loading) {
     return (
       <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center" edges={["top", "bottom"]}>
-        <ActivityIndicator size="large" color="#2E7D32" />
+        <ActivityIndicator size="large" color="#1D5A34" />
         <Text className="text-gray-500 mt-4">Loading offers...</Text>
       </SafeAreaView>
     );
@@ -316,7 +316,7 @@ export default function OffersScreen() {
             onPress={() => router.push("/(admin)/offers/logs")}
             className="w-10 h-10 bg-white rounded-full items-center justify-center"
           >
-            <BarChart3 size={20} color="#2E7D32" />
+            <BarChart3 size={20} color="#1D5A34" />
           </Pressable>
         </View>
 
@@ -466,7 +466,7 @@ export default function OffersScreen() {
         <View
           className="w-14 h-14 bg-primary rounded-full items-center justify-center shadow-lg"
           style={{
-            shadowColor: "#2E7D32",
+            shadowColor: "#1D5A34",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 8,

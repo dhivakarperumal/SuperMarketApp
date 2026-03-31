@@ -34,7 +34,7 @@ export default function AdminLayout() {
   if (isLoading) {
     return (
       <View className="flex-1 items-center justify-center bg-white">
-        <ActivityIndicator size="large" color="#2E7D32" />
+        <ActivityIndicator size="large" color="#1D5A34" />
         <Text className="text-gray-500 mt-4">Loading...</Text>
       </View>
     );

@@ -540,9 +540,9 @@ export default function AddPrinterScreen() {
         paddingVertical: 12,
         paddingHorizontal: 4,
         borderRadius: 12,
-        backgroundColor: connectionType === type ? "#2E7D32" : colors.card,
+        backgroundColor: connectionType === type ? "#1D5A34" : colors.card,
         borderWidth: 1,
-        borderColor: connectionType === type ? "#2E7D32" : colors.border,
+        borderColor: connectionType === type ? "#1D5A34" : colors.border,
         alignItems: "center",
         justifyContent: "center",
         marginHorizontal: 3,
@@ -582,9 +582,9 @@ export default function AddPrinterScreen() {
         paddingVertical: 14,
         paddingHorizontal: 16,
         borderRadius: 12,
-        backgroundColor: selected ? "#2E7D32" : colors.card,
+        backgroundColor: selected ? "#1D5A34" : colors.card,
         borderWidth: 1,
-        borderColor: selected ? "#2E7D32" : colors.border,
+        borderColor: selected ? "#1D5A34" : colors.border,
         alignItems: "center",
         justifyContent: "center",
         marginHorizontal: 4,
@@ -745,7 +745,7 @@ export default function AddPrinterScreen() {
                       {selectedDevice.address}
                     </Text>
                   </View>
-                  <Text style={{ color: "#2E7D32", fontWeight: "600" }}>
+                  <Text style={{ color: "#1D5A34", fontWeight: "600" }}>
                     Change
                   </Text>
                 </Pressable>
@@ -772,11 +772,11 @@ export default function AddPrinterScreen() {
                       justifyContent: "center",
                     }}
                   >
-                    <Bluetooth size={22} color="#2E7D32" />
+                    <Bluetooth size={22} color="#1D5A34" />
                   </View>
                   <View style={{ marginLeft: 12, flex: 1 }}>
                     <Text
-                      style={{ color: "#2E7D32", fontWeight: "600", fontSize: 15 }}
+                      style={{ color: "#1D5A34", fontWeight: "600", fontSize: 15 }}
                     >
                       Select Bluetooth Device
                     </Text>
@@ -822,7 +822,7 @@ export default function AddPrinterScreen() {
                       color: colors.text,
                       borderWidth: 1,
                       borderColor: bluetoothAddress.trim()
-                        ? "#2E7D32"
+                        ? "#1D5A34"
                         : colors.border,
                       textAlign: "center",
                       fontFamily: Platform.OS === "ios" ? "Courier" : "monospace",
@@ -903,7 +903,7 @@ export default function AddPrinterScreen() {
                     marginLeft: 12,
                     width: 50,
                     height: 50,
-                    backgroundColor: "#2E7D32",
+                    backgroundColor: "#1D5A34",
                     borderRadius: 12,
                     alignItems: "center",
                     justifyContent: "center",
@@ -998,7 +998,7 @@ export default function AddPrinterScreen() {
               <Switch
                 value={isDefault}
                 onValueChange={setIsDefault}
-                trackColor={{ false: colors.border, true: "#2E7D32" }}
+                trackColor={{ false: colors.border, true: "#1D5A34" }}
                 thumbColor="#FFFFFF"
               />
             </View>
@@ -1021,7 +1021,7 @@ export default function AddPrinterScreen() {
               <Switch
                 value={enabled}
                 onValueChange={setEnabled}
-                trackColor={{ false: colors.border, true: "#2E7D32" }}
+                trackColor={{ false: colors.border, true: "#1D5A34" }}
                 thumbColor="#FFFFFF"
               />
             </View>
@@ -1049,7 +1049,7 @@ export default function AddPrinterScreen() {
               <Switch
                 value={autoCutter}
                 onValueChange={setAutoCutter}
-                trackColor={{ false: colors.border, true: "#2E7D32" }}
+                trackColor={{ false: colors.border, true: "#1D5A34" }}
                 thumbColor="#FFFFFF"
               />
             </View>
@@ -1067,12 +1067,12 @@ export default function AddPrinterScreen() {
                 alignItems: "center",
                 justifyContent: "center",
                 borderWidth: 1,
-                borderColor: "#2E7D3250",
+                borderColor: "#1D5A3450",
               }}
             >
-              <Printer size={18} color="#2E7D32" />
+              <Printer size={18} color="#1D5A34" />
               <Text
-                style={{ marginLeft: 8, color: "#2E7D32", fontWeight: "600" }}
+                style={{ marginLeft: 8, color: "#1D5A34", fontWeight: "600" }}
               >
                 Test Print
               </Text>
@@ -1100,12 +1100,12 @@ export default function AddPrinterScreen() {
           onPress={handleAddPrinter}
           disabled={saving}
           style={{
-            backgroundColor: "#2E7D32",
+            backgroundColor: "#1D5A34",
             paddingVertical: 16,
             borderRadius: 12,
             alignItems: "center",
             justifyContent: "center",
-            shadowColor: "#2E7D32",
+            shadowColor: "#1D5A34",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 8,
@@ -1541,7 +1541,7 @@ export default function AddPrinterScreen() {
               <Pressable
                 onPress={() => setShowTroubleshoot(false)}
                 style={{
-                  backgroundColor: "#2E7D32",
+                  backgroundColor: "#1D5A34",
                   paddingVertical: 16,
                   borderRadius: 12,
                   alignItems: "center",

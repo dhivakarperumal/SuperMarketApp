@@ -9,38 +9,39 @@ export default function CustomerTabsLayout() {
   const { cartCount } = useCart();
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: "#2E7D32",
-        tabBarInactiveTintColor: "#94A3B8",
-        tabBarHideOnKeyboard: true,
-        tabBarStyle: {
-          backgroundColor: "#FFFFFF",
-          borderTopWidth: 1,
-          borderTopColor: "#E5E7EB",
-          paddingBottom: Math.max(insets.bottom, 10),
-          paddingTop: 8,
-          height: 60 + Math.max(insets.bottom, 10),
-          elevation: 8,
-          shadowColor: "#0F172A",
-          shadowOffset: { width: 0, height: -3 },
-          shadowOpacity: 0.08,
-          shadowRadius: 6,
-        },
-        sceneStyle: {
-          backgroundColor: "#F8FAF8",
-        },
-        tabBarLabelStyle: {
-          fontSize: 11,
-          fontWeight: "700",
-          marginBottom: 2,
-        },
-        tabBarIconStyle: {
-          marginTop: 4,
-        },
-        headerShown: false,
-      }}
-    >
+    <View style={{ flex: 1, backgroundColor: "#1D5A34" }}>
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor: "#FFFFFF",
+          tabBarInactiveTintColor: "#86efac",
+          tabBarHideOnKeyboard: true,
+          tabBarStyle: {
+            backgroundColor: "#1D5A34",
+            borderTopWidth: 1,
+            borderTopColor: "#164829",
+            paddingBottom: Math.max(insets.bottom, 10),
+            paddingTop: 8,
+            height: 60 + Math.max(insets.bottom, 10),
+            elevation: 8,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: -3 },
+            shadowOpacity: 0.1,
+            shadowRadius: 6,
+          },
+          sceneStyle: {
+            backgroundColor: "#F8FAF8",
+          },
+          tabBarLabelStyle: {
+            fontSize: 11,
+            fontWeight: "700",
+            marginBottom: 2,
+          },
+          tabBarIconStyle: {
+            marginTop: 4,
+          },
+          headerShown: false,
+        }}
+      >
       <Tabs.Screen
         name="index"
         options={{
@@ -59,21 +60,8 @@ export default function CustomerTabsLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="reels"
-        options={{
-          title: "Reels",
-          tabBarIcon: ({ color, focused }) => (
-            <Play
-              color={color}
-              size={22}
-              fill={focused ? color : "transparent"}
-              strokeWidth={focused ? 2.5 : 2}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
+
+       <Tabs.Screen
         name="cart"
         options={{
           title: "Cart",
@@ -114,6 +102,21 @@ export default function CustomerTabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="reels"
+        options={{
+          title: "Reels",
+          tabBarIcon: ({ color, focused }) => (
+            <Play
+              color={color}
+              size={22}
+              fill={focused ? color : "transparent"}
+              strokeWidth={focused ? 2.5 : 2}
+            />
+          ),
+        }}
+      />
+     
+      <Tabs.Screen
         name="account"
         options={{
           title: "Account",
@@ -129,5 +132,6 @@ export default function CustomerTabsLayout() {
         }}
       />
     </Tabs>
+    </View>
   );
 }

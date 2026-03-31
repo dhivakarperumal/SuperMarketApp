@@ -104,7 +104,7 @@ export default function BranchesScreen() {
               item.isActive ? "bg-primary/10" : "bg-gray-100"
             }`}
           >
-            <Building2 size={24} color={item.isActive ? "#2E7D32" : "#9CA3AF"} />
+            <Building2 size={24} color={item.isActive ? "#1D5A34" : "#9CA3AF"} />
           </View>
 
           {/* Info */}
@@ -230,7 +230,7 @@ export default function BranchesScreen() {
       {/* Branches List */}
       {isLoading ? (
         <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color="#2E7D32" />
+          <ActivityIndicator size="large" color="#1D5A34" />
         </View>
       ) : (
         <FlatList
@@ -242,7 +242,7 @@ export default function BranchesScreen() {
             <RefreshControl
               refreshing={refreshing}
               onRefresh={handleRefresh}
-              colors={["#2E7D32"]}
+              colors={["#1D5A34"]}
             />
           }
           ListEmptyComponent={

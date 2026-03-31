@@ -82,7 +82,7 @@ export default function PurchaseOrderDetailScreen() {
   if (loading) {
     return (
       <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center" edges={["top"]}>
-        <ActivityIndicator size="large" color="#2E7D32" />
+        <ActivityIndicator size="large" color="#1D5A34" />
         <Text className="text-gray-500 mt-4">Loading...</Text>
       </SafeAreaView>
     );
@@ -140,7 +140,7 @@ export default function PurchaseOrderDetailScreen() {
         {/* Order Info */}
         <View className="bg-white rounded-2xl p-4 mb-4">
           <View className="flex-row items-center mb-3">
-            <Building2 size={18} color="#2E7D32" />
+            <Building2 size={18} color="#1D5A34" />
             <Text className="text-gray-800 font-semibold ml-2">{order.supplierName}</Text>
           </View>
           <View className="flex-row items-center">
@@ -149,7 +149,7 @@ export default function PurchaseOrderDetailScreen() {
           </View>
           {order.expectedDate && (
             <View className="flex-row items-center mt-2">
-              <Calendar size={16} color="#2E7D32" />
+              <Calendar size={16} color="#1D5A34" />
               <Text className="text-gray-500 ml-2">Expected: {formatDate(order.expectedDate)}</Text>
             </View>
           )}

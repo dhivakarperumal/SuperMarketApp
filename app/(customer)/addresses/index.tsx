@@ -111,7 +111,7 @@ export default function AddressesScreen() {
             >
               <LabelIcon
                 size={20}
-                color={address.isDefault ? "#2E7D32" : "#6B7280"}
+                color={address.isDefault ? "#1D5A34" : "#6B7280"}
               />
             </View>
             <View className="ml-3 flex-1">
@@ -121,7 +121,7 @@ export default function AddressesScreen() {
                 </Text>
                 {address.isDefault && (
                   <View className="flex-row items-center ml-2 bg-primary/10 px-2 py-0.5 rounded-full">
-                    <CheckCircle size={10} color="#2E7D32" />
+                    <CheckCircle size={10} color="#1D5A34" />
                     <Text className="text-primary text-xs ml-1 font-medium">Default</Text>
                   </View>
                 )}
@@ -190,10 +190,10 @@ export default function AddressesScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
-      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
+      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
       <LinearGradient
-        colors={["#2E7D32", "#1B5E20"]}
+        colors={["#1D5A34", "#164829"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
@@ -222,12 +222,12 @@ export default function AddressesScreen() {
 
       {loading ? (
         <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color="#2E7D32" />
+          <ActivityIndicator size="large" color="#1D5A34" />
         </View>
       ) : addresses.length === 0 ? (
         <View className="flex-1 items-center justify-center px-4">
           <View className="bg-primary/10 p-6 rounded-full mb-4">
-            <MapPin size={48} color="#2E7D32" />
+            <MapPin size={48} color="#1D5A34" />
           </View>
           <Text className="text-xl font-bold text-gray-800 mb-2">
             No addresses saved
@@ -239,7 +239,7 @@ export default function AddressesScreen() {
             onPress={() => router.push("/(customer)/addresses/add")}
             className="bg-primary px-6 py-3.5 rounded-xl flex-row items-center"
             style={{
-              shadowColor: "#2E7D32",
+              shadowColor: "#1D5A34",
               shadowOffset: { width: 0, height: 4 },
               shadowOpacity: 0.3,
               shadowRadius: 8,

@@ -378,7 +378,7 @@ export default function StoreInfoScreen() {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
-            shadowColor: "#2E7D32",
+            shadowColor: "#1D5A34",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 8,

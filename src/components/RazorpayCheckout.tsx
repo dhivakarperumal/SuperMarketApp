@@ -122,14 +122,14 @@ html,body{width:100%;height:100%;margin:0;padding:0;background:#f5f5f5}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh}
 .container{background:white;border-radius:12px;padding:40px 20px;max-width:400px;width:100%;box-shadow:0 4px 12px rgba(0,0,0,0.15);text-align:center}
 .loader{display:flex;flex-direction:column;align-items:center;gap:16px}
-.spinner{width:50px;height:50px;border:4px solid rgba(46,125,50,0.1);border-top:4px solid #2E7D32;border-radius:50%;animation:spin 1s linear infinite}
+.spinner{width:50px;height:50px;border:4px solid rgba(46,125,50,0.1);border-top:4px solid #1D5A34;border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .text{color:#333;font-size:16px;line-height:1.4;margin:0}
 .sub{color:#999;font-size:14px}
 .error{color:#DC2626;font-size:15px;font-weight:600;margin-bottom:8px}
 .debug{font-size:12px;color:#666;background:#f9fafb;padding:8px 12px;border-radius:6px;margin-top:12px;font-family:monospace;word-break:break-all;text-align:left}
-.button{display:inline-block;background:#2E7D32;color:white;border:none;padding:12px 28px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;margin-top:16px;transition:background 0.2s;font-family:inherit}
-.button:active{background:#1B5E20;opacity:0.9}
+.button{display:inline-block;background:#1D5A34;color:white;border:none;padding:12px 28px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;margin-top:16px;transition:background 0.2s;font-family:inherit}
+.button:active{background:#164829;opacity:0.9}
 #error-box{display:none}
 #loader{display:flex}
 </style>
@@ -210,7 +210,7 @@ function openPayment() {
       name: config.name,
       description: config.description,
       prefill: config.prefill,
-      theme: { color: '#2E7D32' },
+      theme: { color: '#1D5A34' },
       handler: function(response) {
         log('Payment success: ' + response.razorpay_payment_id);
         postMsg('success', {
@@ -432,7 +432,7 @@ setTimeout(openPayment, 500);
         {/* Loading Overlay */}
         {loading && !error && (
           <View style={styles.loadingOverlay}>
-            <ActivityIndicator size="large" color="#2E7D32" />
+            <ActivityIndicator size="large" color="#1D5A34" />
             <Text style={styles.loadingText}>Preparing payment...</Text>
           </View>
         )}
@@ -453,7 +453,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 50,
     paddingBottom: 14,
-    backgroundColor: "#2E7D32",
+    backgroundColor: "#1D5A34",
   },
   headerLeft: {
     flexDirection: "row",
@@ -551,7 +551,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 28,
     paddingVertical: 14,
-    backgroundColor: "#2E7D32",
+    backgroundColor: "#1D5A34",
     borderRadius: 12,
     gap: 8,
   },

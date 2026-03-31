@@ -148,7 +148,7 @@ export default function DashboardScreen() {
   if (ordersLoading || productsLoading) {
     return (
       <SafeAreaView className="flex-1 bg-white items-center justify-center" edges={['top']}>
-        <ActivityIndicator size="large" color="#2E7D32" />
+        <ActivityIndicator size="large" color="#1D5A34" />
         <Text className="text-gray-500 mt-4">Loading dashboard...</Text>
       </SafeAreaView>
     );
@@ -156,17 +156,17 @@ export default function DashboardScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
-      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
+      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120 }}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={["#2E7D32"]} />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={["#1D5A34"]} />
         }
       >
         {/* Header with Gradient */}
         <LinearGradient
-          colors={["#2E7D32", "#1B5E20"]}
+          colors={["#1D5A34", "#164829"]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           className="px-5 pt-4 pb-24"
@@ -256,7 +256,7 @@ export default function DashboardScreen() {
             <View className="flex-row items-center justify-between mb-4">
               <View className="flex-row items-center">
                 <View className="w-10 h-10 bg-green-100 rounded-md items-center justify-center">
-                  <TrendingUp size={20} color="#2E7D32" />
+                  <TrendingUp size={20} color="#1D5A34" />
                 </View>
                 <Text className="text-gray-800 font-bold text-lg ml-3">Today's Overview</Text>
               </View>
@@ -294,7 +294,7 @@ export default function DashboardScreen() {
               style={{ shadowColor: "#000", shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.08, shadowRadius: 12, elevation: 4 }}
             >
               <LinearGradient
-                colors={["#2E7D32", "#66BB6A"]}
+                colors={["#1D5A34", "#66BB6A"]}
                 className="w-11 h-11 rounded-md items-center justify-center mb-3"
               >
                 <ShoppingCart size={22} color="#fff" />
@@ -302,7 +302,7 @@ export default function DashboardScreen() {
               <Text className="text-2xl font-bold text-gray-800">{orders.length}</Text>
               <Text className="text-gray-500 text-sm">Total Orders</Text>
               <View className="flex-row items-center mt-2">
-                <TrendingUp size={12} color="#2E7D32" />
+                <TrendingUp size={12} color="#1D5A34" />
                 <Text className="text-green-600 text-xs ml-1">{thisMonthOrders.length} this month</Text>
               </View>
             </Pressable>
@@ -482,7 +482,7 @@ export default function DashboardScreen() {
               className="flex-row items-center bg-green-50 px-4 py-2 rounded-full"
             >
               <Text className="text-green-600 font-semibold text-sm mr-1">View All</Text>
-              <ChevronRight size={16} color="#2E7D32" />
+              <ChevronRight size={16} color="#1D5A34" />
             </Pressable>
           </View>
 
@@ -577,7 +577,7 @@ export default function DashboardScreen() {
               style={{ shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.06, shadowRadius: 8, elevation: 2 }}
             >
               <View className="w-10 h-10 bg-green-100 rounded-xl items-center justify-center">
-                <ShoppingCart size={20} color="#2E7D32" />
+                <ShoppingCart size={20} color="#1D5A34" />
               </View>
               <Text className="text-gray-700 font-semibold ml-3">New Bill</Text>
             </Pressable>

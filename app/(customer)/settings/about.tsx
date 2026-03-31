@@ -33,10 +33,10 @@ export default function AboutScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
-      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
+      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
       <LinearGradient
-        colors={["#2E7D32", "#1B5E20"]}
+        colors={["#1D5A34", "#164829"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
@@ -119,7 +119,7 @@ export default function AboutScreen() {
             className="flex-row items-center py-3"
           >
             <View className="w-10 h-10 bg-primary/10 rounded-full items-center justify-center">
-              <Mail size={20} color="#2E7D32" />
+              <Mail size={20} color="#1D5A34" />
             </View>
             <View className="ml-3">
               <Text className="text-gray-500 text-xs">Email</Text>
@@ -136,7 +136,7 @@ export default function AboutScreen() {
             className="flex-row items-center py-3"
           >
             <View className="w-10 h-10 bg-primary/10 rounded-full items-center justify-center">
-              <Phone size={20} color="#2E7D32" />
+              <Phone size={20} color="#1D5A34" />
             </View>
             <View className="ml-3">
               <Text className="text-gray-500 text-xs">Phone</Text>
@@ -151,7 +151,7 @@ export default function AboutScreen() {
             className="flex-row items-center py-3"
           >
             <View className="w-10 h-10 bg-primary/10 rounded-full items-center justify-center">
-              <Globe size={20} color="#2E7D32" />
+              <Globe size={20} color="#1D5A34" />
             </View>
             <View className="ml-3">
               <Text className="text-gray-500 text-xs">Website</Text>
@@ -163,7 +163,7 @@ export default function AboutScreen() {
 
           <View className="flex-row items-center py-3">
             <View className="w-10 h-10 bg-primary/10 rounded-full items-center justify-center">
-              <MapPin size={20} color="#2E7D32" />
+              <MapPin size={20} color="#1D5A34" />
             </View>
             <View className="ml-3 flex-1">
               <Text className="text-gray-500 text-xs">Address</Text>

@@ -183,10 +183,10 @@ export default function SupportScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
-      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
+      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
       <LinearGradient
-        colors={["#2E7D32", "#1B5E20"]}
+        colors={["#1D5A34", "#164829"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
@@ -238,7 +238,7 @@ export default function SupportScreen() {
               title="Call Us"
               subtitle="9 AM - 9 PM"
               onPress={handleCall}
-              color="#2E7D32"
+              color="#1D5A34"
             />
             <ContactCard
               icon={Mail}
@@ -272,7 +272,7 @@ export default function SupportScreen() {
 
         {/* Support Hours */}
         <View className="mx-4 mb-4 bg-primary/10 rounded-xl p-4 flex-row items-center">
-          <Clock size={20} color="#2E7D32" />
+          <Clock size={20} color="#1D5A34" />
           <View className="ml-3">
             <Text className="text-gray-800 font-semibold">Support Hours</Text>
             <Text className="text-gray-600 text-sm">
@@ -317,7 +317,7 @@ export default function SupportScreen() {
                   className="flex-row items-center p-4"
                 >
                   <View className="w-10 h-10 bg-primary/10 rounded-full items-center justify-center">
-                    <category.icon size={20} color="#2E7D32" />
+                    <category.icon size={20} color="#1D5A34" />
                   </View>
                   <Text className="flex-1 ml-3 text-gray-800 font-semibold">
                     {category.category}

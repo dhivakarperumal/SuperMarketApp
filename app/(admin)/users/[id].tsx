@@ -219,7 +219,7 @@ export default function UserDetailsScreen() {
   if (isLoading) {
     return (
       <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center">
-        <ActivityIndicator size="large" color="#2E7D32" />
+        <ActivityIndicator size="large" color="#1D5A34" />
       </SafeAreaView>
     );
   }
@@ -441,7 +441,7 @@ export default function UserDetailsScreen() {
               {/* Role Selection */}
               <View className="bg-white rounded-xl p-4 mb-4">
                 <View className="flex-row items-center mb-3">
-                  <Shield size={20} color="#2E7D32" />
+                  <Shield size={20} color="#1D5A34" />
                   <Text className="text-gray-800 font-semibold ml-2">
                     User Role
                   </Text>
@@ -495,7 +495,7 @@ export default function UserDetailsScreen() {
                 branches.length > 0 && (
                   <View className="bg-white rounded-xl p-4 mb-4">
                     <View className="flex-row items-center mb-3">
-                      <Building2 size={20} color="#2E7D32" />
+                      <Building2 size={20} color="#1D5A34" />
                       <Text className="text-gray-800 font-semibold ml-2">
                         Assigned Branch
                       </Text>
@@ -568,7 +568,7 @@ export default function UserDetailsScreen() {
                   </>
                 ) : (
                   <>
-                    <UserCheck size={20} color="#2E7D32" />
+                    <UserCheck size={20} color="#1D5A34" />
                     <Text className="text-green-600 font-semibold ml-2">
                       Activate User
                     </Text>

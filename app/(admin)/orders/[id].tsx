@@ -181,7 +181,7 @@ export default function AdminOrderDetailScreen() {
   if (loading) {
     return (
       <SafeAreaView className="flex-1 bg-white items-center justify-center" edges={["top"]}>
-        <ActivityIndicator size="large" color="#2E7D32" />
+        <ActivityIndicator size="large" color="#1D5A34" />
       </SafeAreaView>
     );
   }
@@ -287,14 +287,14 @@ export default function AdminOrderDetailScreen() {
             ))}
           </View>
           {updating && (
-            <ActivityIndicator size="small" color="#2E7D32" className="mt-2" />
+            <ActivityIndicator size="small" color="#1D5A34" className="mt-2" />
           )}
         </View>
 
         {/* Customer Info */}
         <View className="bg-white mx-4 p-4 rounded-xl mb-4">
           <View className="flex-row items-center mb-3">
-            <User size={20} color="#2E7D32" />
+            <User size={20} color="#1D5A34" />
             <Text className="ml-2 font-bold text-gray-800">Customer</Text>
           </View>
           <Text className="text-gray-800 font-medium">
@@ -310,7 +310,7 @@ export default function AdminOrderDetailScreen() {
         {/* Delivery Address */}
         <View className="bg-white mx-4 p-4 rounded-xl mb-4">
           <View className="flex-row items-center mb-3">
-            <MapPin size={20} color="#2E7D32" />
+            <MapPin size={20} color="#1D5A34" />
             <Text className="ml-2 font-bold text-gray-800">Delivery Address</Text>
           </View>
           <Text className="text-gray-600">
@@ -325,7 +325,7 @@ export default function AdminOrderDetailScreen() {
         <View className="bg-white mx-4 p-4 rounded-xl mb-4">
           <View className="flex-row items-center justify-between">
             <View className="flex-row items-center">
-              <CreditCard size={20} color="#2E7D32" />
+              <CreditCard size={20} color="#1D5A34" />
               <Text className="ml-2 font-bold text-gray-800">Payment</Text>
             </View>
             <View className="px-3 py-1 bg-gray-100 rounded-full">

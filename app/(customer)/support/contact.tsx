@@ -86,7 +86,7 @@ const InputField = ({
       <View style={{ marginTop: multiline ? 16 : 16 }}>
         <Icon
           size={20}
-          color={focusedInput === inputKey ? "#2E7D32" : "#9CA3AF"}
+          color={focusedInput === inputKey ? "#1D5A34" : "#9CA3AF"}
         />
       </View>
       <TextInput
@@ -177,10 +177,10 @@ export default function ContactScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
-      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
+      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
       <LinearGradient
-        colors={["#2E7D32", "#1B5E20"]}
+        colors={["#1D5A34", "#164829"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
@@ -272,7 +272,7 @@ export default function ContactScreen() {
             >
               <MessageSquare
                 size={20}
-                color={showIssueDropdown ? "#2E7D32" : "#9CA3AF"}
+                color={showIssueDropdown ? "#1D5A34" : "#9CA3AF"}
               />
               <Text
                 className={`flex-1 ml-3 ${
@@ -335,8 +335,8 @@ export default function ContactScreen() {
             className="rounded-xl overflow-hidden mt-2 mb-4"
             style={{
               height: 52,
-              backgroundColor: "#2E7D32",
-              shadowColor: "#2E7D32",
+              backgroundColor: "#1D5A34",
+              shadowColor: "#1D5A34",
               shadowOffset: { width: 0, height: 4 },
               shadowOpacity: 0.3,
               shadowRadius: 8,

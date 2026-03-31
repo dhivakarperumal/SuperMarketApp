@@ -131,7 +131,7 @@ export default function EditAddressScreen() {
   if (addressesLoading) {
     return (
       <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center">
-        <ActivityIndicator size="large" color="#2E7D32" />
+        <ActivityIndicator size="large" color="#1D5A34" />
         <Text className="text-gray-500 mt-4">Loading address...</Text>
       </SafeAreaView>
     );
@@ -141,10 +141,10 @@ export default function EditAddressScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
-      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
+      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
       <LinearGradient
-        colors={["#2E7D32", "#1B5E20"]}
+        colors={["#1D5A34", "#164829"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
@@ -351,7 +351,7 @@ export default function EditAddressScreen() {
             <View className="flex-row items-center justify-between bg-white p-4 rounded-xl border border-gray-200 mb-4">
               <View className="flex-row items-center flex-1">
                 <View className="w-10 h-10 bg-primary/10 rounded-full items-center justify-center">
-                  <CheckCircle size={20} color="#2E7D32" />
+                  <CheckCircle size={20} color="#1D5A34" />
                 </View>
                 <View className="ml-3 flex-1">
                   <Text className="text-gray-800 font-semibold">Set as Default</Text>
@@ -361,7 +361,7 @@ export default function EditAddressScreen() {
               <Switch
                 value={isDefault}
                 onValueChange={setIsDefault}
-                trackColor={{ false: "#E5E7EB", true: "#2E7D32" }}
+                trackColor={{ false: "#E5E7EB", true: "#1D5A34" }}
                 thumbColor="#fff"
               />
             </View>
@@ -370,7 +370,7 @@ export default function EditAddressScreen() {
           {/* Current Default Indicator */}
           {currentAddress?.isDefault && (
             <View className="flex-row items-center bg-primary/10 p-4 rounded-xl border border-primary/20 mb-4">
-              <CheckCircle size={20} color="#2E7D32" />
+              <CheckCircle size={20} color="#1D5A34" />
               <Text className="text-primary font-semibold ml-2">
                 This is your default address
               </Text>
@@ -384,7 +384,7 @@ export default function EditAddressScreen() {
             className="rounded-xl overflow-hidden mt-2 mb-6"
             style={{
               height: 54,
-              backgroundColor: loading ? "#9CA3AF" : "#2E7D32",
+              backgroundColor: loading ? "#9CA3AF" : "#1D5A34",
             }}
           >
             <View className="flex-1 flex-row items-center justify-center">

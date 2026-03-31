@@ -119,7 +119,7 @@ export default function InventoryItemScreen() {
   if (loading) {
     return (
       <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center" edges={["top"]}>
-        <ActivityIndicator size="large" color="#2E7D32" />
+        <ActivityIndicator size="large" color="#1D5A34" />
         <Text className="text-gray-500 mt-4">Loading...</Text>
       </SafeAreaView>
     );
@@ -400,7 +400,7 @@ export default function InventoryItemScreen() {
         {/* Stock History */}
         <View className="bg-white rounded-2xl p-4">
           <View className="flex-row items-center mb-4">
-            <History size={20} color="#2E7D32" />
+            <History size={20} color="#1D5A34" />
             <Text className="text-gray-800 font-bold text-lg ml-2">Stock History</Text>
           </View>
 
@@ -472,7 +472,7 @@ export default function InventoryItemScreen() {
           }`}
           style={{
             opacity: actionLoading || !adjustQuantity || parseInt(adjustQuantity) <= 0 ? 0.6 : 1,
-            shadowColor: adjustType === "add" ? "#2E7D32" : "#EF4444",
+            shadowColor: adjustType === "add" ? "#1D5A34" : "#EF4444",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 8,

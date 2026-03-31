@@ -31,7 +31,7 @@ export default function PurchaseOrdersScreen() {
   if (loading) {
     return (
       <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center" edges={["top"]}>
-        <ActivityIndicator size="large" color="#2E7D32" />
+        <ActivityIndicator size="large" color="#1D5A34" />
         <Text className="text-gray-500 mt-4">Loading purchase orders...</Text>
       </SafeAreaView>
     );

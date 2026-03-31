@@ -79,7 +79,7 @@ export default function AddSupplierScreen() {
         {/* Icon */}
         <View className="items-center mb-6">
           <View className="w-20 h-20 bg-primary/10 rounded-full items-center justify-center">
-            <Building2 size={40} color="#2E7D32" />
+            <Building2 size={40} color="#1D5A34" />
           </View>
         </View>
 
@@ -192,7 +192,7 @@ export default function AddSupplierScreen() {
           className="bg-primary py-4 rounded-xl"
           style={{
             opacity: loading ? 0.7 : 1,
-            shadowColor: "#2E7D32",
+            shadowColor: "#1D5A34",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 8,

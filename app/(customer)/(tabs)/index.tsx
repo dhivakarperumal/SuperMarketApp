@@ -49,7 +49,7 @@ const banners = [
     title: "Fresh Grocery",
     subtitle: "20% OFF on first order",
     emoji: "🛒",
-    bgColors: ["#2E7D32", "#1B5E20"],
+    bgColors: ["#1D5A34", "#164829"],
   },
   {
     id: 2,
@@ -70,7 +70,7 @@ const banners = [
 // Quick categories with colors
 const quickCategories = [
   { id: "fruits", name: "Fruits", emoji: "🍎", color: "#FF6B6B", bgColor: "#FFE8E8" },
-  { id: "vegetables", name: "Vegetables", emoji: "🥬", color: "#2E7D32", bgColor: "#E8F5E9" },
+  { id: "vegetables", name: "Vegetables", emoji: "🥬", color: "#1D5A34", bgColor: "#E8F5E9" },
   { id: "dairy", name: "Dairy", emoji: "🥛", color: "#3B82F6", bgColor: "#E8F0FF" },
   { id: "bakery", name: "Bakery", emoji: "🍞", color: "#F59E0B", bgColor: "#FFF3E0" },
   { id: "meat", name: "Meat", emoji: "🍖", color: "#EF4444", bgColor: "#FEE2E2" },
@@ -79,7 +79,7 @@ const quickCategories = [
 
 // Features
 const features = [
-  { icon: Truck, title: "Free Delivery", color: "#2E7D32" },
+  { icon: Truck, title: "Free Delivery", color: "#1D5A34" },
   { icon: Clock, title: "Fast Service", color: "#3B82F6" },
   { icon: Shield, title: "Secure Pay", color: "#8B5CF6" },
   { icon: Gift, title: "Daily Offers", color: "#F59E0B" },
@@ -139,15 +139,15 @@ export default function HomeScreen() {
 
   return (
 <SafeAreaView
-  className="flex-1 bg-gray-50"
+  className="flex-1  "
   edges={["top", "bottom"]}
 >
-  <StatusBar barStyle="light-content" backgroundColor="#217325ff" />
+  <StatusBar barStyle="light-content" backgroundColor="#164829" />
 
 
       {/* Header */}
       <LinearGradient
-        colors={["#2E7D32", "#1B5E20"]}
+        colors={["#1D5A34", "#164829"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
@@ -234,7 +234,7 @@ export default function HomeScreen() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={["#2E7D32"]} />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={["#1D5A34"]} />
         }
         contentContainerStyle={{ paddingBottom: 100 }}
       >
@@ -333,7 +333,7 @@ export default function HomeScreen() {
                     style={{
                       width: activeBanner === index ? 24 : 8,
                       height: 8,
-                      backgroundColor: activeBanner === index ? "#2E7D32" : "#D1D5DB",
+                      backgroundColor: activeBanner === index ? "#1D5A34" : "#D1D5DB",
                     }}
                   />
                 ))}
@@ -367,7 +367,7 @@ export default function HomeScreen() {
                   className="flex-row items-center"
                 >
                   <Text className="text-primary font-semibold text-sm">See All</Text>
-                  <ChevronRight size={16} color="#2E7D32" />
+                  <ChevronRight size={16} color="#1D5A34" />
                 </Pressable>
               </View>
               <ScrollView
@@ -489,13 +489,13 @@ export default function HomeScreen() {
                   className="flex-row items-center"
                 >
                   <Text className="text-primary font-semibold text-sm">View All</Text>
-                  <ChevronRight size={16} color="#2E7D32" />
+                  <ChevronRight size={16} color="#1D5A34" />
                 </Pressable>
               </View>
 
               {productsLoading ? (
                 <View className="items-center py-8">
-                  <ActivityIndicator size="large" color="#2E7D32" />
+                  <ActivityIndicator size="large" color="#1D5A34" />
                 </View>
               ) : (
                 <ScrollView
@@ -529,7 +529,7 @@ export default function HomeScreen() {
                           <View className="flex-row items-center justify-between mt-2">
                             <Text className="text-primary font-bold">{formatCurrency(price)}</Text>
                             <View className="bg-primary/10 p-1.5 rounded-lg">
-                              <ShoppingCart size={14} color="#2E7D32" />
+                              <ShoppingCart size={14} color="#1D5A34" />
                             </View>
                           </View>
                         </View>
@@ -549,14 +549,14 @@ export default function HomeScreen() {
                   className="flex-row items-center"
                 >
                   <Text className="text-primary font-semibold text-sm">View All</Text>
-                  <ChevronRight size={16} color="#2E7D32" />
+                  <ChevronRight size={16} color="#1D5A34" />
                 </Pressable>
               </View>
 
               <View style={{ paddingHorizontal: 16 }}>
                 {productsLoading ? (
                   <View className="items-center py-8">
-                    <ActivityIndicator size="large" color="#2E7D32" />
+                    <ActivityIndicator size="large" color="#1D5A34" />
                   </View>
                 ) : products.length > 0 ? (
                   <View style={{ flexDirection: "row", flexWrap: "wrap" }}>

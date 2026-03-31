@@ -167,7 +167,7 @@ export const createRazorpayOptions = (
       test_mode: RAZORPAY_TEST_MODE ? "true" : "false",
     },
     theme: {
-      color: "#2E7D32",
+      color: "#1D5A34",
     },
     retry: {
       enabled: true,

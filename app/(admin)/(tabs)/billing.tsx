@@ -755,10 +755,10 @@ export default function BillingScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
-      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
+      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
       <LinearGradient
-        colors={["#2E7D32", "#1B5E20"]}
+        colors={["#1D5A34", "#164829"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
@@ -810,14 +810,14 @@ export default function BillingScreen() {
               onSubmitEditing={handleManualSearch}
             />
             <Pressable onPress={handleManualSearch} className="ml-2">
-              <Search size={22} color="#2E7D32" />
+              <Search size={22} color="#1D5A34" />
             </Pressable>
           </View>
           <Pressable
             onPress={() => setScanning(true)}
             className="ml-3 w-12 h-12 bg-white rounded-xl items-center justify-center shadow-sm"
           >
-            <Scan size={24} color="#2E7D32" />
+            <Scan size={24} color="#1D5A34" />
           </Pressable>
         </View>
       </LinearGradient>
@@ -919,14 +919,14 @@ export default function BillingScreen() {
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
             <View>
               <Text style={{ color: "#6B7280", fontSize: 11 }}>{cart.length} items</Text>
-              <Text style={{ fontSize: 20, fontWeight: "bold", color: "#2E7D32" }}>
+              <Text style={{ fontSize: 20, fontWeight: "bold", color: "#1D5A34" }}>
                 {formatCurrency(cartTotal)}
               </Text>
             </View>
             <Pressable
               onPress={() => setShowCheckoutModal(true)}
               style={{
-                backgroundColor: "#2E7D32",
+                backgroundColor: "#1D5A34",
                 paddingVertical: 10,
                 paddingHorizontal: 20,
                 borderRadius: 10,
@@ -959,7 +959,7 @@ export default function BillingScreen() {
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 16, paddingBottom: 12 }}>
               <View>
                 <Text style={{ fontSize: 12, color: "#9CA3AF" }}>{cart.length} items</Text>
-                <Text style={{ fontSize: 24, fontWeight: "700", color: "#2E7D32" }}>{formatCurrency(cartTotal)}</Text>
+                <Text style={{ fontSize: 24, fontWeight: "700", color: "#1D5A34" }}>{formatCurrency(cartTotal)}</Text>
               </View>
               <Pressable onPress={() => setShowCheckoutModal(false)} style={{ padding: 8 }}>
                 <X size={22} color="#9CA3AF" />
@@ -978,7 +978,7 @@ export default function BillingScreen() {
                     flexDirection: "row",
                     alignItems: "center",
                     justifyContent: "center",
-                    backgroundColor: paymentMethod === "Cash" ? "#2E7D32" : "#F3F4F6",
+                    backgroundColor: paymentMethod === "Cash" ? "#1D5A34" : "#F3F4F6",
                   }}
                 >
                   <Banknote size={20} color={paymentMethod === "Cash" ? "#fff" : "#6B7280"} />
@@ -993,7 +993,7 @@ export default function BillingScreen() {
                     flexDirection: "row",
                     alignItems: "center",
                     justifyContent: "center",
-                    backgroundColor: paymentMethod === "Online" ? "#2E7D32" : "#F3F4F6",
+                    backgroundColor: paymentMethod === "Online" ? "#1D5A34" : "#F3F4F6",
                   }}
                 >
                   <Smartphone size={20} color={paymentMethod === "Online" ? "#fff" : "#6B7280"} />
@@ -1044,10 +1044,10 @@ export default function BillingScreen() {
                       borderColor: "#66BB6A",
                     }}
                   >
-                    <Truck size={18} color={includeDelivery ? "#2E7D32" : "#9CA3AF"} />
+                    <Truck size={18} color={includeDelivery ? "#1D5A34" : "#9CA3AF"} />
                     <View style={{ marginLeft: 8, flex: 1 }}>
-                      <Text style={{ fontSize: 10, color: includeDelivery ? "#2E7D32" : "#9CA3AF" }}>Delivery</Text>
-                      <Text style={{ fontSize: 13, fontWeight: "600", color: includeDelivery ? "#2E7D32" : "#374151" }}>
+                      <Text style={{ fontSize: 10, color: includeDelivery ? "#1D5A34" : "#9CA3AF" }}>Delivery</Text>
+                      <Text style={{ fontSize: 13, fontWeight: "600", color: includeDelivery ? "#1D5A34" : "#374151" }}>
                         {includeDelivery ? (deliveryResult.isFree ? "Free" : formatCurrency(deliveryResult.finalCharge)) : "Add"}
                       </Text>
                     </View>
@@ -1059,10 +1059,10 @@ export default function BillingScreen() {
               {appliedCoupon ? (
                 <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: "#F0FDF4", borderRadius: 12, paddingVertical: 10, paddingHorizontal: 12, marginBottom: 14, borderWidth: 1.5, borderColor: "#66BB6A" }}>
                   <Ticket size={18} color="#66BB6A" />
-                  <Text style={{ flex: 1, marginLeft: 8, fontWeight: "600", fontSize: 13, color: "#2E7D32" }}>
+                  <Text style={{ flex: 1, marginLeft: 8, fontWeight: "600", fontSize: 13, color: "#1D5A34" }}>
                     {appliedCoupon.couponCode}
                   </Text>
-                  <Text style={{ fontWeight: "700", fontSize: 13, color: "#2E7D32", marginRight: 10 }}>
+                  <Text style={{ fontWeight: "700", fontSize: 13, color: "#1D5A34", marginRight: 10 }}>
                     -{formatCurrency(cartWithOffers.couponDiscount?.discountAmount || 0)}
                   </Text>
                   <Pressable onPress={handleRemoveCoupon}>
@@ -1100,8 +1100,8 @@ export default function BillingScreen() {
                 <View style={{ backgroundColor: "#F9FAFB", borderRadius: 10, padding: 12, marginBottom: 14 }}>
                   {cartDiscount > 0 && (
                     <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 4 }}>
-                      <Text style={{ color: "#2E7D32", fontSize: 13 }}>Discount</Text>
-                      <Text style={{ fontSize: 13, color: "#2E7D32", fontWeight: "600" }}>-{formatCurrency(cartDiscount)}</Text>
+                      <Text style={{ color: "#1D5A34", fontSize: 13 }}>Discount</Text>
+                      <Text style={{ fontSize: 13, color: "#1D5A34", fontWeight: "600" }}>-{formatCurrency(cartDiscount)}</Text>
                     </View>
                   )}
                   {deliveryCharge > 0 && (
@@ -1122,7 +1122,7 @@ export default function BillingScreen() {
                   handleCompleteSale();
                 }}
                 style={{
-                  backgroundColor: "#2E7D32",
+                  backgroundColor: "#1D5A34",
                   paddingVertical: 14,
                   borderRadius: 12,
                   flexDirection: "row",
@@ -1286,7 +1286,7 @@ export default function BillingScreen() {
                           isSelected ? "bg-primary/20" : "bg-gray-100"
                         }`}
                       >
-                        <LabelIcon size={18} color={isSelected ? "#2E7D32" : "#6B7280"} />
+                        <LabelIcon size={18} color={isSelected ? "#1D5A34" : "#6B7280"} />
                       </View>
 
                       <View className="flex-1 ml-3">
@@ -1296,7 +1296,7 @@ export default function BillingScreen() {
                           </Text>
                           {addr.isDefault && (
                             <View className="flex-row items-center ml-2 bg-primary/10 px-2 py-0.5 rounded-full">
-                              <Check size={10} color="#2E7D32" />
+                              <Check size={10} color="#1D5A34" />
                               <Text className="text-primary text-xs ml-1">Default</Text>
                             </View>
                           )}
@@ -1328,7 +1328,7 @@ export default function BillingScreen() {
                 }}
                 className="flex-row items-center justify-center py-4 mb-3 bg-primary/10 rounded-xl"
               >
-                <Plus size={20} color="#2E7D32" />
+                <Plus size={20} color="#1D5A34" />
                 <Text className="text-primary font-semibold ml-2">Add New Address</Text>
               </Pressable>
 

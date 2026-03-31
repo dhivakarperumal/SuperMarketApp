@@ -17,7 +17,7 @@ export default function SuppliersScreen() {
   if (loading) {
     return (
       <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center" edges={["top"]}>
-        <ActivityIndicator size="large" color="#2E7D32" />
+        <ActivityIndicator size="large" color="#1D5A34" />
         <Text className="text-gray-500 mt-4">Loading suppliers...</Text>
       </SafeAreaView>
     );
@@ -79,7 +79,7 @@ export default function SuppliersScreen() {
             >
               <View className="flex-row items-center mb-3">
                 <View className="w-12 h-12 bg-primary/10 rounded-full items-center justify-center">
-                  <Building2 size={24} color="#2E7D32" />
+                  <Building2 size={24} color="#1D5A34" />
                 </View>
                 <View className="flex-1 ml-3">
                   <Text className="text-gray-800 font-semibold text-base">{supplier.name}</Text>

@@ -448,7 +448,7 @@ export default function ProductDetailScreen() {
     return (
       <SafeAreaView className="flex-1 bg-white">
         <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color="#2E7D32" />
+          <ActivityIndicator size="large" color="#1D5A34" />
           <Text className="text-gray-500 mt-4">Loading...</Text>
         </View>
       </SafeAreaView>
@@ -487,10 +487,10 @@ export default function ProductDetailScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white" edges={["top"]}>
-      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
+      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
       <LinearGradient
-        colors={["#2E7D32", "#1B5E20"]}
+        colors={["#1D5A34", "#164829"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
@@ -677,7 +677,7 @@ export default function ProductDetailScreen() {
                     ? "#DC2626"
                     : stockStatus.isLowStock
                     ? "#D97706"
-                    : "#2E7D32",
+                    : "#1D5A34",
                 }}
               >
                 {stockStatus.label}
@@ -770,7 +770,7 @@ export default function ProductDetailScreen() {
               onPress={() => setShowReviewModal(true)}
               className="flex-row items-center bg-primary/10 px-3 py-2 rounded-lg"
             >
-              <Edit3 size={14} color="#2E7D32" />
+              <Edit3 size={14} color="#1D5A34" />
               <Text className="text-primary font-semibold text-sm ml-1">Write Review</Text>
             </Pressable>
           </View>
@@ -832,7 +832,7 @@ export default function ProductDetailScreen() {
                 className="flex-row items-center"
               >
                 <Text className="text-primary font-medium text-sm">See All</Text>
-                <ChevronRight size={16} color="#2E7D32" />
+                <ChevronRight size={16} color="#1D5A34" />
               </Pressable>
             </View>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>

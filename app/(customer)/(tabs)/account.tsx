@@ -104,11 +104,11 @@ export default function AccountScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
-      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
+      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <LinearGradient
-          colors={["#2E7D32", "#1B5E20"]}
+          colors={["#1D5A34", "#164829"]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
@@ -169,7 +169,7 @@ export default function AccountScreen() {
               }`}
             >
               <View className="w-10 h-10 bg-primary/10 rounded-full items-center justify-center">
-                <item.icon size={20} color="#2E7D32" />
+                <item.icon size={20} color="#1D5A34" />
               </View>
               <View className="flex-1 ml-4">
                 <Text className="text-gray-800 font-semibold">{item.label}</Text>

@@ -455,11 +455,11 @@ export default function ReportScreen() {
             .header {
               text-align: center;
               margin-bottom: 30px;
-              border-bottom: 2px solid #2E7D32;
+              border-bottom: 2px solid #1D5A34;
               padding-bottom: 20px;
             }
             .header h1 {
-              color: #2E7D32;
+              color: #1D5A34;
               margin: 0;
               font-size: 24px;
             }
@@ -537,7 +537,7 @@ export default function ReportScreen() {
               font-size: 10px;
             }
             th {
-              background: #2E7D32;
+              background: #1D5A34;
               color: white;
               padding: 8px 6px;
               text-align: left;

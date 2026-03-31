@@ -349,7 +349,7 @@ export default function AddUserScreen() {
           {/* Role Selection */}
           <View className="bg-white rounded-xl p-4 mb-4">
             <View className="flex-row items-center mb-3">
-              <Shield size={20} color="#2E7D32" />
+              <Shield size={20} color="#1D5A34" />
               <Text className="text-gray-800 font-semibold ml-2">Select Role *</Text>
             </View>
 
@@ -398,7 +398,7 @@ export default function AddUserScreen() {
           {branches.length > 0 && (
             <View className="bg-white rounded-xl p-4 mb-4">
               <View className="flex-row items-center mb-3">
-                <Building2 size={20} color="#2E7D32" />
+                <Building2 size={20} color="#1D5A34" />
                 <Text className="text-gray-800 font-semibold ml-2">
                   Assign to Branch *
                 </Text>
@@ -466,7 +466,7 @@ export default function AddUserScreen() {
           className="bg-primary rounded-xl py-4 items-center"
           style={{
             opacity: isLoading ? 0.7 : 1,
-            shadowColor: "#2E7D32",
+            shadowColor: "#1D5A34",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 8,

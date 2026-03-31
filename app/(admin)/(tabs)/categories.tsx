@@ -82,7 +82,7 @@ export default function CategoriesScreen() {
       {/* Categories List */}
       {loading ? (
         <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color="#2E7D32" />
+          <ActivityIndicator size="large" color="#1D5A34" />
         </View>
       ) : (
         <FlashList
@@ -209,7 +209,7 @@ export default function CategoriesScreen() {
             fabOpen ? "bg-gray-700" : "bg-primary"
           }`}
           style={{
-            shadowColor: fabOpen ? "#374151" : "#2E7D32",
+            shadowColor: fabOpen ? "#374151" : "#1D5A34",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 8,

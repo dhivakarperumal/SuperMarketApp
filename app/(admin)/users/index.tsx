@@ -256,7 +256,7 @@ export default function UsersScreen() {
                 {item.isActive ? (
                   <UserX size={20} color="#DC2626" />
                 ) : (
-                  <UserCheck size={20} color="#2E7D32" />
+                  <UserCheck size={20} color="#1D5A34" />
                 )}
               </Pressable>
             )}
@@ -354,7 +354,7 @@ export default function UsersScreen() {
       {/* Users List */}
       {isLoading ? (
         <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color="#2E7D32" />
+          <ActivityIndicator size="large" color="#1D5A34" />
         </View>
       ) : (
         <FlatList
@@ -366,7 +366,7 @@ export default function UsersScreen() {
             <RefreshControl
               refreshing={refreshing}
               onRefresh={handleRefresh}
-              colors={["#2E7D32"]}
+              colors={["#1D5A34"]}
             />
           }
           ListEmptyComponent={

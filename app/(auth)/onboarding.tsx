@@ -24,7 +24,7 @@ const slides = [
     title: "Fresh groceries",
     subtitle: "Picked daily, delivered fast",
     description: "Browse fruits, veggies, and daily essentials in a clean shopping experience.",
-    color: "#2E7D32",
+    color: "#1D5A34",
     bgColor: "#E9F7E1",
     badge: "Daily fresh",
   },

@@ -70,7 +70,7 @@ const typeConfig: Record<
 > = {
   discount: {
     icon: Percent,
-    color: "#2E7D32",
+    color: "#1D5A34",
     bg: "#E8F5E9",
     description: "Percentage or flat amount off on products",
   },
@@ -341,7 +341,7 @@ export default function AddOfferScreen() {
         <Switch
           value={formData.isActive}
           onValueChange={(value) => updateFormData({ isActive: value })}
-          trackColor={{ false: "#E5E7EB", true: "#2E7D32" }}
+          trackColor={{ false: "#E5E7EB", true: "#1D5A34" }}
           thumbColor="#FFFFFF"
         />
       </View>
@@ -557,7 +557,7 @@ export default function AddOfferScreen() {
                   >
                     <View className="items-center">
                       {type === "percentage" ? (
-                        <Percent size={24} color={isSelected ? "#2E7D32" : "#9CA3AF"} />
+                        <Percent size={24} color={isSelected ? "#1D5A34" : "#9CA3AF"} />
                       ) : (
                         <Text
                           className={`text-2xl font-bold ${
@@ -1181,7 +1181,7 @@ export default function AddOfferScreen() {
             <Text className="text-gray-700 font-medium mb-2">Badge Preview</Text>
             <View
               className="px-3 py-1.5 rounded-full self-start"
-              style={{ backgroundColor: formData.badgeColor || "#2E7D32" }}
+              style={{ backgroundColor: formData.badgeColor || "#1D5A34" }}
             >
               <Text className="text-white font-bold text-sm">
                 {formData.badgeText}

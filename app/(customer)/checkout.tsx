@@ -801,7 +801,7 @@ export default function CheckoutScreen() {
             className="bg-white rounded-xl p-4 mb-4 flex-row items-center border-2 border-primary"
           >
             <View className="w-12 h-12 bg-primary/10 rounded-full items-center justify-center">
-              <MapPin size={24} color="#2E7D32" />
+              <MapPin size={24} color="#1D5A34" />
             </View>
             <View className="flex-1 ml-3">
               {selectedAddressId ? (
@@ -957,7 +957,7 @@ export default function CheckoutScreen() {
             >
               {paymentMethod === "cod" && <Check size={14} color="#fff" />}
             </View>
-            <Truck size={24} color={paymentMethod === "cod" ? "#2E7D32" : "#6B7280"} />
+            <Truck size={24} color={paymentMethod === "cod" ? "#1D5A34" : "#6B7280"} />
             <View className="ml-4 flex-1">
               <Text className={`font-semibold ${paymentMethod === "cod" ? "text-primary" : "text-gray-800"}`}>
                 Cash on Delivery
@@ -979,7 +979,7 @@ export default function CheckoutScreen() {
             >
               {paymentMethod === "online" && <Check size={14} color="#fff" />}
             </View>
-            <CreditCard size={24} color={paymentMethod === "online" ? "#2E7D32" : "#6B7280"} />
+            <CreditCard size={24} color={paymentMethod === "online" ? "#1D5A34" : "#6B7280"} />
             <View className="ml-4 flex-1">
               <View className="flex-row items-center">
                 <Text className={`font-semibold ${paymentMethod === "online" ? "text-primary" : "text-gray-800"}`}>
@@ -1021,7 +1021,7 @@ export default function CheckoutScreen() {
         {/* Delivery Address */}
         <View className="bg-white rounded-xl p-4 mb-4">
           <View className="flex-row items-center mb-3">
-            <MapPin size={20} color="#2E7D32" />
+            <MapPin size={20} color="#1D5A34" />
             <Text className="ml-2 font-bold text-gray-800">Delivery Address</Text>
           </View>
           <Text className="text-gray-800 font-medium">
@@ -1042,7 +1042,7 @@ export default function CheckoutScreen() {
             {paymentMethod === "whatsapp" ? (
               <MessageCircle size={20} color="#25D366" />
             ) : (
-              <CreditCard size={20} color="#2E7D32" />
+              <CreditCard size={20} color="#1D5A34" />
             )}
             <Text className="ml-2 font-bold text-gray-800">Payment Method</Text>
           </View>
@@ -1215,10 +1215,10 @@ export default function CheckoutScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={["top"]}>
-      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
+      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
       <LinearGradient
-        colors={["#2E7D32", "#1B5E20"]}
+        colors={["#1D5A34", "#164829"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
@@ -1256,8 +1256,8 @@ export default function CheckoutScreen() {
           disabled={loading}
           className="py-4 rounded-xl"
           style={{
-            backgroundColor: currentStep === "review" && paymentMethod === "whatsapp" ? "#25D366" : "#2E7D32",
-            shadowColor: currentStep === "review" && paymentMethod === "whatsapp" ? "#25D366" : "#2E7D32",
+            backgroundColor: currentStep === "review" && paymentMethod === "whatsapp" ? "#25D366" : "#1D5A34",
+            shadowColor: currentStep === "review" && paymentMethod === "whatsapp" ? "#25D366" : "#1D5A34",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 8,
@@ -1330,7 +1330,7 @@ export default function CheckoutScreen() {
             <ScrollView className="px-4" showsVerticalScrollIndicator={false}>
               {addressesLoading ? (
                 <View className="items-center py-8">
-                  <ActivityIndicator size="large" color="#2E7D32" />
+                  <ActivityIndicator size="large" color="#1D5A34" />
                 </View>
               ) : filteredAddresses.length === 0 ? (
                 <View className="items-center py-8">
@@ -1357,7 +1357,7 @@ export default function CheckoutScreen() {
                           isSelected ? "bg-primary/20" : "bg-gray-100"
                         }`}
                       >
-                        <LabelIcon size={18} color={isSelected ? "#2E7D32" : "#6B7280"} />
+                        <LabelIcon size={18} color={isSelected ? "#1D5A34" : "#6B7280"} />
                       </View>
 
                       <View className="flex-1 ml-3">
@@ -1367,7 +1367,7 @@ export default function CheckoutScreen() {
                           </Text>
                           {addr.isDefault && (
                             <View className="flex-row items-center ml-2 bg-primary/10 px-2 py-0.5 rounded-full">
-                              <CheckCircle size={10} color="#2E7D32" />
+                              <CheckCircle size={10} color="#1D5A34" />
                               <Text className="text-primary text-xs ml-1">Default</Text>
                             </View>
                           )}

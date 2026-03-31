@@ -141,7 +141,7 @@ export function CouponInput({
     if (compact) {
       return (
         <View className="flex-row items-center bg-green-50 border border-green-200 rounded-lg p-3">
-          <Tag size={16} color="#2E7D32" />
+          <Tag size={16} color="#1D5A34" />
           <View className="flex-1 ml-2">
             <Text className="text-green-700 font-semibold text-sm">
               {appliedCoupon.couponCode}
@@ -167,14 +167,14 @@ export function CouponInput({
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center flex-1">
             <View className="w-12 h-12 bg-green-100 rounded-full items-center justify-center">
-              <Check size={24} color="#2E7D32" strokeWidth={3} />
+              <Check size={24} color="#1D5A34" strokeWidth={3} />
             </View>
             <View className="ml-3 flex-1">
               <Text className="text-green-800 font-bold text-base">
                 Coupon Applied!
               </Text>
               <View className="flex-row items-center mt-1">
-                <Ticket size={14} color="#2E7D32" />
+                <Ticket size={14} color="#1D5A34" />
                 <Text className="text-green-600 font-mono font-bold ml-1.5 text-sm">
                   {appliedCoupon.couponCode}
                 </Text>

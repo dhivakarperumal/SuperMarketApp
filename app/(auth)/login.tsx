@@ -1,29 +1,28 @@
-import { LinearGradient } from "expo-linear-gradient";
 import { Link, useRouter } from "expo-router";
-import { ArrowRight, Eye, EyeOff, Lock, Mail } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
-  Image,
   Pressable,
   Text,
   TextInput,
   View,
+  Dimensions,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
-import { GoogleIcon } from "../../src/components/GoogleIcon";
 import { useAuth } from "../../src/context/AuthContext";
+import { Instagram, Twitter } from "lucide-react-native";
+
+const { width, height } = Dimensions.get("window");
 
 export default function LoginScreen() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [focusedInput, setFocusedInput] = useState<string | null>(null);
-  const { signIn, signInWithGoogle, isAuthenticated } = useAuth();
+  const { signIn, isAuthenticated } = useAuth();
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -60,189 +59,118 @@ export default function LoginScreen() {
     }
   };
 
-  const handleGoogleLogin = async () => {
-    setLoading(true);
-    try {
-      await signInWithGoogle();
-      Toast.show({
-        type: "success",
-        text1: "Success",
-        text2: "Logged in with Google",
-      });
-    } catch (error: any) {
-      Toast.show({
-        type: "error",
-        text1: "Google Login Failed",
-        text2: error.message || "Failed to login with Google",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <SafeAreaView className="flex-1 bg-[#F4F8F2]" edges={["top", "bottom"]}>
-      <KeyboardAwareScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        enableOnAndroid
-        extraScrollHeight={100}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-      >
-        <View className="flex-1 pb-6">
-          <LinearGradient
-            colors={["#2E7D32", "#1B5E20"]}
-            style={{
-              paddingHorizontal: 24,
-              paddingTop: 18,
-              paddingBottom: 88,
-              borderBottomLeftRadius: 28,
-              borderBottomRightRadius: 28,
-            }}
-          >
-            <View className="w-16 h-16 items-center justify-center rounded-2xl bg-white/15">
-              <Image
-                source={require("../../assets/images/logo.png")}
-                style={{ width: 42, height: 42 }}
-                resizeMode="contain"
+    <View className="flex-1 bg-[#FFFFFF]">
+      {/* Top Pink Wave using overlapping circles */}
+      <View
+        className="absolute bg-[#1D5A34]"
+        style={{
+          width: width * 1.5,
+          height: width * 1.5,
+          borderRadius: width * 0.75,
+          top: -width * 1.1,
+          left: -width * 0.1,
+        }}
+      />
+      
+      {/* Bottom Pink Wave */}
+      <View
+        className="absolute bg-[#1D5A34]"
+        style={{
+          width: width * 1.5,
+          height: width * 1.5,
+          borderRadius: width * 0.75,
+          bottom: -width * 1.2,
+          right: -width * 0.2,
+        }}
+      />
+
+      <SafeAreaView className="flex-1" edges={["top", "bottom"]}>
+        <KeyboardAwareScrollView
+          contentContainerStyle={{ flexGrow: 1, justifyContent: "center", paddingBottom: 50 }}
+          enableOnAndroid
+          extraScrollHeight={50}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+        <View className="flex-1 px-8 justify-center">
+          
+          <View className="items-center mb-10 pt-16">
+            <Text className="text-[32px] font-bold text-[#1D5A34] tracking-tight">
+              Log In
+            </Text>
+          </View>
+
+          <View className="mb-4">
+            <View className="h-[50px] w-full rounded-full bg-[#E8E8E8] px-5 justify-center">
+              <TextInput
+                value={email}
+                onChangeText={setEmail}
+                placeholder="Username or Email"
+                placeholderTextColor="#6B7280"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                className="flex-1 text-slate-800 text-[14px]"
               />
             </View>
-            <Text className="mt-5 text-3xl font-bold text-white">
-              Welcome back
-            </Text>
-            <Text className="mt-2 text-sm leading-5 text-white/85">
-              Sign in to continue with fresh deals, fast delivery, and easy checkout.
-            </Text>
-          </LinearGradient>
+          </View>
 
-          <View className="px-6" style={{ marginTop: -52 }}>
-            <View
-              className="rounded-3xl bg-white p-5"
-              style={{
-                borderWidth: 1,
-                borderColor: "#EEF2E8",
-                shadowColor: "#0F172A",
-                shadowOffset: { width: 0, height: 10 },
-                shadowOpacity: 0.08,
-                shadowRadius: 18,
-                elevation: 8,
-              }}
-            >
-              <Text className="text-xl font-bold text-slate-900">Login to your account</Text>
-              <Text className="mt-1 mb-5 text-sm text-slate-500">
-                Continue shopping smarter with your saved cart and offers.
-              </Text>
-
-              <View className="mb-4">
-                <Text className="mb-2 ml-1 text-sm font-semibold text-slate-600">
-                  Email Address
-                </Text>
-                <View
-                  className={`flex-row items-center rounded-2xl border bg-[#F8FAF8] px-4 ${
-                    focusedInput === "email" ? "border-[#2E7D32]" : "border-gray-200"
-                  }`}
-                  style={{ height: 54 }}
-                >
-                  <Mail
-                    size={19}
-                    color={focusedInput === "email" ? "#2E7D32" : "#94A3B8"}
-                  />
-                  <TextInput
-                    value={email}
-                    onChangeText={setEmail}
-                    placeholder="Enter your email"
-                    placeholderTextColor="#94A3B8"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    onFocus={() => setFocusedInput("email")}
-                    onBlur={() => setFocusedInput(null)}
-                    className="ml-3 flex-1 text-slate-800"
-                    style={{ fontSize: 15 }}
-                  />
-                </View>
-              </View>
-
-              <View className="mb-2">
-                <Text className="mb-2 ml-1 text-sm font-semibold text-slate-600">
-                  Password
-                </Text>
-                <View
-                  className={`flex-row items-center rounded-2xl border bg-[#F8FAF8] px-4 ${
-                    focusedInput === "password" ? "border-[#2E7D32]" : "border-gray-200"
-                  }`}
-                  style={{ height: 54 }}
-                >
-                  <Lock
-                    size={19}
-                    color={focusedInput === "password" ? "#2E7D32" : "#94A3B8"}
-                  />
-                  <TextInput
-                    value={password}
-                    onChangeText={setPassword}
-                    placeholder="Enter your password"
-                    placeholderTextColor="#94A3B8"
-                    secureTextEntry={!showPassword}
-                    autoCapitalize="none"
-                    onFocus={() => setFocusedInput("password")}
-                    onBlur={() => setFocusedInput(null)}
-                    className="ml-3 flex-1 text-slate-800"
-                    style={{ fontSize: 15 }}
-                  />
-                  <Pressable onPress={() => setShowPassword(!showPassword)} hitSlop={8}>
-                    {showPassword ? (
-                      <EyeOff size={19} color="#94A3B8" />
-                    ) : (
-                      <Eye size={19} color="#94A3B8" />
-                    )}
-                  </Pressable>
-                </View>
-              </View>
-
-              <Pressable className="mb-5 self-end">
-                <Text className="text-sm font-semibold text-[#2E7D32]">Forgot password?</Text>
-              </Pressable>
-
-              <Pressable onPress={handleLogin} disabled={loading} className="overflow-hidden rounded-2xl">
-                <LinearGradient
-                  colors={["#5AC42A", "#3D971B"]}
-                  style={{ paddingVertical: 16, borderRadius: 16 }}
-                >
-                  <View className="flex-row items-center justify-center">
-                    {loading ? (
-                      <ActivityIndicator color="#fff" />
-                    ) : (
-                      <>
-                        <Text className="mr-2 text-base font-bold text-white">Sign In</Text>
-                        <ArrowRight size={18} color="#fff" />
-                      </>
-                    )}
-                  </View>
-                </LinearGradient>
-              </Pressable>
-
-              <Pressable
-                onPress={handleGoogleLogin}
-                disabled={loading}
-                className="mt-3 flex-row items-center justify-center rounded-2xl border border-gray-200 bg-[#F8FAF8] px-4 py-4"
-              >
-                <GoogleIcon size={20} />
-                <Text className="ml-3 text-sm font-semibold text-slate-700">
-                  Continue with Google
-                </Text>
-              </Pressable>
-            </View>
-
-            <View className="flex-row justify-center pt-6">
-              <Text className="text-slate-500">Don&apos;t have an account? </Text>
-              <Link href="/(auth)/register" asChild>
-                <Pressable>
-                  <Text className="font-bold text-[#2E7D32]">Sign Up</Text>
-                </Pressable>
-              </Link>
+          <View className="mb-6">
+            <View className="h-[50px] w-full rounded-full bg-[#FFFFFF] border border-[#E8E8E8] px-5 justify-center">
+              <TextInput
+                value={password}
+                onChangeText={setPassword}
+                placeholder="Password"
+                placeholderTextColor="#6B7280"
+                secureTextEntry
+                autoCapitalize="none"
+                className="flex-1 text-slate-800 text-[14px]"
+              />
             </View>
           </View>
+
+          <Pressable className="mb-6 items-center">
+            <Text className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              Remember Me
+            </Text>
+          </Pressable>
+
+          <Pressable
+            onPress={handleLogin}
+            disabled={loading}
+            className="h-[54px] w-full rounded-full bg-[#1D5A34] items-center justify-center shadow-sm"
+          >
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text className="text-[16px] font-medium text-white">Log in</Text>
+            )}
+          </Pressable>
+
+          <View className="flex-row justify-center mt-6">
+            <Text className="text-[#6B7280] text-sm">Don't Have An Account? </Text>
+            <Link href="/(auth)/register" asChild>
+              <Pressable>
+                <Text className="text-[#6B7280] font-medium text-sm">Sign Up</Text>
+              </Pressable>
+            </Link>
+          </View>
+
+          <View className="flex-row justify-center items-center mt-8">
+            <Text className="text-[#6B7280] text-sm mr-3">or Log in with</Text>
+            <Pressable className="mx-1 items-center justify-center border border-[#1D5A34] rounded-full w-8 h-8">
+              <Instagram size={14} color="#1D5A34" />
+            </Pressable>
+            <Pressable className="mx-1 items-center justify-center border border-[#1D5A34] rounded-full w-8 h-8">
+              <Twitter size={14} color="#1D5A34" />
+            </Pressable>
+          </View>
+          
         </View>
       </KeyboardAwareScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
+      <View style={{ height: insets.bottom, backgroundColor: "black", position: "absolute", bottom: 0, width: "100%" }} />
+    </View>
   );
 }
+

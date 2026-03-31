@@ -144,7 +144,7 @@ export default function EditReelScreen() {
   if (loading) {
     return (
       <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center">
-        <ActivityIndicator size="large" color="#2E7D32" />
+        <ActivityIndicator size="large" color="#1D5A34" />
       </SafeAreaView>
     );
   }
@@ -221,7 +221,7 @@ export default function EditReelScreen() {
         {/* Video URL */}
         <View className="bg-white rounded-xl p-4 mb-4">
           <View className="flex-row items-center mb-3">
-            <Video size={20} color="#2E7D32" />
+            <Video size={20} color="#1D5A34" />
             <Text className="text-gray-800 font-semibold ml-2">Video URL *</Text>
           </View>
           <TextInput
@@ -238,7 +238,7 @@ export default function EditReelScreen() {
         {/* Thumbnail URL */}
         <View className="bg-white rounded-xl p-4 mb-4">
           <View className="flex-row items-center mb-3">
-            <ImageIcon size={20} color="#2E7D32" />
+            <ImageIcon size={20} color="#1D5A34" />
             <Text className="text-gray-800 font-semibold ml-2">Thumbnail URL</Text>
           </View>
           <TextInput
@@ -271,7 +271,7 @@ export default function EditReelScreen() {
         {/* Hashtags */}
         <View className="bg-white rounded-xl p-4 mb-4">
           <View className="flex-row items-center mb-3">
-            <Tag size={20} color="#2E7D32" />
+            <Tag size={20} color="#1D5A34" />
             <Text className="text-gray-800 font-semibold ml-2">Hashtags</Text>
           </View>
           <TextInput
@@ -288,7 +288,7 @@ export default function EditReelScreen() {
         <View className="bg-white rounded-xl p-4 mb-4">
           <View className="flex-row items-center justify-between mb-3">
             <View className="flex-row items-center">
-              <ShoppingBag size={20} color="#2E7D32" />
+              <ShoppingBag size={20} color="#1D5A34" />
               <Text className="text-gray-800 font-semibold ml-2">Link Product</Text>
             </View>
             {selectedProduct && (

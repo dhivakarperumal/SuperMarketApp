@@ -219,7 +219,7 @@ export default function EditProductScreen() {
   if (fetching) {
     return (
       <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center" edges={["top"]}>
-        <ActivityIndicator size="large" color="#2E7D32" />
+        <ActivityIndicator size="large" color="#1D5A34" />
       </SafeAreaView>
     );
   }
@@ -465,7 +465,7 @@ export default function EditProductScreen() {
           disabled={loading}
           className="bg-primary py-4 rounded-xl"
           style={{
-            shadowColor: "#2E7D32",
+            shadowColor: "#1D5A34",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 8,

@@ -95,7 +95,7 @@ export default function SettingsScreen() {
     description,
     onPress,
     showArrow = true,
-    iconColor = "#2E7D32",
+    iconColor = "#1D5A34",
     iconBgColor,
   }: any) => (
     <Pressable
@@ -133,7 +133,7 @@ export default function SettingsScreen() {
     description,
     value,
     onValueChange,
-    iconColor = "#2E7D32",
+    iconColor = "#1D5A34",
     iconBgColor,
   }: any) => (
     <View style={{
@@ -161,7 +161,7 @@ export default function SettingsScreen() {
       <Switch
         value={value}
         onValueChange={onValueChange}
-        trackColor={{ false: colors.border, true: "#2E7D32" }}
+        trackColor={{ false: colors.border, true: "#1D5A34" }}
         thumbColor="#fff"
       />
     </View>
@@ -182,10 +182,10 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.surface }} edges={["top", "bottom"]}>
-      <StatusBar barStyle="light-content" backgroundColor="#2E7D32" />
+      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
       <LinearGradient
-        colors={["#2E7D32", "#1B5E20"]}
+        colors={["#1D5A34", "#164829"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}

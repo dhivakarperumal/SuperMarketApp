@@ -11,7 +11,7 @@ import { SubscriptionPlanType, BillingCycle } from "../../../src/types";
 const planColors: Record<string, string[]> = {
   basic: ["#6B7280", "#9CA3AF"],
   standard: ["#3B82F6", "#60A5FA"],
-  premium: ["#2E7D32", "#66BB6A"],
+  premium: ["#1D5A34", "#66BB6A"],
   enterprise: ["#6C5CE7", "#A29BFE"],
 };
 
@@ -49,7 +49,7 @@ export default function SubscriptionScreen() {
   if (loading) {
     return (
       <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center" edges={["top"]}>
-        <ActivityIndicator size="large" color="#2E7D32" />
+        <ActivityIndicator size="large" color="#1D5A34" />
         <Text className="text-gray-500 mt-4">Loading subscription...</Text>
       </SafeAreaView>
     );
@@ -170,7 +170,7 @@ export default function SubscriptionScreen() {
             <View
               key={plan.id}
               className="bg-white rounded-2xl mb-4 overflow-hidden"
-              style={{ borderWidth: isPopular ? 2 : isCurrentPlan ? 2 : 0, borderColor: isCurrentPlan ? "#3B82F6" : "#2E7D32" }}
+              style={{ borderWidth: isPopular ? 2 : isCurrentPlan ? 2 : 0, borderColor: isCurrentPlan ? "#3B82F6" : "#1D5A34" }}
             >
               {isPopular && !isCurrentPlan && (
                 <View className="bg-primary py-1">
@@ -222,7 +222,7 @@ export default function SubscriptionScreen() {
 
                 {plan.features.map((feature, index) => (
                   <View key={index} className="flex-row items-center mb-2">
-                    <Check size={16} color="#2E7D32" />
+                    <Check size={16} color="#1D5A34" />
                     <Text className="text-gray-600 ml-2">{feature}</Text>
                   </View>
                 ))}

@@ -137,7 +137,7 @@ export default function SettingsScreen() {
       >
         {/* Header */}
         <LinearGradient
-          colors={isDark ? ["#1F2937", "#111827"] : ["#2E7D32", "#1B5E20"]}
+          colors={isDark ? ["#1F2937", "#111827"] : ["#1D5A34", "#164829"]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           className="px-5 pt-4 pb-8"
@@ -167,7 +167,7 @@ export default function SettingsScreen() {
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <LinearGradient
-                colors={["#2E7D32", "#1B5E20"]}
+                colors={["#1D5A34", "#164829"]}
                 style={{
                   width: 60,
                   height: 60,
@@ -207,7 +207,7 @@ export default function SettingsScreen() {
                   borderRadius: 20,
                 }}
               >
-                <Text style={{ color: '#2E7D32', fontWeight: '600', fontSize: 12, textTransform: 'capitalize' }}>
+                <Text style={{ color: '#1D5A34', fontWeight: '600', fontSize: 12, textTransform: 'capitalize' }}>
                   {userProfile?.role || 'Admin'}
                 </Text>
               </View>
@@ -350,7 +350,7 @@ export default function SettingsScreen() {
             <SettingItem
               icon={Printer}
               iconBg={isDark ? '#14532D' : '#E8F5E9'}
-              iconColor="#2E7D32"
+              iconColor="#1D5A34"
               title="Add Printer"
               subtitle="Configure thermal printer"
               onPress={() => router.push("/(admin)/printer/add")}
@@ -380,7 +380,7 @@ export default function SettingsScreen() {
                 <Switch
                   value={notifications}
                   onValueChange={setNotifications}
-                  trackColor={{ false: colors.border, true: "#2E7D32" }}
+                  trackColor={{ false: colors.border, true: "#1D5A34" }}
                   thumbColor="#FFFFFF"
                 />
               }
@@ -395,7 +395,7 @@ export default function SettingsScreen() {
                 <Switch
                   value={isDark}
                   onValueChange={toggleTheme}
-                  trackColor={{ false: colors.border, true: "#2E7D32" }}
+                  trackColor={{ false: colors.border, true: "#1D5A34" }}
                   thumbColor="#FFFFFF"
                 />
               }
