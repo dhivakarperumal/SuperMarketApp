@@ -159,7 +159,7 @@ export default function ShopScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
+    <SafeAreaView className="flex-1 bg-[#1D5A34]" edges={['top']}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
       <LinearGradient
@@ -325,7 +325,7 @@ export default function ShopScreen() {
 
       {/* Products */}
       {loading ? (
-        <View className="flex-1 items-center justify-center">
+        <View className="flex-1 items-center justify-center bg-gray-50">
           <ActivityIndicator size="large" color="#1D5A34" />
         </View>
       ) : viewMode === "grid" ? (
@@ -333,6 +333,7 @@ export default function ShopScreen() {
           data={filteredProducts}
           numColumns={2}
           estimatedItemSize={280}
+          className="bg-gray-50"
           contentContainerStyle={{ paddingHorizontal: 12, paddingVertical: 12 }}
           ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
           renderItem={({ item, index }) => (

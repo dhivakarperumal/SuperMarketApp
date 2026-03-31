@@ -25,6 +25,7 @@ import {
   Volume2,
   VolumeX,
   Play,
+  Clapperboard,
   X,
   Send,
 } from "lucide-react-native";
@@ -141,7 +142,7 @@ const ReelItem = memo(({
           />
         ) : (
           <View style={[styles.video, styles.placeholderVideo]}>
-            <Play size={60} color="#fff" />
+            <Clapperboard size={60} color="#fff" />
             <Text style={styles.noVideoText}>No video available</Text>
           </View>
         )}
@@ -447,7 +448,7 @@ export default function ReelsScreen() {
       <SafeAreaView style={styles.emptyContainer} edges={["top"]}>
         <View style={styles.emptyContent}>
           <View style={styles.emptyIcon}>
-            <Play size={48} color="#9CA3AF" />
+            <Clapperboard size={48} color="#9CA3AF" />
           </View>
           <Text style={styles.emptyTitle}>No Reels Yet</Text>
           <Text style={styles.emptySubtitle}>

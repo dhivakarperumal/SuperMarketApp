@@ -103,9 +103,9 @@ export default function AccountScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
+    <SafeAreaView className="flex-1 bg-[#1D5A34]" edges={['top']}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} className="bg-gray-50">
         {/* Header */}
         <LinearGradient
           colors={["#1D5A34", "#164829"]}

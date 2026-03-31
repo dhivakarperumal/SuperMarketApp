@@ -23,6 +23,7 @@ import {
   Edit,
   ToggleLeft,
   ToggleRight,
+  Clapperboard,
 } from "lucide-react-native";
 import { useReelsAdmin, Reel } from "../../../src/hooks/useReels";
 import { formatDate } from "../../../src/utils/formatters";
@@ -122,13 +123,13 @@ export default function AdminReelsScreen() {
               />
             ) : (
               <View className="w-full h-full items-center justify-center bg-gray-300">
-                <Play size={32} color="#9CA3AF" />
+                <Clapperboard size={32} color="#9CA3AF" />
               </View>
             )}
             {/* Play overlay */}
             <View className="absolute inset-0 items-center justify-center bg-black/20">
               <View className="w-10 h-10 rounded-full bg-white/90 items-center justify-center">
-                <Play size={20} color="#000" fill="#000" />
+                <Clapperboard size={20} color="#000" fill="#000" />
               </View>
             </View>
             {/* Status badge */}
@@ -275,7 +276,7 @@ export default function AdminReelsScreen() {
       ) : reels.length === 0 ? (
         <View className="flex-1 items-center justify-center p-8">
           <View className="w-20 h-20 rounded-full bg-gray-200 items-center justify-center mb-4">
-            <Play size={40} color="#9CA3AF" />
+            <Clapperboard size={40} color="#9CA3AF" />
           </View>
           <Text className="text-gray-800 text-xl font-bold mb-2">No Reels Yet</Text>
           <Text className="text-gray-500 text-center mb-6">

@@ -783,6 +783,7 @@ export default function CheckoutScreen() {
 
   const renderAddressStep = () => (
     <KeyboardAwareScrollView
+      className="flex-1 bg-gray-50"
       contentContainerStyle={{ paddingBottom: 20 }}
       enableOnAndroid={true}
       extraScrollHeight={120}
@@ -937,7 +938,7 @@ export default function CheckoutScreen() {
   );
 
   const renderPaymentStep = () => (
-    <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+    <ScrollView className="flex-1 bg-gray-50" showsVerticalScrollIndicator={false}>
       <View className="p-4">
         <Text className="text-lg font-bold text-gray-800 mb-4">
           Payment Method
@@ -1016,7 +1017,7 @@ export default function CheckoutScreen() {
   );
 
   const renderReviewStep = () => (
-    <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+    <ScrollView className="flex-1 bg-gray-50" showsVerticalScrollIndicator={false}>
       <View className="p-4">
         {/* Delivery Address */}
         <View className="bg-white rounded-xl p-4 mb-4">
@@ -1188,7 +1189,7 @@ export default function CheckoutScreen() {
 
   if (cart.length === 0) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50" edges={["top"]}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#1D5A34" }} edges={["top"]}>
         <View className="flex-row items-center px-4 py-4 bg-white border-b border-gray-200">
           <Pressable
             onPress={() => router.back()}
@@ -1214,7 +1215,7 @@ export default function CheckoutScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top"]}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#1D5A34" }} edges={["top"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
       <LinearGradient

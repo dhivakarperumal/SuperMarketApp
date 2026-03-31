@@ -31,6 +31,7 @@ import {
   MessageCircle,
   Tag,
   Play,
+  Clapperboard,
   Receipt,
 } from "lucide-react-native";
 import Toast from "react-native-toast-message";
@@ -272,7 +273,7 @@ export default function SettingsScreen() {
               onPress={() => router.push("/(admin)/offers")}
             />
             <SettingItem
-              icon={Play}
+              icon={Clapperboard}
               iconBg={isDark ? '#7F1D1D' : '#FEE2E2'}
               iconColor="#EF4444"
               title="Reels"

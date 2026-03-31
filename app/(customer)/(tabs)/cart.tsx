@@ -163,7 +163,7 @@ export default function CartScreen() {
 
   if (cart.length === 0) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#1D5A34" }} edges={['top']}>
         <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
         <LinearGradient
           colors={["#1D5A34", "#164829"]}
@@ -181,7 +181,7 @@ export default function CartScreen() {
             <Text className="text-2xl font-bold text-white">My Cart</Text>
           </View>
         </LinearGradient>
-        <View className="flex-1 items-center justify-center px-4">
+        <View className="flex-1 items-center justify-center px-4 bg-gray-50">
           <View className="bg-gray-100 p-6 rounded-full mb-4">
             <ShoppingBag size={48} color="#9CA3AF" />
           </View>
@@ -203,7 +203,7 @@ export default function CartScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#1D5A34" }} edges={['top']}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
       <LinearGradient
@@ -236,7 +236,7 @@ export default function CartScreen() {
 
       {/* Cart Items */}
       <ScrollView
-        className="flex-1"
+        className="flex-1 bg-gray-50"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingTop: 6, paddingBottom: 12 }}
       >

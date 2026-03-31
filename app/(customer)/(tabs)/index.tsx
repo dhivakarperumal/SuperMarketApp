@@ -139,10 +139,10 @@ export default function HomeScreen() {
 
   return (
 <SafeAreaView
-  className="flex-1  "
-  edges={["top", "bottom"]}
+  className="flex-1 bg-[#1D5A34]"
+  edges={["top"]}
 >
-  <StatusBar barStyle="light-content" backgroundColor="#164829" />
+  <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
 
 
       {/* Header */}
@@ -232,6 +232,7 @@ export default function HomeScreen() {
       <OfflineBanner compact />
 
       <ScrollView
+        className="bg-gray-50"
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={["#1D5A34"]} />
