@@ -1,67 +1,62 @@
-import { useState, useRef, useMemo, useEffect } from "react";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import { CameraView, useCameraPermissions } from "expo-camera";
+import { router } from "expo-router";
+import { addDoc, collection, getDocs, serverTimestamp } from "firebase/firestore";
 import {
-  View,
-  Text,
-  Pressable,
-  TextInput,
-  ScrollView,
-  Image,
-  Switch,
-  Modal,
-  StatusBar,
+    Banknote,
+    Briefcase,
+    Camera,
+    Check,
+    Home,
+    LogOut,
+    MapPin,
+    MapPinned,
+    Minus,
+    Plus,
+    Printer,
+    Scan,
+    Search,
+    ShoppingBag,
+    Smartphone,
+    Ticket,
+    Trash2,
+    Truck,
+    X
+} from "lucide-react-native";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+    Image,
+    Modal,
+    Pressable,
+    ScrollView,
+    StatusBar,
+    Text,
+    TextInput,
+    View
 } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import { router } from "expo-router";
-import {
-  Camera,
-  Scan,
-  Plus,
-  Minus,
-  Trash2,
-  Printer,
-  ShoppingBag,
-  Check,
-  Banknote,
-  CreditCard,
-  Smartphone,
-  LogOut,
-  Truck,
-  Ticket,
-  Tag,
-  X,
-  MapPin,
-  ChevronRight,
-  Home,
-  Briefcase,
-  MapPinned,
-  Search,
-} from "lucide-react-native";
-import { CameraView, useCameraPermissions } from "expo-camera";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import Toast from "react-native-toast-message";
-import { collection, addDoc, serverTimestamp, getDocs } from "firebase/firestore";
-import { db } from "../../../src/services/firebase/config";
-import { useProducts } from "../../../src/hooks/useProducts";
-import { useAddresses } from "../../../src/hooks/useAddresses";
-import { usePrinter } from "../../../src/context/PrinterContext";
-import { SavedAddress } from "../../../src/types";
-import { useAuth } from "../../../src/context/AuthContext";
-import { usePermissions } from "../../../src/context/PermissionContext";
-import { useDeliveryConfig } from "../../../src/context/DeliveryConfigContext";
-import { formatCurrency } from "../../../src/utils/formatters";
-import { RazorpayCheckout } from "../../../src/components/RazorpayCheckout";
-import {
-  createRazorpayOptions,
-  RazorpayResponse,
-  validateRazorpayResponse,
-  getRazorpayErrorMessage,
-  RAZORPAY_TEST_MODE,
-} from "../../../src/services/razorpay/config";
 import { ConfirmationModal } from "../../../src/components/ConfirmationModal";
+import { RazorpayCheckout } from "../../../src/components/RazorpayCheckout";
+import { useAuth } from "../../../src/context/AuthContext";
+import { useDeliveryConfig } from "../../../src/context/DeliveryConfigContext";
 import { useOffers } from "../../../src/context/OfferContext";
-import { Offer, AppliedOfferSummary } from "../../../src/types/offers";
-import { calculateCartWithOffersAndCoupon, validateCoupon } from "../../../src/services/offers/OfferEngine";
+import { usePermissions } from "../../../src/context/PermissionContext";
+import { usePrinter } from "../../../src/context/PrinterContext";
+import { useAddresses } from "../../../src/hooks/useAddresses";
+import { useProducts } from "../../../src/hooks/useProducts";
 import { useReceiptSettings } from "../../../src/hooks/useReceiptSettings";
+import { db } from "../../../src/services/firebase/config";
+import { calculateCartWithOffersAndCoupon, validateCoupon } from "../../../src/services/offers/OfferEngine";
+import {
+    createRazorpayOptions,
+    getRazorpayErrorMessage,
+    RazorpayResponse,
+    validateRazorpayResponse
+} from "../../../src/services/razorpay/config";
+import { SavedAddress } from "../../../src/types";
+import { AppliedOfferSummary, Offer } from "../../../src/types/offers";
+import { formatCurrency } from "../../../src/utils/formatters";
 
 interface BillingItem {
   id: string;
@@ -756,7 +751,7 @@ export default function BillingScreen() {
     <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <View}}
+      <View
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View className="flex-row items-center justify-between mb-4">

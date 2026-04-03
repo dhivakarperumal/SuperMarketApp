@@ -155,6 +155,7 @@ var CONFIG_JSON = '${configJson.replace(/'/g, "\\'")}';
 var config = JSON.parse(CONFIG_JSON);
 var attemptCount = 0;
 var maxAttempts = 3;
+var paymentProcessed = false;
 
 function log(msg) {
   console.log('[RZP]', msg);
@@ -163,10 +164,15 @@ function log(msg) {
 function postMsg(type, data) {
   try {
     if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
-      window.ReactNativeWebView.postMessage(JSON.stringify({ type: type, data: data || {} }));
+      var message = JSON.stringify({ type: type, data: data || {} });
+      log('Posting message: ' + message);
+      window.ReactNativeWebView.postMessage(message);
+    } else {
+      log('ReactNativeWebView not available');
     }
   } catch (e) {
     console.error('postMsg error:', e);
+    log('postMsg error: ' + e.message);
   }
 }
 
@@ -185,6 +191,7 @@ var RAZORPAY_LOAD_MAX_ATTEMPTS = 50; // 50 * 200ms = 10 seconds
 function retry() {
   attemptCount++;
   razorpayLoadAttempts = 0;
+  paymentProcessed = false;
   if (attemptCount >= maxAttempts) {
     showErr('Too many attempts', 'MAX_RETRIES');
     return;
@@ -222,7 +229,13 @@ function openPayment() {
       prefill: config.prefill,
       theme: { color: '#1D5C45' },
       handler: function(response) {
+        if (paymentProcessed) {
+          log('Payment already processed, ignoring duplicate handler call');
+          return;
+        }
+        paymentProcessed = true;
         log('Payment success: ' + response.razorpay_payment_id);
+        log('Full response: ' + JSON.stringify(response));
         postMsg('success', {
           razorpay_payment_id: response.razorpay_payment_id || '',
           razorpay_order_id: response.razorpay_order_id || '',
@@ -233,17 +246,24 @@ function openPayment() {
         escape: false,
         backdropclose: false,
         ondismiss: function() {
-          log('Payment dismissed');
+          if (paymentProcessed) return;
+          log('Payment dismissed by user');
           postMsg('dismiss', {});
         }
       }
     });
 
     rzp.on('payment.failed', function(response) {
+      if (paymentProcessed) {
+        log('Payment already processed, ignoring duplicate failure handler');
+        return;
+      }
+      paymentProcessed = true;
       var msg = response.error ? response.error.description : 'Payment failed';
       var code = response.error ? response.error.code : 'UNKNOWN';
       log('Payment failed: ' + msg + ' (' + code + ')');
-      postMsg('failure', { message: msg, code: code });
+      log('Full error response: ' + JSON.stringify(response));
+      postMsg('failure', { message: msg, code: code, fullError: response.error });
     });
 
     log('Opening modal');
@@ -252,6 +272,7 @@ function openPayment() {
 
   } catch (e) {
     log('Exception: ' + e.message);
+    log('Stack: ' + (e.stack || 'No stack trace'));
     showErr(e.message, 'EXCEPTION');
   }
 }
@@ -259,7 +280,8 @@ function openPayment() {
 window.retryAction = retry;
 
 log('Init');
-postMsg('log', { message: 'Page ready' });
+log('Config: ' + JSON.stringify({ key: config.key.substring(0, 15) + '...', amount: config.amount, currency: config.currency }));
+postMsg('log', { message: 'Page initialized, waiting for Razorpay SDK' });
 setTimeout(openPayment, 500);
 </script>
 
@@ -273,7 +295,7 @@ setTimeout(openPayment, 500);
       const message = JSON.parse(event.nativeEvent.data);
       const { type, data } = message;
 
-      console.log("[RazorpayCheckout] WebView message:", type, data);
+      console.log("[RazorpayCheckout] WebView message:", type, JSON.stringify(data));
 
       switch (type) {
         case "success":
@@ -281,9 +303,11 @@ setTimeout(openPayment, 500);
           const response = data as RazorpayResponse;
           const validation = validateRazorpayResponse(response);
           if (validation.isValid) {
+            console.log("[RazorpayCheckout] Response validation passed, calling onSuccess");
             onSuccess(response);
           } else {
             console.error("[RazorpayCheckout] Invalid response:", validation.error);
+            console.error("[RazorpayCheckout] Response data:", response);
             onFailure(validation.error || "Invalid payment response");
           }
           break;
@@ -298,6 +322,7 @@ setTimeout(openPayment, 500);
             onClose();
           } else {
             console.error("[RazorpayCheckout] ❌ Payment failure:", data);
+            console.error("[RazorpayCheckout] Error message:", errorMsg);
             onFailure(errorMsg);
           }
           break;
@@ -325,6 +350,7 @@ setTimeout(openPayment, 500);
       }
     } catch (e) {
       console.error("[RazorpayCheckout] Error parsing message:", e);
+      console.error("[RazorpayCheckout] Raw event data:", event.nativeEvent.data);
       onFailure("Failed to process payment response. Please try again.");
     }
   };
