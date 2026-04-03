@@ -1,14 +1,14 @@
-import { View, Text, ScrollView, Pressable, StatusBar } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { ChevronLeft, Shield } from "lucide-react-native";
 import { router } from "expo-router";
+import { ChevronLeft } from "lucide-react-native";
+import { Pressable, ScrollView, StatusBar, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function PrivacyPolicyScreen() {
   return (
     <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <View}}
+      <View
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View className="flex-row items-center">

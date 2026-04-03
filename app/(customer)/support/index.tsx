@@ -1,35 +1,32 @@
+import { router } from "expo-router";
+import {
+    ChevronDown,
+    ChevronLeft,
+    ChevronUp,
+    Clock,
+    CreditCard,
+    HelpCircle,
+    Mail,
+    Package,
+    Phone,
+    RotateCcw,
+    Search,
+    Send,
+    Truck,
+    User
+} from "lucide-react-native";
 import { useState } from "react";
 import {
-  View,
-  Text,
-  Pressable,
-  ScrollView,
-  TextInput,
-  Linking,
-  ActivityIndicator,
-  StatusBar,
+    Linking,
+    Pressable,
+    ScrollView,
+    StatusBar,
+    Text,
+    TextInput,
+    View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  ChevronLeft,
-  Phone,
-  Mail,
-  ChevronRight,
-  ChevronDown,
-  ChevronUp,
-  Package,
-  CreditCard,
-  Truck,
-  RotateCcw,
-  User,
-  HelpCircle,
-  Search,
-  Clock,
-  Send,
-} from "lucide-react-native";
 import { WhatsAppIcon } from "../../../src/components/icons/WhatsAppIcon";
-import { router } from "expo-router";
-import Toast from "react-native-toast-message";
 
 const faqs = [
   {
@@ -184,7 +181,7 @@ export default function SupportScreen() {
     <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <View}}
+      <View
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View className="flex-row items-center">

@@ -1,30 +1,30 @@
-import { useState, useMemo } from "react";
+import { FlashList } from "@shopify/flash-list";
+import { router } from "expo-router";
 import {
-  View,
-  Text,
-  Pressable,
-  TextInput,
-  ActivityIndicator,
-  Image,
-  StatusBar,
+    AlertTriangle,
+    Boxes,
+    ChevronLeft,
+    ChevronRight,
+    IndianRupee,
+    Package,
+    Plus,
+    Search,
+    TrendingDown,
+    TrendingUp,
+    X,
+} from "lucide-react-native";
+import { useMemo, useState } from "react";
+import {
+    ActivityIndicator,
+    Image,
+    Pressable,
+    StatusBar,
+    Text,
+    TextInput,
+    View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { FlashList } from "@shopify/flash-list";
-import {
-  ChevronLeft,
-  Search,
-  Package,
-  AlertTriangle,
-  TrendingDown,
-  TrendingUp,
-  Plus,
-  X,
-  ChevronRight,
-  Boxes,
-  IndianRupee,
-} from "lucide-react-native";
-import { router } from "expo-router";
-import { useInventory, InventoryItem } from "../../../src/hooks/useInventory";
+import { InventoryItem, useInventory } from "../../../src/hooks/useInventory";
 import { formatCurrency } from "../../../src/utils/formatters";
 
 const statusConfig: Record<string, { bg: string; text: string; icon: any; label: string }> = {
@@ -155,7 +155,7 @@ export default function InventoryScreen() {
     <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <View}}
+      <View
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View className="flex-row items-center mb-4">

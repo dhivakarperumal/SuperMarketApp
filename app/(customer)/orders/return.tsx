@@ -1,38 +1,38 @@
-import { useState, useEffect } from "react";
+import { router, useLocalSearchParams } from "expo-router";
+import { doc, getDoc } from "firebase/firestore";
 import {
-  View,
-  Text,
-  ScrollView,
-  Pressable,
-  ActivityIndicator,
-  Image,
-  TextInput,
-  StatusBar,
+    AlertCircle,
+    Check,
+    ChevronDown,
+    ChevronLeft,
+    Minus,
+    Package,
+    Plus,
+    RotateCcw,
+} from "lucide-react-native";
+import { useEffect, useState } from "react";
+import {
+    ActivityIndicator,
+    Image,
+    Pressable,
+    ScrollView,
+    StatusBar,
+    Text,
+    TextInput,
+    View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useLocalSearchParams, router } from "expo-router";
-import {
-  ChevronLeft,
-  Package,
-  Check,
-  Minus,
-  Plus,
-  AlertCircle,
-  ChevronDown,
-  RotateCcw,
-} from "lucide-react-native";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../../src/services/firebase/config";
-import { useReturns } from "../../../src/hooks/useReturns";
-import { useAuth } from "../../../src/context/AuthContext";
-import { formatCurrency } from "../../../src/utils/formatters";
-import { RETURN_REASONS, ReturnItem } from "../../../src/types";
-import {
-  checkReturnEligibility,
-  getReturnableItems,
-  calculateRefundAmount,
-} from "../../../src/utils/returnUtils";
 import Toast from "react-native-toast-message";
+import { useAuth } from "../../../src/context/AuthContext";
+import { useReturns } from "../../../src/hooks/useReturns";
+import { db } from "../../../src/services/firebase/config";
+import { RETURN_REASONS, ReturnItem } from "../../../src/types";
+import { formatCurrency } from "../../../src/utils/formatters";
+import {
+    calculateRefundAmount,
+    checkReturnEligibility,
+    getReturnableItems,
+} from "../../../src/utils/returnUtils";
 
 interface OrderItem {
   productId: string;
@@ -229,7 +229,7 @@ export default function ReturnRequestScreen() {
     <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <View}}
+      <View
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View className="flex-row items-center">

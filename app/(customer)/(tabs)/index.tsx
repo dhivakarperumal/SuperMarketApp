@@ -1,41 +1,41 @@
-import { useState, useEffect, useRef } from "react";
+import { router } from "expo-router";
 import {
-  View,
-  Text,
-  ScrollView,
-  TextInput,
-  Pressable,
-  RefreshControl,
-  StatusBar,
-  ActivityIndicator,
-  Dimensions,
-  Image,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
+    Bell,
+    ChevronRight,
+    Clock,
+    Gift,
+    Heart,
+    Search,
+    Shield,
+    ShoppingBag,
+    ShoppingCart,
+    Truck,
+    X,
+} from "lucide-react-native";
+import { useEffect, useRef, useState } from "react";
+import {
+    ActivityIndicator,
+    Dimensions,
+    Image,
+    NativeScrollEvent,
+    NativeSyntheticEvent,
+    Pressable,
+    RefreshControl,
+    ScrollView,
+    StatusBar,
+    Text,
+    TextInput,
+    View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  Search,
-  Bell,
-  Heart,
-  ShoppingCart,
-  ChevronRight,
-  X,
-  ShoppingBag,
-  Truck,
-  Clock,
-  Shield,
-  Gift,
-} from "lucide-react-native";
-import { router } from "expo-router";
-import { useProducts } from "../../../src/hooks/useProducts";
-import { useCategories } from "../../../src/hooks/useCategories";
-import { useCart } from "../../../src/context/CartContext";
-import { useFavorites } from "../../../src/hooks/useFavorites";
-import { useAuth } from "../../../src/context/AuthContext";
-import { useOffline } from "../../../src/context/OfflineContext";
 import { ProductCard } from "../../../src/components/cards/ProductCard";
 import { OfflineBanner } from "../../../src/components/OfflineBanner";
+import { useAuth } from "../../../src/context/AuthContext";
+import { useCart } from "../../../src/context/CartContext";
+import { useOffline } from "../../../src/context/OfflineContext";
+import { useCategories } from "../../../src/hooks/useCategories";
+import { useFavorites } from "../../../src/hooks/useFavorites";
+import { useProducts } from "../../../src/hooks/useProducts";
 import { formatCurrency } from "../../../src/utils/formatters";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
@@ -292,7 +292,7 @@ export default function HomeScreen() {
                     onPress={() => router.push("/(customer)/(tabs)/shop")}
                     style={{ width: BANNER_WIDTH, marginRight: index < banners.length - 1 ? 12 : 0 }}
                   >
-                    <View}}
+                    <View
                       style={{
                         height: 150,
                         borderRadius: 20,
@@ -409,7 +409,7 @@ export default function HomeScreen() {
             <View className="px-4 pt-6 pb-3">
               {/* Offer 1 */}
               <Pressable onPress={() => router.push("/(customer)/(tabs)/shop")} className="mb-3">
-                <View}}
+                <View
                   style={{
                     borderRadius: 16,
                     padding: 16,
@@ -428,7 +428,7 @@ export default function HomeScreen() {
 
               {/* Offer 2 */}
               <Pressable onPress={() => router.push("/(customer)/(tabs)/shop")} className="mb-3">
-                <View}}
+                <View
                   style={{
                     borderRadius: 16,
                     padding: 16,
@@ -447,7 +447,7 @@ export default function HomeScreen() {
 
               {/* Offer 3 */}
               <Pressable onPress={() => router.push("/(customer)/(tabs)/shop")}>
-                <View}}
+                <View
                   style={{
                     borderRadius: 16,
                     padding: 16,

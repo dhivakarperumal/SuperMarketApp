@@ -1,17 +1,17 @@
-import { View, Text, Pressable, ScrollView, Image, Linking, StatusBar } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  ChevronLeft,
-  Mail,
-  Phone,
-  Globe,
-  MapPin,
-  Instagram,
-  Facebook,
-  Twitter,
-  Heart,
-} from "lucide-react-native";
 import { router } from "expo-router";
+import {
+    ChevronLeft,
+    Facebook,
+    Globe,
+    Heart,
+    Instagram,
+    Mail,
+    MapPin,
+    Phone,
+    Twitter,
+} from "lucide-react-native";
+import { Image, Linking, Pressable, ScrollView, StatusBar, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Logo = require("../../../assets/images/logo.png");
 
@@ -34,7 +34,7 @@ export default function AboutScreen() {
     <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <View}}
+      <View
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>

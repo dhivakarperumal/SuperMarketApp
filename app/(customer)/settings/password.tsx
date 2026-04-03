@@ -1,23 +1,23 @@
+import { router } from "expo-router";
+import {
+    EmailAuthProvider,
+    reauthenticateWithCredential,
+    updatePassword,
+} from "firebase/auth";
+import { ChevronLeft, Eye, EyeOff, Lock } from "lucide-react-native";
 import { useState } from "react";
 import {
-  View,
-  Text,
-  TextInput,
-  Pressable,
-  ActivityIndicator,
-  StatusBar,
+    ActivityIndicator,
+    Pressable,
+    StatusBar,
+    Text,
+    TextInput,
+    View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { ChevronLeft, Lock, Eye, EyeOff } from "lucide-react-native";
-import { router } from "expo-router";
-import { useAuth } from "../../../src/context/AuthContext";
-import {
-  EmailAuthProvider,
-  reauthenticateWithCredential,
-  updatePassword,
-} from "firebase/auth";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
+import { useAuth } from "../../../src/context/AuthContext";
 
 interface PasswordFieldProps {
   label: string;
@@ -192,7 +192,7 @@ export default function ChangePasswordScreen() {
     <SafeAreaView style={{ flex: 1, backgroundColor: "#F9FAFB" }} edges={["top", "bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <View}}
+      <View
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>

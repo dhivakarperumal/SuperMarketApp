@@ -1,32 +1,32 @@
-import { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Pressable,
-  ActivityIndicator,
-  Switch,
-  StatusBar,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import {
-  ChevronLeft,
-  User,
-  Phone,
-  MapPin,
-  Building2,
-  Map,
-  Hash,
-  Home,
-  Briefcase,
-  MapPinned,
-  CheckCircle,
-  Save,
-} from "lucide-react-native";
 import { router, useLocalSearchParams } from "expo-router";
-import { useAddresses } from "../../../src/hooks/useAddresses";
+import {
+    Briefcase,
+    Building2,
+    CheckCircle,
+    ChevronLeft,
+    Hash,
+    Home,
+    Map,
+    MapPin,
+    MapPinned,
+    Phone,
+    Save,
+    User,
+} from "lucide-react-native";
+import { useEffect, useState } from "react";
+import {
+    ActivityIndicator,
+    Pressable,
+    StatusBar,
+    Switch,
+    Text,
+    TextInput,
+    View,
+} from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
+import { useAddresses } from "../../../src/hooks/useAddresses";
 
 const addressLabels = [
   { id: "home", label: "Home", icon: Home },
@@ -142,7 +142,7 @@ export default function EditAddressScreen() {
     <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <View}}
+      <View
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View className="flex-row items-center">

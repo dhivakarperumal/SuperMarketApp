@@ -1,9 +1,9 @@
-import { useState, useMemo, useEffect } from "react";
-import { View, Text, Pressable, TextInput, ActivityIndicator, StatusBar } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { FlashList } from "@shopify/flash-list";
-import { Search, Filter, ChevronRight } from "lucide-react-native";
 import { router, useLocalSearchParams } from "expo-router";
+import { ChevronRight, Search } from "lucide-react-native";
+import { useEffect, useMemo, useState } from "react";
+import { ActivityIndicator, Pressable, StatusBar, Text, TextInput, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useOrders } from "../../../src/hooks/useOrders";
 import { formatCurrency, formatDate } from "../../../src/utils/formatters";
 
@@ -72,7 +72,7 @@ export default function OrdersScreen() {
     <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <View}}
+      <View
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <Text className="text-2xl font-bold text-white mb-4">Orders</Text>

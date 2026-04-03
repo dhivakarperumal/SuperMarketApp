@@ -1,26 +1,25 @@
-import { useState } from "react";
-import { View, Text, Pressable, ScrollView, Image, StatusBar } from "react-native";
-const Logo = require("../../../assets/images/logo.png");
-import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  User,
-  Package,
-  MapPin,
-  CreditCard,
-  Bell,
-  HelpCircle,
-  LogOut,
-  ChevronRight,
-  ChevronLeft,
-  Settings,
-  Shield,
-  FileText,
-  Truck,
-  RotateCcw,
-} from "lucide-react-native";
 import { router } from "expo-router";
-import { useAuth } from "../../../src/context/AuthContext";
+import {
+    Bell,
+    ChevronLeft,
+    ChevronRight,
+    CreditCard,
+    FileText,
+    HelpCircle,
+    LogOut,
+    MapPin,
+    Package,
+    RotateCcw,
+    Settings,
+    Shield,
+    Truck
+} from "lucide-react-native";
+import { useState } from "react";
+import { Image, Pressable, ScrollView, StatusBar, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { ConfirmationModal } from "../../../src/components/ConfirmationModal";
+import { useAuth } from "../../../src/context/AuthContext";
+const Logo = require("../../../assets/images/logo.png");
 
 export default function AccountScreen() {
   const { user, logout } = useAuth();
@@ -106,7 +105,7 @@ export default function AccountScreen() {
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       <ScrollView showsVerticalScrollIndicator={false} className="bg-[#F1F8E9]">
         {/* Header */}
-        <View}}
+        <View
           style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
         >
           <View className="flex-row items-center justify-between">

@@ -1,24 +1,24 @@
-import { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  ActivityIndicator,
-  Image,
-  StatusBar,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { FlashList } from "@shopify/flash-list";
 import { router } from "expo-router";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import {
-  ChevronLeft,
-  ChevronRight,
-  Package,
-  ShoppingBag,
+    ChevronLeft,
+    ChevronRight,
+    Package,
+    ShoppingBag,
 } from "lucide-react-native";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
-import { db } from "../../../src/services/firebase/config";
+import { useEffect, useState } from "react";
+import {
+    ActivityIndicator,
+    Image,
+    Pressable,
+    StatusBar,
+    Text,
+    View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../../../src/context/AuthContext";
+import { db } from "../../../src/services/firebase/config";
 import { formatCurrency, formatDate } from "../../../src/utils/formatters";
 
 const Logo = require("../../../assets/images/logo.png");
@@ -103,7 +103,7 @@ export default function CustomerOrdersScreen() {
     <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <View}}
+      <View
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View className="flex-row items-center justify-between">

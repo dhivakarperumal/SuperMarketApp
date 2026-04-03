@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { View, Text, Pressable, ScrollView, ActivityIndicator } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { ChevronLeft, Check, Crown, Calendar, AlertCircle } from "lucide-react-native";
 import { router } from "expo-router";
+import { AlertCircle, Calendar, Check, ChevronLeft, Crown } from "lucide-react-native";
+import { useState } from "react";
+import { ActivityIndicator, Pressable, ScrollView, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import { useSubscription } from "../../../src/hooks/useSubscription";
-import { SubscriptionPlanType, BillingCycle } from "../../../src/types";
+import { BillingCycle, SubscriptionPlanType } from "../../../src/types";
 
 const planColors: Record<string, string[]> = {
   basic: ["#6B7280", "#9CA3AF"],
@@ -232,7 +232,7 @@ export default function SubscriptionScreen() {
                   className="mt-4"
                   style={{ opacity: isCurrentPlan ? 0.5 : 1 }}
                 >
-                  <View}}
+                  <View
                     style={{ borderRadius: 12, padding: 14 }}
                   >
                     <Text className="text-white text-center font-semibold">

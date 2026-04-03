@@ -1,44 +1,42 @@
+import { router } from "expo-router";
+import {
+  BarChart3,
+  Bell,
+  Building2,
+  ChevronRight,
+  Clapperboard,
+  ClipboardList,
+  Crown,
+  FileText,
+  HelpCircle,
+  LogOut,
+  Mail,
+  MessageCircle,
+  Moon,
+  Package,
+  Phone,
+  Printer,
+  Receipt,
+  Shield,
+  Store,
+  Tag,
+  Truck,
+  Users
+} from "lucide-react-native";
 import { useState } from "react";
 import {
-  View,
-  Text,
+  Image,
   Pressable,
   ScrollView,
   Switch,
-  Image,
+  Text,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  Printer,
-  ChevronRight,
-  Bell,
-  Moon,
-  LogOut,
-  Store,
-  Phone,
-  Mail,
-  Shield,
-  HelpCircle,
-  FileText,
-  BarChart3,
-  Users,
-  Building2,
-  Crown,
-  Truck,
-  ClipboardList,
-  Package,
-  MessageCircle,
-  Tag,
-  Play,
-  Clapperboard,
-  Receipt,
-} from "lucide-react-native";
-import Toast from "react-native-toast-message";
-import { router } from "expo-router";
-import { useAuth } from "../../../src/context/AuthContext";
-import { useTheme } from "../../../src/context/ThemeContext";
-import { usePermissions } from "../../../src/context/PermissionContext";
 import { ConfirmationModal } from "../../../src/components/ConfirmationModal";
+import { useAuth } from "../../../src/context/AuthContext";
+import { usePermissions } from "../../../src/context/PermissionContext";
+import { useTheme } from "../../../src/context/ThemeContext";
 
 const Logo = require("../../../assets/images/logo.png");
 
@@ -136,7 +134,7 @@ export default function SettingsScreen() {
         className="bg-transparent"
       >
         {/* Header */}
-        <View}}
+        <View
           className="px-5 pt-4 pb-8"
         >
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>

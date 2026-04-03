@@ -24,9 +24,9 @@ import {
   Pressable,
   RefreshControl,
   ScrollView,
+  StatusBar,
   Text,
   View,
-  StatusBar,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../../../src/context/AuthContext";
@@ -164,7 +164,7 @@ export default function DashboardScreen() {
         }
       >
         {/* Header with Gradient */}
-        <View}}
+        <View
           className="px-5 pt-4 pb-24"
         >
           <View className="flex-row items-center justify-between">

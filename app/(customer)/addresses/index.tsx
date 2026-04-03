@@ -1,21 +1,21 @@
-import { useState } from "react";
-import { View, Text, Pressable, ScrollView, ActivityIndicator, Modal, StatusBar } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  ChevronLeft,
-  MapPin,
-  Plus,
-  Edit2,
-  Trash2,
-  CheckCircle,
-  Home,
-  Briefcase,
-  MapPinned,
-  Phone,
-} from "lucide-react-native";
 import { router } from "expo-router";
-import { useAddresses } from "../../../src/hooks/useAddresses";
+import {
+    Briefcase,
+    CheckCircle,
+    ChevronLeft,
+    Edit2,
+    Home,
+    MapPin,
+    MapPinned,
+    Phone,
+    Plus,
+    Trash2,
+} from "lucide-react-native";
+import { useState } from "react";
+import { ActivityIndicator, Modal, Pressable, ScrollView, StatusBar, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
+import { useAddresses } from "../../../src/hooks/useAddresses";
 import { SavedAddress } from "../../../src/types";
 
 export default function AddressesScreen() {
@@ -191,7 +191,7 @@ export default function AddressesScreen() {
     <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <View}}
+      <View
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View className="flex-row items-center justify-between">

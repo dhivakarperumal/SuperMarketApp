@@ -1,22 +1,22 @@
-import { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Pressable,
-  ActivityIndicator,
-  Image,
-  StatusBar,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { ChevronLeft, User, Mail, Phone, Camera, LucideIcon } from "lucide-react-native";
 import { router } from "expo-router";
-import { useAuth } from "../../../src/context/AuthContext";
-import { doc, updateDoc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
-import { db } from "../../../src/services/firebase/config";
+import { doc, updateDoc } from "firebase/firestore";
+import { Camera, ChevronLeft, LucideIcon, Mail, Phone, User } from "lucide-react-native";
+import { useEffect, useState } from "react";
+import {
+    ActivityIndicator,
+    Image,
+    Pressable,
+    StatusBar,
+    Text,
+    TextInput,
+    View,
+} from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
+import { useAuth } from "../../../src/context/AuthContext";
+import { db } from "../../../src/services/firebase/config";
 
 interface InputFieldProps {
   icon: LucideIcon;
@@ -152,7 +152,7 @@ export default function EditProfileScreen() {
     <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <View}}
+      <View
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View className="flex-row items-center">

@@ -594,6 +594,9 @@ export default function CheckoutScreen() {
       // Validate the payment response first
       const validation = validateRazorpayResponse(response);
       if (!validation.isValid) {
+        console.error("[Checkout] Payment validation failed:", validation.error);
+        console.error("[Checkout] Payment response:", response);
+        
         Toast.show({
           type: "error",
           text1: "Payment Verification Failed",
@@ -606,6 +609,7 @@ export default function CheckoutScreen() {
               status: "PaymentFailed",
               paymentStatus: "failed",
               paymentError: validation.error,
+              failedAt: serverTimestamp(),
             });
           } catch (e) {
             console.error("Failed to update order status:", e);
@@ -617,6 +621,8 @@ export default function CheckoutScreen() {
       }
 
       if (pendingOrderId) {
+        console.log("[Checkout] ✅ Payment successful, updating order:", pendingOrderId);
+        
         // Build payment details object, excluding undefined values
         const paymentDetails: Record<string, string> = {
           razorpay_payment_id: response.razorpay_payment_id || "",
@@ -691,8 +697,10 @@ export default function CheckoutScreen() {
   const handlePaymentFailure = async (error: string) => {
     setShowRazorpay(false);
 
+    console.error("[Checkout] Payment failure:", error);
+    
     const errorMessage = getRazorpayErrorMessage(error);
-    const isUserCancelled = /cancelled|canceled|user cancelled|user canceled/i.test(errorMessage);
+    const isUserCancelled = /cancelled|canceled|user cancelled|user canceled|dismissed/i.test(errorMessage);
 
     if (pendingOrderId) {
       try {
@@ -710,7 +718,7 @@ export default function CheckoutScreen() {
     Toast.show({
       type: isUserCancelled ? "info" : "error",
       text1: isUserCancelled ? "Payment Cancelled" : "Payment Failed",
-      text2: errorMessage,
+      text2: errorMessage || "Please try again or use a different payment method",
     });
 
     setPendingOrderId(null);

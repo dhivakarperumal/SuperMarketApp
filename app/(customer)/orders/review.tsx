@@ -1,21 +1,21 @@
+import { router, useLocalSearchParams } from "expo-router";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { ChevronLeft, ShoppingBag, Star } from "lucide-react-native";
 import { useState } from "react";
 import {
-  View,
-  Text,
-  TextInput,
-  Pressable,
-  ActivityIndicator,
-  Image,
-  StatusBar,
+    ActivityIndicator,
+    Image,
+    Pressable,
+    StatusBar,
+    Text,
+    TextInput,
+    View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { ChevronLeft, Star, ShoppingBag } from "lucide-react-native";
-import { router, useLocalSearchParams } from "expo-router";
-import { useAuth } from "../../../src/context/AuthContext";
-import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../../src/services/firebase/config";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
+import { useAuth } from "../../../src/context/AuthContext";
+import { db } from "../../../src/services/firebase/config";
 
 export default function ReviewScreen() {
   const { productId, productName, productImage, orderId } = useLocalSearchParams<{
@@ -152,7 +152,7 @@ export default function ReviewScreen() {
     <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <View}}
+      <View
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View className="flex-row items-center">
