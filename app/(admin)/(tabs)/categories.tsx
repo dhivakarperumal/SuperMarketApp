@@ -58,7 +58,7 @@ export default function CategoriesScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       {/* Header */}
       <View className="px-4 py-4 bg-gray-100 border-b border-gray-200">
         <View className="flex-row items-center justify-between mb-4">
@@ -82,7 +82,7 @@ export default function CategoriesScreen() {
       {/* Categories List */}
       {loading ? (
         <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color="#1D5A34" />
+          <ActivityIndicator size="large" color="#1D5C45" />
         </View>
       ) : (
         <FlashList
@@ -209,7 +209,7 @@ export default function CategoriesScreen() {
             fabOpen ? "bg-gray-700" : "bg-primary"
           }`}
           style={{
-            shadowColor: fabOpen ? "#374151" : "#1D5A34",
+            shadowColor: fabOpen ? "#374151" : "#1D5C45",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 8,

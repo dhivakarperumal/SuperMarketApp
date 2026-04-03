@@ -7,7 +7,6 @@ import {
   Switch,
   Image,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Printer,
@@ -130,17 +129,14 @@ export default function SettingsScreen() {
   );
 
   return (
-    <SafeAreaView className="flex-1" style={{ backgroundColor: colors.surface }} edges={['top']}>
+    <SafeAreaView className="flex-1" style={{ backgroundColor: colors.surface }} edges={["top","bottom"]}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 100 }}
         className="bg-transparent"
       >
         {/* Header */}
-        <LinearGradient
-          colors={isDark ? ["#1F2937", "#111827"] : ["#1D5A34", "#164829"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
+        <View}}
           className="px-5 pt-4 pb-8"
         >
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -151,7 +147,7 @@ export default function SettingsScreen() {
               resizeMode="contain"
             />
           </View>
-        </LinearGradient>
+        </View>
 
         {/* Profile Card */}
         <View className="px-4 mt-[-20px]">
@@ -167,8 +163,7 @@ export default function SettingsScreen() {
             }}
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <LinearGradient
-                colors={["#1D5A34", "#164829"]}
+              <View
                 style={{
                   width: 60,
                   height: 60,
@@ -180,7 +175,7 @@ export default function SettingsScreen() {
                 <Text style={{ color: '#FFFFFF', fontSize: 24, fontWeight: 'bold' }}>
                   {initials}
                 </Text>
-              </LinearGradient>
+              </View>
               <View style={{ marginLeft: 16, flex: 1 }}>
                 <Text style={{ fontWeight: 'bold', color: colors.text, fontSize: 18 }}>
                   {displayName}

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { View, Text, Pressable, ScrollView, Image, StatusBar } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 const Logo = require("../../../assets/images/logo.png");
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -103,14 +102,11 @@ export default function AccountScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-[#1D5A34]" edges={['top']}>
+    <SafeAreaView className="flex-1 bg-[#1D5A34]" edges={["top","bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
-      <ScrollView showsVerticalScrollIndicator={false} className="bg-gray-50">
+      <ScrollView showsVerticalScrollIndicator={false} className="bg-[#F1F8E9]">
         {/* Header */}
-        <LinearGradient
-          colors={["#1D5A34", "#164829"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
+        <View}}
           style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
         >
           <View className="flex-row items-center justify-between">
@@ -129,7 +125,7 @@ export default function AccountScreen() {
               resizeMode="contain"
             />
           </View>
-        </LinearGradient>
+        </View>
 
         {/* Profile Section */}
         <View className="bg-white mx-4 my-4 p-4 rounded-xl">
@@ -164,7 +160,7 @@ export default function AccountScreen() {
             <Pressable
               key={item.label}
               onPress={item.onPress}
-              className={`flex-row items-center p-4 active:bg-gray-50 ${
+              className={`flex-row items-center p-4 active:bg-[#F1F8E9] ${
                 index < menuItems.length - 1 ? "border-b border-gray-100" : ""
               }`}
             >
@@ -189,7 +185,7 @@ export default function AccountScreen() {
             <Pressable
               key={item.label}
               onPress={item.onPress}
-              className={`flex-row items-center p-4 active:bg-gray-50 ${
+              className={`flex-row items-center p-4 active:bg-[#F1F8E9] ${
                 index < policyItems.length - 1 ? "border-b border-gray-100" : ""
               }`}
             >

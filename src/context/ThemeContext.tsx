@@ -10,9 +10,9 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [isDark] = useState(false);
     const colors = {
-        primary: "#1D5A34",
+        primary: "#1D5C45",
         primaryLight: "#66BB6A",
-        primaryDark: "#164829",
+        primaryDark: "#16482F",
         bgLight: "#F1F8E9",
         softGreen: "#E8F5E9",
         accentOrange: "#FF9800",

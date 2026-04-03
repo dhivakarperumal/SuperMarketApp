@@ -460,7 +460,7 @@ export function calculateCartWithOffers(
             (offer.discountType === "percentage"
               ? `${offer.discountValue}% OFF`
               : `₹${offer.discountValue} OFF`),
-          badgeColor: offer.badgeColor || "#1D5A34",
+          badgeColor: offer.badgeColor || "#1D5C45",
         });
 
         // Update summary
@@ -587,7 +587,7 @@ export function getProductOfferInfo(
           (offer.discountType === "percentage"
             ? `${offer.discountValue}% OFF`
             : `₹${offer.discountValue} OFF`),
-        badgeColor: offer.badgeColor || "#1D5A34",
+        badgeColor: offer.badgeColor || "#1D5C45",
         offerDescription: offer.description,
       };
     }

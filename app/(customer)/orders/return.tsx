@@ -9,7 +9,6 @@ import {
   TextInput,
   StatusBar,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, router } from "expo-router";
 import {
@@ -227,13 +226,10 @@ export default function ReturnRequestScreen() {
   const refundAmount = getRefundAmount();
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <LinearGradient
-        colors={["#1D5A34", "#164829"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
+      <View}}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View className="flex-row items-center">
@@ -251,7 +247,7 @@ export default function ReturnRequestScreen() {
             </Text>
           </View>
         </View>
-      </LinearGradient>
+      </View>
 
       {/* Progress Bar */}
       <View className="flex-row px-4 py-3 bg-white">
@@ -388,7 +384,7 @@ export default function ReturnRequestScreen() {
                 {/* Reason Selector */}
                 <Pressable
                   onPress={() => setShowReasonPicker(showReasonPicker === key ? null : key)}
-                  className="flex-row items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200"
+                  className="flex-row items-center justify-between p-3 bg-[#F1F8E9] rounded-lg border border-gray-200"
                 >
                   <Text className="text-gray-700">
                     {RETURN_REASONS.find((r) => r.value === item.reason)?.label ||
@@ -435,7 +431,7 @@ export default function ReturnRequestScreen() {
                 placeholder="Describe any issues or provide additional details..."
                 multiline
                 numberOfLines={3}
-                className="bg-gray-50 p-3 rounded-lg border border-gray-200 text-gray-700"
+                className="bg-[#F1F8E9] p-3 rounded-lg border border-gray-200 text-gray-700"
                 style={{ textAlignVertical: "top", minHeight: 80 }}
               />
             </View>

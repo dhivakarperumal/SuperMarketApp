@@ -1,20 +1,95 @@
 import { Link, useRouter } from "expo-router";
+import {
+  Eye,
+  EyeOff,
+  Lock,
+  LucideIcon,
+  Mail,
+  User,
+} from "lucide-react-native";
 import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
+  Image,
   Pressable,
   Text,
   TextInput,
   View,
-  Dimensions,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import { useAuth } from "../../src/context/AuthContext";
-import { Instagram, Twitter } from "lucide-react-native";
 
-const { width, height } = Dimensions.get("window");
+interface InputFieldProps {
+  icon: LucideIcon;
+  label: string;
+  value: string;
+  onChangeText: (text: string) => void;
+  placeholder: string;
+  keyboardType?: "default" | "email-address" | "phone-pad";
+  secureTextEntry?: boolean;
+  autoCapitalize?: "none" | "sentences" | "words";
+  showToggle?: boolean;
+  showPassword?: boolean;
+  onTogglePassword?: () => void;
+  inputKey: string;
+  focusedInput: string | null;
+  onFocus: (key: string) => void;
+  onBlur: () => void;
+}
+
+const InputField = ({
+  icon: Icon,
+  label,
+  value,
+  onChangeText,
+  placeholder,
+  keyboardType = "default",
+  secureTextEntry = false,
+  autoCapitalize = "sentences",
+  showToggle = false,
+  showPassword = false,
+  onTogglePassword,
+  inputKey,
+  focusedInput,
+  onFocus,
+  onBlur,
+}: InputFieldProps) => (
+  <View className="mb-4">
+    <Text className="mb-2 ml-1 text-[13px] font-medium text-slate-500">{label}</Text>
+    <View
+      className={`flex-row items-center rounded-full border bg-white px-4 ${
+        focusedInput === inputKey ? "border-[#1D5C45]" : "border-[#E5E7EB]"
+      }`}
+      style={{ height: 54 }}
+    >
+      <Icon size={18} color={focusedInput === inputKey ? "#1D5C45" : "#9CA3AF"} />
+      <TextInput
+        value={value}
+        onChangeText={onChangeText}
+        placeholder={placeholder}
+        placeholderTextColor="#94A3B8"
+        keyboardType={keyboardType}
+        secureTextEntry={secureTextEntry}
+        autoCapitalize={autoCapitalize}
+        onFocus={() => onFocus(inputKey)}
+        onBlur={onBlur}
+        className="ml-3 flex-1 text-slate-800"
+        style={{ fontSize: 14 }}
+      />
+      {showToggle && onTogglePassword && (
+        <Pressable onPress={onTogglePassword} hitSlop={8}>
+          {showPassword ? (
+            <EyeOff size={18} color="#94A3B8" />
+          ) : (
+            <Eye size={18} color="#94A3B8" />
+          )}
+        </Pressable>
+      )}
+    </View>
+  </View>
+);
 
 export default function RegisterScreen() {
   const router = useRouter();
@@ -23,15 +98,20 @@ export default function RegisterScreen() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [focusedInput, setFocusedInput] = useState<string | null>(null);
   const { signUp, isAuthenticated } = useAuth();
-  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     if (isAuthenticated) {
       router.replace("/");
     }
   }, [isAuthenticated, router]);
+
+  const handleFocus = (key: string) => setFocusedInput(key);
+  const handleBlur = () => setFocusedInput(null);
+  const togglePassword = () => setShowPassword(!showPassword);
 
   const handleRegister = async () => {
     if (!name || !email || !password || !confirmPassword) {
@@ -80,142 +160,152 @@ export default function RegisterScreen() {
     }
   };
 
+
+
   return (
-    <View className="flex-1 bg-[#FFFFFF]">
-      {/* Bottom Pink/Black Waves */}
-      <View
-        className="absolute bg-[#202020]"
-        style={{
-          width: width * 1.5,
-          height: width * 1.5,
-          borderRadius: width * 0.75,
-          bottom: -width * 1.05,
-          left: -width * 0.25,
-        }}
-      />
-      <View
-        className="absolute bg-[#1D5A34]"
-        style={{
-          width: width * 1.8,
-          height: width * 1.8,
-          borderRadius: width * 0.9,
-          bottom: -width * 1.25,
-          left: -width * 0.2,
-        }}
-      />
-
-      <SafeAreaView className="flex-1" edges={["top", "bottom"]}>
-        <KeyboardAwareScrollView
-          contentContainerStyle={{ flexGrow: 1, paddingBottom: 50 }}
-          enableOnAndroid
-          extraScrollHeight={50}
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
-        >
-        <View className="flex-1 px-8 justify-center pt-20">
-          
-          <View className="items-center mb-8">
-            <Text className="text-[32px] font-bold text-[#1D5A34] tracking-tight">
-              Sign Up
-            </Text>
-          </View>
-
-          <View className="mb-4">
-            <View className="h-[50px] w-full rounded-full bg-[#FFFFFF] border border-[#E8E8E8] px-5 justify-center">
-              <TextInput
-                value={email}
-                onChangeText={setEmail}
-                placeholder="Email or mobile"
-                placeholderTextColor="#6B7280"
-                keyboardType="email-address"
-                autoCapitalize="none"
-                className="flex-1 text-slate-800 text-[14px]"
+    <SafeAreaView className="flex-1 bg-[#F7F8F4]" edges={["top", "bottom"]}>
+      <KeyboardAwareScrollView
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 28 }}
+        enableOnAndroid
+        extraScrollHeight={100}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
+        <View className="flex-1 px-6 pb-6 pt-2">
+          <View className="items-center">
+            <View
+              style={{
+                width: "100%",
+                height: 210,
+                alignItems: "center",
+                justifyContent: "flex-end",
+                overflow: "hidden",
+              }}
+            >
+              <View
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: -20,
+                  right: -20,
+                  height: 160,
+                  backgroundColor: "#EAF2E4",
+                  borderBottomLeftRadius: 120,
+                  borderBottomRightRadius: 120,
+                }}
+              />
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: 18,
+                  left: -30,
+                  width: 240,
+                  height: 70,
+                  backgroundColor: "#E2E8DD",
+                  transform: [{ rotate: "-10deg" }],
+                }}
+              />
+              <Image
+                source={require("../../assets/images/logo.png")}
+                style={{ width: 160, height: 160 }}
+                resizeMode="contain"
               />
             </View>
-          </View>
-          
-          <View className="mb-4">
-            <View className="h-[50px] w-full rounded-full bg-[#E8E8E8] px-5 justify-center">
-              <TextInput
-                value={name}
-                onChangeText={setName}
-                placeholder="Username"
-                placeholderTextColor="#6B7280"
-                autoCapitalize="words"
-                className="flex-1 text-slate-800 text-[14px]"
-              />
-            </View>
+
+            <Text className="mt-2 text-[34px] font-bold text-[#202020]">Create Account</Text>
+            <Text className="mt-1 text-sm text-[#6B7280]">Let&apos;s Create account together</Text>
           </View>
 
-          <View className="mb-4">
-            <View className="h-[50px] w-full rounded-full bg-[#FFFFFF] border border-[#E8E8E8] px-5 justify-center">
-              <TextInput
-                value={password}
-                onChangeText={setPassword}
-                placeholder="Password"
-                placeholderTextColor="#6B7280"
-                secureTextEntry
-                autoCapitalize="none"
-                className="flex-1 text-slate-800 text-[14px]"
-              />
-            </View>
-          </View>
+          <View className="mt-7">
+            <InputField
+              icon={User}
+              label="Full Name"
+              value={name}
+              onChangeText={setName}
+              placeholder="Full Name"
+              autoCapitalize="words"
+              inputKey="name"
+              focusedInput={focusedInput}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
 
-          <View className="mb-6">
-            <View className="h-[50px] w-full rounded-full bg-[#E8E8E8] px-5 justify-center">
-              <TextInput
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-                placeholder="Confirm password"
-                placeholderTextColor="#6B7280"
-                secureTextEntry
-                autoCapitalize="none"
-                className="flex-1 text-slate-800 text-[14px]"
-              />
-            </View>
-          </View>
+            <InputField
+              icon={Mail}
+              label="Email"
+              value={email}
+              onChangeText={setEmail}
+              placeholder="Email address"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              inputKey="email"
+              focusedInput={focusedInput}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
 
-          <Pressable className="mb-5 items-center">
-            <Text className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-              Remember Me
-            </Text>
-          </Pressable>
+            <InputField
+              icon={Lock}
+              label="Password"
+              value={password}
+              onChangeText={setPassword}
+              placeholder="Enter Password"
+              secureTextEntry={!showPassword}
+              autoCapitalize="none"
+              showToggle={true}
+              showPassword={showPassword}
+              onTogglePassword={togglePassword}
+              inputKey="password"
+              focusedInput={focusedInput}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
 
-          <Pressable
-            onPress={handleRegister}
-            disabled={loading}
-            className="h-[54px] w-full rounded-full bg-[#1D5A34] items-center justify-center shadow-sm"
-          >
-            {loading ? (
-              <ActivityIndicator color="#fff" />
-            ) : (
-              <Text className="text-[16px] font-medium text-white">Signup</Text>
-            )}
-          </Pressable>
+            <InputField
+              icon={Lock}
+              label="Repeat Password"
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              placeholder="Enter Password"
+              secureTextEntry={!showPassword}
+              autoCapitalize="none"
+              showToggle={true}
+              showPassword={showPassword}
+              onTogglePassword={togglePassword}
+              inputKey="confirmPassword"
+              focusedInput={focusedInput}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
 
-          <View className="flex-row justify-center mt-5 mb-16">
-            <Text className="text-[#6B7280] text-sm">Already have an account? </Text>
-            <Link href="/(auth)/login" asChild>
-              <Pressable>
-                <Text className="text-[#6B7280] font-medium text-sm">LOG IN</Text>
-              </Pressable>
-            </Link>
-          </View>
-
-          <View className="flex-row justify-center items-center mt-auto pb-4">
-            <Text className="text-[#FFFFFF] text-xs mr-3 font-medium">or connect with</Text>
-            <Pressable className="mx-1 items-center justify-center w-6 h-6">
-              <Instagram size={14} color="#FFFFFF" />
+            <Pressable
+              onPress={handleRegister}
+              disabled={loading}
+              className="mt-5 items-center justify-center rounded-full bg-[#32CD32]"
+              style={{ height: 54 }}
+            >
+              {loading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text className="text-base font-semibold text-white">Register</Text>
+              )}
             </Pressable>
-            <Pressable className="mx-1 items-center justify-center w-6 h-6">
-              <Twitter size={14} color="#FFFFFF" />
-            </Pressable>
+
+            <Text className="mt-4 px-2 text-center text-xs leading-5 text-slate-400">
+              By signing up, you agree to our <Text className="font-semibold text-[#1D5C45]">Terms</Text> and <Text className="font-semibold text-[#1D5C45]">Privacy Policy</Text>.
+            </Text>
+
+            <View className="mt-5 flex-row justify-center">
+              <Text className="text-slate-500">I have an account? </Text>
+              <Link href="/(auth)/login" asChild>
+                <Pressable>
+                  <Text className="font-semibold text-[#1D5C45]">Log in</Text>
+                </Pressable>
+              </Link>
+            </View>
           </View>
-          
         </View>
       </KeyboardAwareScrollView>
-      </SafeAreaView>
-      <View style={{ height: insets.bottom, backgroundColor: "black", position: "absolute", bottom: 0, width: "100%" }} />
-    </View>
+    </SafeAreaView>
   );
 }

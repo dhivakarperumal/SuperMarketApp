@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { LinearGradient } from "expo-linear-gradient";
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
@@ -27,8 +26,7 @@ export default function Index() {
 
   if (isLoading || onboardingCompleted === null) {
     return (
-      <LinearGradient
-        colors={["#1D5A34", "#164829"]}
+      <View
         style={{ flex: 1, alignItems: "center", justifyContent: "center", padding: 24 }}
       >
         <View
@@ -45,7 +43,7 @@ export default function Index() {
             Fresh groceries, quick delivery, effortless shopping.
           </Text>
         </View>
-      </LinearGradient>
+      </View>
     );
   }
 

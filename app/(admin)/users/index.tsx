@@ -280,7 +280,7 @@ export default function UsersScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       {/* Header */}
       <View className="bg-white px-4 py-3 border-b border-gray-100">
         <View className="flex-row items-center">

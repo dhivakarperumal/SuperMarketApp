@@ -218,14 +218,14 @@ export default function EditProductScreen() {
 
   if (fetching) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center" edges={["top"]}>
-        <ActivityIndicator size="large" color="#1D5A34" />
+      <SafeAreaView className="flex-1 bg-[#F1F8E9] items-center justify-center" edges={["top","bottom"]}>
+        <ActivityIndicator size="large" color="#1D5C45" />
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       {/* Header */}
       <View className="flex-row items-center justify-between px-4 py-4 bg-gray-100 border-b border-gray-200">
         <View className="flex-row items-center">
@@ -286,7 +286,7 @@ export default function EditProductScreen() {
                 value={product.name}
                 onChangeText={(text) => setProduct({ ...product, name: text })}
                 placeholder="Enter product name"
-                className="border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50"
+                className="border-2 border-gray-200 rounded-xl px-4 py-3 bg-[#F1F8E9]"
                 placeholderTextColor="#9CA3AF"
               />
             </View>
@@ -299,7 +299,7 @@ export default function EditProductScreen() {
                 placeholder="Enter product description"
                 multiline
                 numberOfLines={3}
-                className="border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50"
+                className="border-2 border-gray-200 rounded-xl px-4 py-3 bg-[#F1F8E9]"
                 placeholderTextColor="#9CA3AF"
                 textAlignVertical="top"
               />
@@ -350,7 +350,7 @@ export default function EditProductScreen() {
                   onChangeText={(text) => setProduct({ ...product, price: text })}
                   placeholder="0"
                   keyboardType="numeric"
-                  className="border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50"
+                  className="border-2 border-gray-200 rounded-xl px-4 py-3 bg-[#F1F8E9]"
                   placeholderTextColor="#9CA3AF"
                 />
               </View>
@@ -365,7 +365,7 @@ export default function EditProductScreen() {
                         onChangeText={(text) => updateWeightPrice(weight, text)}
                         placeholder="0"
                         keyboardType="numeric"
-                        className="flex-1 border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50"
+                        className="flex-1 border-2 border-gray-200 rounded-xl px-4 py-3 bg-[#F1F8E9]"
                         placeholderTextColor="#9CA3AF"
                       />
                     </View>
@@ -386,7 +386,7 @@ export default function EditProductScreen() {
                 value={newWeight}
                 onChangeText={setNewWeight}
                 placeholder="Add variant (e.g., 500g, 1kg)"
-                className="flex-1 border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50"
+                className="flex-1 border-2 border-gray-200 rounded-xl px-4 py-3 bg-[#F1F8E9]"
                 placeholderTextColor="#9CA3AF"
               />
               <Pressable
@@ -410,7 +410,7 @@ export default function EditProductScreen() {
                   onChangeText={(text) => setProduct({ ...product, stock: text })}
                   placeholder="0"
                   keyboardType="numeric"
-                  className="border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50"
+                  className="border-2 border-gray-200 rounded-xl px-4 py-3 bg-[#F1F8E9]"
                   placeholderTextColor="#9CA3AF"
                 />
               </View>
@@ -447,7 +447,7 @@ export default function EditProductScreen() {
                 onChangeText={(text) => setProduct({ ...product, discount: text })}
                 placeholder="0"
                 keyboardType="numeric"
-                className="border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50"
+                className="border-2 border-gray-200 rounded-xl px-4 py-3 bg-[#F1F8E9]"
                 placeholderTextColor="#9CA3AF"
               />
             </View>
@@ -465,7 +465,7 @@ export default function EditProductScreen() {
           disabled={loading}
           className="bg-primary py-4 rounded-xl"
           style={{
-            shadowColor: "#1D5A34",
+            shadowColor: "#1D5C45",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 8,

@@ -1,20 +1,20 @@
-import { useState } from "react";
-import { View, Text, Pressable, Image, ScrollView, Modal } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  Heart,
-  Trash2,
-  ShoppingCart,
-  ShoppingBag,
-  HeartOff,
-  ChevronLeft,
-} from "lucide-react-native";
 import { router } from "expo-router";
-import { useFavorites } from "../../../src/hooks/useFavorites";
-import { useCart } from "../../../src/context/CartContext";
-import { formatCurrency } from "../../../src/utils/formatters";
-import { FavoriteItem } from "../../../src/types";
+import {
+    ChevronLeft,
+    Heart,
+    HeartOff,
+    ShoppingBag,
+    ShoppingCart,
+    Trash2,
+} from "lucide-react-native";
+import { useState } from "react";
+import { Image, Modal, Pressable, ScrollView, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
+import { useCart } from "../../../src/context/CartContext";
+import { useFavorites } from "../../../src/hooks/useFavorites";
+import { FavoriteItem } from "../../../src/types";
+import { formatCurrency } from "../../../src/utils/formatters";
 
 export default function FavoritesScreen() {
   const { favorites, removeFromFavorites, clearAllFavorites, loading } = useFavorites();
@@ -91,16 +91,16 @@ export default function FavoritesScreen() {
 
   if (favorites.length === 0) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
-        <View className="px-4 py-4 bg-white border-b border-gray-200">
+      <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
+        <View className="px-4 py-4 bg-primary border-b border-primaryDark">
           <View className="flex-row items-center">
             <Pressable
               onPress={() => router.back()}
-              className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center mr-3"
+              className="w-10 h-10 bg-white rounded-full items-center justify-center mr-3"
             >
-              <ChevronLeft size={24} color="#374151" />
+              <ChevronLeft size={24} color="#1D5C45" />
             </Pressable>
-            <Text className="text-2xl font-bold text-gray-800">Wishlist</Text>
+            <Text className="text-2xl font-bold text-white">Wishlist</Text>
           </View>
         </View>
         <View className="flex-1 items-center justify-center px-6">
@@ -128,20 +128,20 @@ export default function FavoritesScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       {/* Header */}
-      <View className="px-4 py-4 bg-white border-b border-gray-200">
+      <View className="px-4 py-4 bg-primary border-b border-primaryDark">
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
             <Pressable
               onPress={() => router.back()}
-              className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center mr-3"
+              className="w-10 h-10 bg-white rounded-full items-center justify-center mr-3"
             >
-              <ChevronLeft size={24} color="#374151" />
+              <ChevronLeft size={24} color="#1D5C45" />
             </Pressable>
             <View>
-              <Text className="text-2xl font-bold text-gray-800">Wishlist</Text>
-              <Text className="text-gray-500 text-sm">{favorites.length} items</Text>
+              <Text className="text-2xl font-bold text-white">Wishlist</Text>
+              <Text className="text-white/80 text-sm">{favorites.length} items</Text>
             </View>
           </View>
           <View className="flex-row items-center">
@@ -267,7 +267,7 @@ export default function FavoritesScreen() {
 
               {/* Product Preview */}
               {itemToDelete && (
-                <View className="flex-row items-center bg-gray-50 p-3 rounded-xl mb-6">
+                <View className="flex-row items-center bg-[#F1F8E9] p-3 rounded-xl mb-6">
                   <View className="w-12 h-12 bg-gray-200 rounded-lg overflow-hidden">
                     {itemToDelete.image ? (
                       <Image

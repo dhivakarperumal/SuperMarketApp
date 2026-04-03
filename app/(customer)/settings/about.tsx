@@ -1,5 +1,4 @@
 import { View, Text, Pressable, ScrollView, Image, Linking, StatusBar } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   ChevronLeft,
@@ -32,13 +31,10 @@ export default function AboutScreen() {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <LinearGradient
-        colors={["#1D5A34", "#164829"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
+      <View}}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -58,7 +54,7 @@ export default function AboutScreen() {
           </Pressable>
           <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#FFFFFF' }}>About App</Text>
         </View>
-      </LinearGradient>
+      </View>
 
       <ScrollView
         className="flex-1"
@@ -202,7 +198,7 @@ export default function AboutScreen() {
         <View className="bg-white rounded-xl overflow-hidden mb-8">
           <Pressable
             onPress={() => router.push("/(customer)/policies/privacy")}
-            className="p-4 active:bg-gray-50"
+            className="p-4 active:bg-[#F1F8E9]"
           >
             <Text className="text-primary font-semibold text-center">
               Privacy Policy
@@ -211,7 +207,7 @@ export default function AboutScreen() {
           <View className="h-px bg-gray-100" />
           <Pressable
             onPress={() => router.push("/(customer)/policies/terms")}
-            className="p-4 active:bg-gray-50"
+            className="p-4 active:bg-[#F1F8E9]"
           >
             <Text className="text-primary font-semibold text-center">
               Terms & Conditions

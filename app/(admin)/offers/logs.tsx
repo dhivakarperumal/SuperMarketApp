@@ -178,7 +178,7 @@ export default function OfferLogsScreen() {
         </View>
 
         {/* Details */}
-        <View className="px-4 py-3 bg-gray-50">
+        <View className="px-4 py-3 bg-[#F1F8E9]">
           <View className="flex-row items-center justify-between">
             <View className="flex-row items-center">
               <ShoppingBag size={14} color="#9CA3AF" />
@@ -230,7 +230,7 @@ export default function OfferLogsScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center" edges={["top", "bottom"]}>
+      <SafeAreaView className="flex-1 bg-[#F1F8E9] items-center justify-center" edges={["top", "bottom"]}>
         <ActivityIndicator size="large" color="#1D5A34" />
         <Text className="text-gray-500 mt-4">Loading offer logs...</Text>
       </SafeAreaView>
@@ -238,7 +238,7 @@ export default function OfferLogsScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       {/* Header */}
       <View className="px-4 py-4 bg-white border-b border-gray-200">
         <View className="flex-row items-center mb-4">

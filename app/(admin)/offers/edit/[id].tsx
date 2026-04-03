@@ -175,7 +175,7 @@ export default function EditOfferScreen() {
 
   if (offersLoading || !formData) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center" edges={["top", "bottom"]}>
+      <SafeAreaView className="flex-1 bg-[#F1F8E9] items-center justify-center" edges={["top", "bottom"]}>
         <ActivityIndicator size="large" color="#1D5A34" />
         <Text className="text-gray-500 mt-4">Loading offer...</Text>
       </SafeAreaView>
@@ -184,7 +184,7 @@ export default function EditOfferScreen() {
 
   if (!offer) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center" edges={["top", "bottom"]}>
+      <SafeAreaView className="flex-1 bg-[#F1F8E9] items-center justify-center" edges={["top", "bottom"]}>
         <Text className="text-gray-500">Offer not found</Text>
         <Pressable
           onPress={() => router.back()}
@@ -200,7 +200,7 @@ export default function EditOfferScreen() {
   const TypeIcon = config.icon;
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"
@@ -269,7 +269,7 @@ export default function EditOfferScreen() {
                 onChangeText={(text) => updateFormData({ name: text })}
                 placeholder="e.g., Diwali Special 20% Off"
                 placeholderTextColor="#9CA3AF"
-                className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800"
+                className="bg-[#F1F8E9] border border-gray-200 rounded-xl px-4 py-3 text-gray-800"
               />
             </View>
 
@@ -283,7 +283,7 @@ export default function EditOfferScreen() {
                 placeholderTextColor="#9CA3AF"
                 multiline
                 numberOfLines={3}
-                className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800"
+                className="bg-[#F1F8E9] border border-gray-200 rounded-xl px-4 py-3 text-gray-800"
                 textAlignVertical="top"
               />
             </View>
@@ -296,12 +296,12 @@ export default function EditOfferScreen() {
                 onChangeText={(text) => updateFormData({ badgeText: text })}
                 placeholder="e.g., 20% OFF"
                 placeholderTextColor="#9CA3AF"
-                className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800"
+                className="bg-[#F1F8E9] border border-gray-200 rounded-xl px-4 py-3 text-gray-800"
               />
             </View>
 
             {/* Active Toggle */}
-            <View className="flex-row items-center justify-between bg-gray-50 rounded-xl p-4">
+            <View className="flex-row items-center justify-between bg-[#F1F8E9] rounded-xl p-4">
               <View>
                 <Text className="text-gray-700 font-medium">Active</Text>
                 <Text className="text-gray-400 text-sm">
@@ -326,7 +326,7 @@ export default function EditOfferScreen() {
               <Text className="text-gray-700 font-medium mb-2">Start Date</Text>
               <Pressable
                 onPress={() => setShowStartDate(true)}
-                className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 flex-row items-center"
+                className="bg-[#F1F8E9] border border-gray-200 rounded-xl px-4 py-3 flex-row items-center"
               >
                 <Calendar size={20} color="#9CA3AF" />
                 <Text className="text-gray-800 ml-3">
@@ -342,7 +342,7 @@ export default function EditOfferScreen() {
               <Text className="text-gray-700 font-medium mb-2">End Date</Text>
               <Pressable
                 onPress={() => setShowEndDate(true)}
-                className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 flex-row items-center"
+                className="bg-[#F1F8E9] border border-gray-200 rounded-xl px-4 py-3 flex-row items-center"
               >
                 <Calendar size={20} color="#9CA3AF" />
                 <Text className="text-gray-800 ml-3">
@@ -371,7 +371,7 @@ export default function EditOfferScreen() {
                   key={scope}
                   onPress={() => updateFormData({ scope })}
                   className={`p-3 rounded-xl mb-2 flex-row items-center ${
-                    isSelected ? "bg-green-50 border border-primary" : "bg-gray-50"
+                    isSelected ? "bg-green-50 border border-primary" : "bg-[#F1F8E9]"
                   }`}
                 >
                   <View
@@ -443,7 +443,7 @@ export default function EditOfferScreen() {
                           updateFormData({ eligibleProducts: updated });
                         }}
                         className={`p-2 rounded-lg mb-1 flex-row items-center ${
-                          isSelected ? "bg-green-50" : "bg-gray-50"
+                          isSelected ? "bg-green-50" : "bg-[#F1F8E9]"
                         }`}
                       >
                         <View
@@ -484,7 +484,7 @@ export default function EditOfferScreen() {
                         className={`flex-1 p-3 rounded-xl mr-2 ${
                           isSelected
                             ? "bg-green-50 border border-primary"
-                            : "bg-gray-50"
+                            : "bg-[#F1F8E9]"
                         }`}
                       >
                         <Text
@@ -505,7 +505,7 @@ export default function EditOfferScreen() {
                 <Text className="text-gray-700 font-medium mb-2">
                   Discount Value
                 </Text>
-                <View className="flex-row items-center bg-gray-50 border border-gray-200 rounded-xl px-4">
+                <View className="flex-row items-center bg-[#F1F8E9] border border-gray-200 rounded-xl px-4">
                   {formData.discountType === "flat" && (
                     <Text className="text-gray-500 text-lg mr-2">₹</Text>
                   )}
@@ -531,7 +531,7 @@ export default function EditOfferScreen() {
                   <Text className="text-gray-700 font-medium mb-2">
                     Maximum Discount Amount
                   </Text>
-                  <View className="flex-row items-center bg-gray-50 border border-gray-200 rounded-xl px-4">
+                  <View className="flex-row items-center bg-[#F1F8E9] border border-gray-200 rounded-xl px-4">
                     <Text className="text-gray-500 text-lg mr-2">₹</Text>
                     <TextInput
                       value={String(formData.maxDiscountAmount || "")}
@@ -569,7 +569,7 @@ export default function EditOfferScreen() {
                     keyboardType="numeric"
                     placeholder="e.g., 2"
                     placeholderTextColor="#9CA3AF"
-                    className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800"
+                    className="bg-[#F1F8E9] border border-gray-200 rounded-xl px-4 py-3 text-gray-800"
                   />
                 </View>
                 <View className="flex-1 ml-2">
@@ -584,7 +584,7 @@ export default function EditOfferScreen() {
                     keyboardType="numeric"
                     placeholder="e.g., 1"
                     placeholderTextColor="#9CA3AF"
-                    className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800"
+                    className="bg-[#F1F8E9] border border-gray-200 rounded-xl px-4 py-3 text-gray-800"
                   />
                 </View>
               </View>
@@ -600,7 +600,7 @@ export default function EditOfferScreen() {
 
               <View className="mb-4">
                 <Text className="text-gray-700 font-medium mb-2">Combo Price</Text>
-                <View className="flex-row items-center bg-gray-50 border border-gray-200 rounded-xl px-4">
+                <View className="flex-row items-center bg-[#F1F8E9] border border-gray-200 rounded-xl px-4">
                   <Text className="text-gray-500 text-lg mr-2">₹</Text>
                   <TextInput
                     value={String(formData.comboPrice || "")}
@@ -644,7 +644,7 @@ export default function EditOfferScreen() {
                         }
                       }}
                       className={`p-2 rounded-lg mb-1 flex-row items-center ${
-                        isSelected ? "bg-blue-50" : "bg-gray-50"
+                        isSelected ? "bg-blue-50" : "bg-[#F1F8E9]"
                       }`}
                     >
                       <View
@@ -675,7 +675,7 @@ export default function EditOfferScreen() {
               <View className="mb-4">
                 <Text className="text-gray-700 font-medium mb-2">Coupon Code</Text>
                 <View className="flex-row items-center">
-                  <View className="flex-1 flex-row items-center bg-gray-50 border border-gray-200 rounded-xl px-4 mr-2">
+                  <View className="flex-1 flex-row items-center bg-[#F1F8E9] border border-gray-200 rounded-xl px-4 mr-2">
                     <Ticket size={20} color="#F59E0B" />
                     <TextInput
                       value={formData.couponCode}
@@ -710,7 +710,7 @@ export default function EditOfferScreen() {
                         className={`flex-1 p-3 rounded-xl mr-2 ${
                           isSelected
                             ? "bg-amber-50 border border-amber-500"
-                            : "bg-gray-50"
+                            : "bg-[#F1F8E9]"
                         }`}
                       >
                         <Text
@@ -729,7 +729,7 @@ export default function EditOfferScreen() {
               {/* Discount Value */}
               <View className="mb-4">
                 <Text className="text-gray-700 font-medium mb-2">Discount Value</Text>
-                <View className="flex-row items-center bg-gray-50 border border-gray-200 rounded-xl px-4">
+                <View className="flex-row items-center bg-[#F1F8E9] border border-gray-200 rounded-xl px-4">
                   {formData.discountType === "flat" && (
                     <Text className="text-gray-500 text-lg mr-2">₹</Text>
                   )}
@@ -755,7 +755,7 @@ export default function EditOfferScreen() {
                   <Text className="text-gray-700 font-medium mb-2">
                     Maximum Discount
                   </Text>
-                  <View className="flex-row items-center bg-gray-50 border border-gray-200 rounded-xl px-4">
+                  <View className="flex-row items-center bg-[#F1F8E9] border border-gray-200 rounded-xl px-4">
                     <Text className="text-gray-500 text-lg mr-2">₹</Text>
                     <TextInput
                       value={String(formData.maxDiscountAmount || "")}
@@ -776,7 +776,7 @@ export default function EditOfferScreen() {
                 <Text className="text-gray-700 font-medium mb-2">
                   Minimum Order Amount
                 </Text>
-                <View className="flex-row items-center bg-gray-50 border border-gray-200 rounded-xl px-4">
+                <View className="flex-row items-center bg-[#F1F8E9] border border-gray-200 rounded-xl px-4">
                   <Text className="text-gray-500 text-lg mr-2">₹</Text>
                   <TextInput
                     value={String(formData.minOrderAmount || "")}
@@ -792,7 +792,7 @@ export default function EditOfferScreen() {
               </View>
 
               {/* First Order Only */}
-              <View className="mb-4 flex-row items-center justify-between bg-gray-50 rounded-xl p-4">
+              <View className="mb-4 flex-row items-center justify-between bg-[#F1F8E9] rounded-xl p-4">
                 <View className="flex-1">
                   <Text className="text-gray-700 font-medium">First Order Only</Text>
                   <Text className="text-gray-400 text-sm">New customers only</Text>
@@ -806,7 +806,7 @@ export default function EditOfferScreen() {
               </View>
 
               {/* One Time Use */}
-              <View className="flex-row items-center justify-between bg-gray-50 rounded-xl p-4">
+              <View className="flex-row items-center justify-between bg-[#F1F8E9] rounded-xl p-4">
                 <View className="flex-1">
                   <Text className="text-gray-700 font-medium">One-Time Use</Text>
                   <Text className="text-gray-400 text-sm">
@@ -838,7 +838,7 @@ export default function EditOfferScreen() {
                   keyboardType="numeric"
                   placeholder="Unlimited"
                   placeholderTextColor="#9CA3AF"
-                  className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800"
+                  className="bg-[#F1F8E9] border border-gray-200 rounded-xl px-4 py-3 text-gray-800"
                 />
               </View>
               <View className="flex-1 ml-2">
@@ -851,12 +851,12 @@ export default function EditOfferScreen() {
                   keyboardType="numeric"
                   placeholder="Unlimited"
                   placeholderTextColor="#9CA3AF"
-                  className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800"
+                  className="bg-[#F1F8E9] border border-gray-200 rounded-xl px-4 py-3 text-gray-800"
                 />
               </View>
             </View>
 
-            <View className="bg-gray-50 rounded-xl p-3 flex-row items-center">
+            <View className="bg-[#F1F8E9] rounded-xl p-3 flex-row items-center">
               <Text className="text-gray-600 text-sm">Current usage:</Text>
               <Text className="text-gray-800 font-semibold ml-2">
                 {offer.usageCount || 0} times

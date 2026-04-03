@@ -6,9 +6,7 @@ import {
   TextInput,
   ActivityIndicator,
   Image,
-  StatusBar,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { FlashList } from "@shopify/flash-list";
 import { ChevronLeft, Search, Plus, FolderOpen, Edit, Trash2 } from "lucide-react-native";
@@ -58,35 +56,29 @@ export default function CategoriesScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top"]}>
-      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       {/* Header */}
-      <LinearGradient
-        colors={["#1D5A34", "#164829"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
-      >
-        <View className="flex-row items-center justify-between mb-4">
-          <View className="flex-row items-center">
-            <Pressable
-              onPress={() => router.back()}
-              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-3"
-            >
-              <ChevronLeft size={24} color="#FFFFFF" />
-            </Pressable>
-            <Text className="text-xl font-bold text-white">Categories</Text>
-          </View>
+      <View className="flex-row items-center justify-between px-4 py-4 bg-gray-100 border-b border-gray-200">
+        <View className="flex-row items-center">
           <Pressable
-            onPress={() => router.push("/(admin)/categories/add")}
-            className="flex-row items-center bg-white/20 border border-white/30 px-4 py-2 rounded-xl"
+            onPress={() => router.back()}
+            className="w-10 h-10 bg-white rounded-full items-center justify-center mr-3"
           >
-            <Plus size={18} color="#fff" />
-            <Text className="text-white font-semibold ml-1">Add</Text>
+            <ChevronLeft size={24} color="#374151" />
           </Pressable>
+          <Text className="text-xl font-bold text-gray-800">Categories</Text>
         </View>
+        <Pressable
+          onPress={() => router.push("/(admin)/categories/add")}
+          className="flex-row items-center bg-primary px-4 py-2 rounded-xl"
+        >
+          <Plus size={18} color="#fff" />
+          <Text className="text-white font-semibold ml-1">Add</Text>
+        </Pressable>
+      </View>
 
-        {/* Search Bar */}
+      {/* Search Bar */}
+      <View className="px-4 py-3">
         <View className="flex-row items-center bg-white rounded-xl px-4 py-3">
           <Search size={20} color="#9CA3AF" />
           <TextInput
@@ -97,12 +89,12 @@ export default function CategoriesScreen() {
             className="flex-1 ml-3 text-gray-800"
           />
         </View>
-      </LinearGradient>
+      </View>
 
       {/* Categories List */}
       {loading ? (
         <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color="#1D5A34" />
+          <ActivityIndicator size="large" color="#1D5C45" />
         </View>
       ) : (
         <FlashList

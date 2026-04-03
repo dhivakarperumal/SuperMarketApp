@@ -10,7 +10,6 @@ import {
   Modal,
   StatusBar,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import {
@@ -727,7 +726,7 @@ export default function BillingScreen() {
 
   if (!permission) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center" edges={['top']}>
+      <SafeAreaView className="flex-1 bg-[#F1F8E9] items-center justify-center" edges={["top","bottom"]}>
         <Text>Requesting camera permission...</Text>
       </SafeAreaView>
     );
@@ -735,7 +734,7 @@ export default function BillingScreen() {
 
   if (!permission.granted) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center px-4" edges={['top']}>
+      <SafeAreaView className="flex-1 bg-[#F1F8E9] items-center justify-center px-4" edges={["top","bottom"]}>
         <Camera size={48} color="#9CA3AF" />
         <Text className="text-gray-800 font-semibold text-lg mt-4 text-center">
           Camera Permission Required
@@ -754,13 +753,10 @@ export default function BillingScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <LinearGradient
-        colors={["#1D5A34", "#164829"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
+      <View}}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View className="flex-row items-center justify-between mb-4">
@@ -820,7 +816,7 @@ export default function BillingScreen() {
             <Scan size={24} color="#1D5A34" />
           </Pressable>
         </View>
-      </LinearGradient>
+      </View>
 
       {/* Scanner Section */}
       {scanning && (

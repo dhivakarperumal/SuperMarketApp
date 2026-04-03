@@ -1,41 +1,38 @@
-import { useState, useMemo, useEffect } from "react";
+import { FlashList } from "@shopify/flash-list";
+import { router, useLocalSearchParams } from "expo-router";
 import {
-  View,
-  Text,
-  TextInput,
-  Pressable,
-  ActivityIndicator,
-  Modal,
-  Switch,
-  ScrollView,
-  Image,
-  StatusBar,
+    ArrowUpDown,
+    ChevronLeft,
+    Grid3X3,
+    Heart,
+    List,
+    Minus,
+    Plus,
+    Search,
+    ShoppingCart,
+    SlidersHorizontal,
+    X
+} from "lucide-react-native";
+import { useEffect, useMemo, useState } from "react";
+import {
+    ActivityIndicator,
+    Image,
+    Modal,
+    Pressable,
+    ScrollView,
+    Switch,
+    Text,
+    TextInput,
+    View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { LinearGradient } from "expo-linear-gradient";
-import { FlashList } from "@shopify/flash-list";
-import {
-  Search,
-  SlidersHorizontal,
-  X,
-  Grid3X3,
-  List,
-  ShoppingCart,
-  Plus,
-  Minus,
-  Heart,
-  ChevronLeft,
-  ArrowUpDown,
-  Check,
-} from "lucide-react-native";
-import { router, useLocalSearchParams } from "expo-router";
-import { useProducts } from "../../../src/hooks/useProducts";
-import { useCategories } from "../../../src/hooks/useCategories";
+import Toast from "react-native-toast-message";
 import { ProductCard } from "../../../src/components/cards/ProductCard";
 import { useCart } from "../../../src/context/CartContext";
+import { useCategories } from "../../../src/hooks/useCategories";
 import { useFavorites } from "../../../src/hooks/useFavorites";
+import { useProducts } from "../../../src/hooks/useProducts";
 import { formatCurrency } from "../../../src/utils/formatters";
-import Toast from "react-native-toast-message";
 
 // Helper to get first valid product image (filter out barcodes)
 const getFirstValidImage = (images: string[] | undefined): string => {
@@ -159,22 +156,16 @@ export default function ShopScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-[#1D5A34]" edges={['top']}>
-      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={['top', 'bottom']}>
       {/* Header */}
-      <LinearGradient
-        colors={["#1D5A34", "#164829"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
-      >
+      <View className="px-4 py-4 bg-[#1D5C45] border-b border-[#16482F]">
         <View className="flex-row items-center justify-between mb-4">
           <View className="flex-row items-center">
             <Pressable
               onPress={() => router.back()}
-              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-3"
+              className="w-10 h-10 bg-white rounded-full items-center justify-center mr-3"
             >
-              <ChevronLeft size={24} color="#FFFFFF" />
+              <ChevronLeft size={24} color="#1D5C45" />
             </Pressable>
             <Text className="text-2xl font-bold text-white">Shop</Text>
           </View>
@@ -182,24 +173,24 @@ export default function ShopScreen() {
             {/* View Mode Toggle */}
             <Pressable
               onPress={() => setViewMode(viewMode === "grid" ? "table" : "grid")}
-              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-2"
+              className="w-10 h-10 bg-white rounded-full items-center justify-center mr-2"
             >
               {viewMode === "grid" ? (
-                <List size={20} color="#FFFFFF" />
+                <List size={20} color="#374151" />
               ) : (
-                <Grid3X3 size={20} color="#FFFFFF" />
+                <Grid3X3 size={20} color="#374151" />
               )}
             </Pressable>
             {/* Filter Button */}
             <Pressable
               onPress={() => setShowFilters(true)}
-              className="relative w-10 h-10 bg-white/20 rounded-full items-center justify-center"
+              className="relative w-10 h-10 bg-white rounded-full items-center justify-center"
             >
-              <SlidersHorizontal size={20} color="#FFFFFF" />
+              <SlidersHorizontal size={20} color="#374151" />
               {activeFilterCount > 0 && (
                 <View
-                  className="absolute -top-1 -right-1 bg-red-500 rounded-full items-center justify-center"
-                  style={{ minWidth: 18, height: 18, paddingHorizontal: 4, borderWidth: 2, borderColor: "#FFFFFF" }}
+                  className="absolute -top-1 -right-1 bg-primary rounded-full items-center justify-center"
+                  style={{ minWidth: 18, height: 18, paddingHorizontal: 4 }}
                 >
                   <Text className="text-white text-xs font-bold">{activeFilterCount}</Text>
                 </View>
@@ -209,23 +200,25 @@ export default function ShopScreen() {
         </View>
 
         {/* Search Bar */}
-        <View className="flex-row items-center bg-white rounded-2xl px-4" style={{ height: 50 }}>
-          <Search size={20} color="#9CA3AF" />
-          <TextInput
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            placeholder="Search products..."
-            placeholderTextColor="#9CA3AF"
-            className="flex-1 ml-3 text-gray-800"
-            style={{ fontSize: 15 }}
-          />
-          {searchQuery.length > 0 && (
-            <Pressable onPress={() => setSearchQuery("")}>
-              <X size={18} color="#9CA3AF" />
-            </Pressable>
-          )}
+        <View className="flex-row items-center">
+          <View className="flex-1 flex-row items-center bg-white rounded-xl px-4 py-3">
+            <Search size={20} color="#9CA3AF" />
+            <TextInput
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+              placeholder="Search products..."
+              placeholderTextColor="#9CA3AF"
+              className="flex-1 ml-3 text-gray-800"
+              style={{ fontSize: 15 }}
+            />
+            {searchQuery.length > 0 && (
+              <Pressable onPress={() => setSearchQuery("")}>
+                <X size={18} color="#9CA3AF" />
+              </Pressable>
+            )}
+          </View>
         </View>
-      </LinearGradient>
+      </View>
 
       {/* Active Filters & Results Count */}
       {(searchQuery || activeFilterCount > 0) && (
@@ -325,15 +318,14 @@ export default function ShopScreen() {
 
       {/* Products */}
       {loading ? (
-        <View className="flex-1 items-center justify-center bg-gray-50">
-          <ActivityIndicator size="large" color="#1D5A34" />
+        <View className="flex-1 items-center justify-center">
+          <ActivityIndicator size="large" color="#1D5C45" />
         </View>
       ) : viewMode === "grid" ? (
         <FlashList
           data={filteredProducts}
           numColumns={2}
           estimatedItemSize={280}
-          className="bg-gray-50"
           contentContainerStyle={{ paddingHorizontal: 12, paddingVertical: 12 }}
           ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
           renderItem={({ item, index }) => (
@@ -445,7 +437,7 @@ export default function ShopScreen() {
                           }}
                           className="p-2"
                         >
-                          <Minus size={16} color="#1D5A34" />
+                          <Minus size={16} color="#1D5C45" />
                         </Pressable>
                         <Text className="px-3 font-semibold text-gray-800">{quantity}</Text>
                         <Pressable
@@ -455,7 +447,7 @@ export default function ShopScreen() {
                           }}
                           className="p-2"
                         >
-                          <Plus size={16} color="#1D5A34" />
+                          <Plus size={16} color="#1D5C45" />
                         </Pressable>
                       </View>
                     ) : (
@@ -630,7 +622,7 @@ export default function ShopScreen() {
                   <Switch
                     value={inStockOnly}
                     onValueChange={setInStockOnly}
-                    trackColor={{ false: "#E5E7EB", true: "#1D5A34" }}
+                    trackColor={{ false: "#E5E7EB", true: "#1D5C45" }}
                     thumbColor="#fff"
                   />
                 </View>
@@ -646,7 +638,7 @@ export default function ShopScreen() {
                   <Switch
                     value={showCategoryFilter}
                     onValueChange={setShowCategoryFilter}
-                    trackColor={{ false: "#E5E7EB", true: "#1D5A34" }}
+                    trackColor={{ false: "#E5E7EB", true: "#1D5C45" }}
                     thumbColor="#fff"
                   />
                 </View>

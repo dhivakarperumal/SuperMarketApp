@@ -1,6 +1,5 @@
 import { useState, useMemo } from "react";
-import { View, Text, Pressable, TextInput, ActivityIndicator, Image, ScrollView, StatusBar } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { View, Text, Pressable, TextInput, ActivityIndicator, Image, ScrollView } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { FlashList } from "@shopify/flash-list";
 import { Search, Plus, Package, Edit, Trash2, FolderPlus, X, Printer } from "lucide-react-native";
@@ -244,28 +243,22 @@ export default function ProductsScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
-      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       {/* Header */}
-      <LinearGradient
-        colors={["#1D5A34", "#164829"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
-      >
+      <View className="px-4 py-4 bg-gray-100 border-b border-gray-200">
         <View className="flex-row items-center justify-between mb-4">
-          <Text className="text-2xl font-bold text-white">Products</Text>
+          <Text className="text-2xl font-bold text-gray-800">Products</Text>
           <View className="flex-row items-center">
-            <Text className="text-white/80 mr-3">{filteredProducts.length} items</Text>
+            <Text className="text-gray-500 mr-3">{filteredProducts.length} items</Text>
             <Pressable
               onPress={printAllBarcodes}
               disabled={printing}
-              className="p-2 bg-white/20 rounded-lg border border-white/30"
+              className="p-2 bg-white rounded-lg border border-gray-200"
             >
               {printing ? (
-                <ActivityIndicator size={20} color="#FFFFFF" />
+                <ActivityIndicator size={20} color="#4FAD21" />
               ) : (
-                <Printer size={20} color="#FFFFFF" />
+                <Printer size={20} color="#4FAD21" />
               )}
             </Pressable>
           </View>
@@ -295,13 +288,13 @@ export default function ProductsScreen() {
             onPress={() => setSelectedCategory("all")}
             className={`px-4 py-2 rounded-xl mr-2 ${
               selectedCategory === "all"
-                ? "bg-white"
-                : "bg-white/20 border border-white/30"
+                ? "bg-primary"
+                : "bg-white border border-gray-200"
             }`}
           >
             <Text
               className={`font-medium ${
-                selectedCategory === "all" ? "text-primary font-bold" : "text-white"
+                selectedCategory === "all" ? "text-white" : "text-gray-600"
               }`}
             >
               All
@@ -315,26 +308,26 @@ export default function ProductsScreen() {
               onPress={() => setSelectedCategory(cat.id)}
               className={`px-4 py-2 rounded-xl mr-2 ${
                 selectedCategory === cat.id
-                  ? "bg-white"
-                  : "bg-white/20 border border-white/30"
+                  ? "bg-primary"
+                  : "bg-white border border-gray-200"
               }`}
             >
               <Text
                 className={`font-medium ${
-                  selectedCategory === cat.id ? "text-primary font-bold" : "text-white"
+                  selectedCategory === cat.id ? "text-white" : "text-gray-600"
                 }`}
               >
-                {cat.cname}
+                {cat.name}
               </Text>
             </Pressable>
           ))}
         </ScrollView>
-      </LinearGradient>
+      </View>
 
       {/* Products List */}
       {loading ? (
         <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color="#1D5A34" />
+          <ActivityIndicator size="large" color="#4FAD21" />
         </View>
       ) : (
         <FlashList
@@ -472,7 +465,7 @@ export default function ProductsScreen() {
             fabOpen ? "bg-gray-700" : "bg-primary"
           }`}
           style={{
-            shadowColor: fabOpen ? "#374151" : "#1D5A34",
+            shadowColor: fabOpen ? "#374151" : "#4FAD21",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 8,

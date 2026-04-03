@@ -5,9 +5,7 @@ import {
   Pressable,
   ScrollView,
   Switch,
-  StatusBar,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   ChevronLeft,
@@ -95,7 +93,7 @@ export default function SettingsScreen() {
     description,
     onPress,
     showArrow = true,
-    iconColor = "#1D5A34",
+    iconColor = "#1D5C45",
     iconBgColor,
   }: any) => (
     <Pressable
@@ -133,7 +131,7 @@ export default function SettingsScreen() {
     description,
     value,
     onValueChange,
-    iconColor = "#1D5A34",
+    iconColor = "#1D5C45",
     iconBgColor,
   }: any) => (
     <View style={{
@@ -161,7 +159,7 @@ export default function SettingsScreen() {
       <Switch
         value={value}
         onValueChange={onValueChange}
-        trackColor={{ false: colors.border, true: "#1D5A34" }}
+        trackColor={{ false: colors.border, true: "#1D5C45" }}
         thumbColor="#fff"
       />
     </View>
@@ -182,32 +180,32 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.surface }} edges={["top", "bottom"]}>
-      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <LinearGradient
-        colors={["#1D5A34", "#164829"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
-      >
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Pressable
-            onPress={() => router.back()}
-            style={{
-              width: 40,
-              height: 40,
-              backgroundColor: 'rgba(255, 255, 255, 0.2)',
-              borderRadius: 20,
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginRight: 12
-            }}
-          >
-            <ChevronLeft size={24} color="#FFFFFF" />
-          </Pressable>
-          <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#FFFFFF' }}>Settings</Text>
-        </View>
-      </LinearGradient>
+      <View style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 16,
+        paddingVertical: 16,
+        backgroundColor: colors.surfaceSecondary,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.border
+      }}>
+        <Pressable
+          onPress={() => router.back()}
+          style={{
+            width: 40,
+            height: 40,
+            backgroundColor: colors.card,
+            borderRadius: 20,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginRight: 12
+          }}
+        >
+          <ChevronLeft size={24} color={colors.text} />
+        </Pressable>
+        <Text style={{ fontSize: 20, fontWeight: 'bold', color: colors.text }}>Settings</Text>
+      </View>
 
       <ScrollView
         style={{ flex: 1 }}

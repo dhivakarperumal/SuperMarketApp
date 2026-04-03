@@ -118,9 +118,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         
         // Sign out from Firebase
         await signOut(auth);
-        
-        // Force navigation completely instead of relying on root wrapper
-        require("expo-router").router.replace("/(auth)/login");
     };
 
     return (

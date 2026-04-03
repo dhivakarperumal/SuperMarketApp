@@ -25,11 +25,9 @@ import {
   Volume2,
   VolumeX,
   Play,
-  Clapperboard,
   X,
   Send,
 } from "lucide-react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import { useReels, Reel, ReelComment } from "../../../src/hooks/useReels";
 import Toast from "react-native-toast-message";
@@ -142,7 +140,7 @@ const ReelItem = memo(({
           />
         ) : (
           <View style={[styles.video, styles.placeholderVideo]}>
-            <Clapperboard size={60} color="#fff" />
+            <Play size={60} color="#fff" />
             <Text style={styles.noVideoText}>No video available</Text>
           </View>
         )}
@@ -158,8 +156,7 @@ const ReelItem = memo(({
       </Pressable>
 
       {/* Gradient overlay for text */}
-      <LinearGradient
-        colors={["transparent", "rgba(0,0,0,0.8)"]}
+      <View
         style={styles.gradient}
         pointerEvents="none"
       />
@@ -437,7 +434,7 @@ export default function ReelsScreen() {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#1D5A34" />
+        <ActivityIndicator size="large" color="#1D5C45" />
         <Text style={styles.loadingText}>Loading reels...</Text>
       </View>
     );
@@ -445,10 +442,10 @@ export default function ReelsScreen() {
 
   if (reels.length === 0) {
     return (
-      <SafeAreaView style={styles.emptyContainer} edges={["top"]}>
+      <SafeAreaView style={styles.emptyContainer} edges={["top","bottom"]}>
         <View style={styles.emptyContent}>
           <View style={styles.emptyIcon}>
-            <Clapperboard size={48} color="#9CA3AF" />
+            <Play size={48} color="#9CA3AF" />
           </View>
           <Text style={styles.emptyTitle}>No Reels Yet</Text>
           <Text style={styles.emptySubtitle}>
@@ -484,7 +481,7 @@ export default function ReelsScreen() {
       />
 
       {/* Header */}
-      <SafeAreaView style={styles.header} edges={["top"]}>
+      <SafeAreaView style={styles.header} edges={["top","bottom"]}>
         <Text style={styles.headerTitle}>Reels</Text>
       </SafeAreaView>
 
@@ -515,7 +512,7 @@ export default function ReelsScreen() {
             {/* Comments List */}
             {loadingComments ? (
               <View style={styles.commentsLoading}>
-                <ActivityIndicator size="large" color="#1D5A34" />
+                <ActivityIndicator size="large" color="#1D5C45" />
               </View>
             ) : comments.length === 0 ? (
               <View style={styles.noComments}>
@@ -732,7 +729,7 @@ const styles = StyleSheet.create({
   profilePlaceholder: {
     width: "100%",
     height: "100%",
-    backgroundColor: "#1D5A34",
+    backgroundColor: "#1D5C45",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -896,7 +893,7 @@ const styles = StyleSheet.create({
   commentAvatarPlaceholder: {
     width: "100%",
     height: "100%",
-    backgroundColor: "#1D5A34",
+    backgroundColor: "#1D5C45",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -951,7 +948,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: "#1D5A34",
+    backgroundColor: "#1D5C45",
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 8,

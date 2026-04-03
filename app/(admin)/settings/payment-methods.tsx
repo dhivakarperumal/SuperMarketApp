@@ -215,7 +215,7 @@ export default function PaymentMethodsScreen() {
   const upiMethod = paymentMethods.find((m) => m.id === "upi");
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.surface }} edges={["top"]}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.surface }} edges={["top","bottom"]}>
       {/* Header */}
       <View
         style={{

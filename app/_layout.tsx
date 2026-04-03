@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { LogBox } from "react-native";
+import { LogBox, View } from "react-native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -30,10 +30,10 @@ function AppContent() {
   const { isDark, colors } = useTheme();
 
   return (
-    <>
+    <View style={{ flex: 1, backgroundColor: colors?.background || "#F1F8E9" }}>
       <StatusBar
         style={colors?.statusBar || "dark"}
-        backgroundColor={colors?.background || "#FFFFFF"}
+        backgroundColor={colors?.background || "#F1F8E9"}
       />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
@@ -42,7 +42,7 @@ function AppContent() {
         <Stack.Screen name="(admin)" />
       </Stack>
       <Toast config={toastConfig} position="top" topOffset={60} visibilityTime={3000} />
-    </>
+    </View>
   );
 }
 

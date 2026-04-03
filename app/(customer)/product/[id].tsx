@@ -13,9 +13,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
-  StatusBar,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { useLocalSearchParams, router } from "expo-router";
 import {
@@ -410,7 +408,7 @@ export default function ProductDetailScreen() {
         className="mr-3 bg-white rounded-2xl overflow-hidden border border-gray-100"
         style={{ width: 140 }}
       >
-        <View className="h-32 bg-gray-50 items-center justify-center p-2">
+        <View className="h-32 bg-[#F1F8E9] items-center justify-center p-2">
           {cardImage ? (
             <Image source={{ uri: cardImage }} className="w-full h-full" resizeMode="contain" />
           ) : (
@@ -448,7 +446,7 @@ export default function ProductDetailScreen() {
     return (
       <SafeAreaView className="flex-1 bg-white">
         <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color="#1D5A34" />
+          <ActivityIndicator size="large" color="#1D5C45" />
           <Text className="text-gray-500 mt-4">Loading...</Text>
         </View>
       </SafeAreaView>
@@ -486,45 +484,37 @@ export default function ProductDetailScreen() {
   const avgRating = getAverageRating();
 
   return (
-    <SafeAreaView className="flex-1 bg-white" edges={["top"]}>
-      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
+    <SafeAreaView className="flex-1 bg-white" edges={["top","bottom"]}>
       {/* Header */}
-      <LinearGradient
-        colors={["#1D5A34", "#164829"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
-      >
-        <View className="flex-row items-center justify-between">
+      <View className="flex-row items-center justify-between px-4 py-2 bg-white">
+        <Pressable
+          onPress={() => router.back()}
+          className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center"
+        >
+          <ChevronLeft size={22} color="#374151" />
+        </Pressable>
+        <Text className="flex-1 text-center font-bold text-gray-900 text-lg" numberOfLines={1}>
+          Product Details
+        </Text>
+        <View className="flex-row" style={{ gap: 10 }}>
           <Pressable
-            onPress={() => router.back()}
-            className="w-10 h-10 bg-white/20 rounded-full items-center justify-center"
+            onPress={handleShare}
+            className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center"
           >
-            <ChevronLeft size={22} color="#FFFFFF" />
+            <Share2 size={20} color="#374151" />
           </Pressable>
-          <Text className="flex-1 text-center font-bold text-white text-lg" numberOfLines={1}>
-            Product Details
-          </Text>
-          <View className="flex-row" style={{ gap: 10 }}>
-            <Pressable
-              onPress={handleShare}
-              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center"
-            >
-              <Share2 size={20} color="#FFFFFF" />
-            </Pressable>
-            <Pressable
-              onPress={handleToggleFavorite}
-              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center"
-            >
-              <Heart
-                size={20}
-                color={isFavorite ? "#EF4444" : "#FFFFFF"}
-                fill={isFavorite ? "#EF4444" : "transparent"}
-              />
-            </Pressable>
-          </View>
+          <Pressable
+            onPress={handleToggleFavorite}
+            className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center"
+          >
+            <Heart
+              size={20}
+              color={isFavorite ? "#EF4444" : "#374151"}
+              fill={isFavorite ? "#EF4444" : "transparent"}
+            />
+          </Pressable>
         </View>
-      </LinearGradient>
+      </View>
 
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Product Images */}
@@ -677,7 +667,7 @@ export default function ProductDetailScreen() {
                     ? "#DC2626"
                     : stockStatus.isLowStock
                     ? "#D97706"
-                    : "#1D5A34",
+                    : "#1D5C45",
                 }}
               >
                 {stockStatus.label}
@@ -723,7 +713,7 @@ export default function ProductDetailScreen() {
 
           {/* Quantity Selector */}
           {!stockStatus?.isOutOfStock && (
-            <View className="flex-row items-center justify-between bg-gray-50 p-4 rounded-xl mb-4">
+            <View className="flex-row items-center justify-between bg-[#F1F8E9] p-4 rounded-xl mb-4">
               <Text className="text-gray-700 font-semibold">Quantity</Text>
               <View className="flex-row items-center bg-white rounded-xl border border-gray-200">
                 <Pressable
@@ -763,14 +753,14 @@ export default function ProductDetailScreen() {
         </View>
 
         {/* Reviews Section */}
-        <View className="bg-gray-50 p-4 mt-3 mx-4 rounded-2xl">
+        <View className="bg-[#F1F8E9] p-4 mt-3 mx-4 rounded-2xl">
           <View className="flex-row items-center justify-between mb-4">
             <Text className="text-lg font-bold text-gray-900">Reviews</Text>
             <Pressable
               onPress={() => setShowReviewModal(true)}
               className="flex-row items-center bg-primary/10 px-3 py-2 rounded-lg"
             >
-              <Edit3 size={14} color="#1D5A34" />
+              <Edit3 size={14} color="#1D5C45" />
               <Text className="text-primary font-semibold text-sm ml-1">Write Review</Text>
             </Pressable>
           </View>
@@ -785,7 +775,7 @@ export default function ProductDetailScreen() {
           )}
 
           {reviews.length === 0 ? (
-            <View className="items-center py-6 bg-gray-50 rounded-xl">
+            <View className="items-center py-6 bg-[#F1F8E9] rounded-xl">
               <Star size={32} color="#D1D5DB" />
               <Text className="text-gray-500 mt-2">No reviews yet</Text>
               <Text className="text-gray-400 text-sm mt-1">Be the first to review!</Text>
@@ -832,7 +822,7 @@ export default function ProductDetailScreen() {
                 className="flex-row items-center"
               >
                 <Text className="text-primary font-medium text-sm">See All</Text>
-                <ChevronRight size={16} color="#1D5A34" />
+                <ChevronRight size={16} color="#1D5C45" />
               </Pressable>
             </View>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -900,7 +890,7 @@ export default function ProductDetailScreen() {
                 {/* Review Comment */}
                 <Text className="text-gray-700 font-semibold mb-2">Your Review</Text>
                 <TextInput
-                  className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-gray-800 min-h-[120px]"
+                  className="bg-[#F1F8E9] border border-gray-200 rounded-xl p-4 text-gray-800 min-h-[120px]"
                   placeholder="Share your experience with this product..."
                   placeholderTextColor="#9CA3AF"
                   multiline

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { View, Text, Pressable, ScrollView, ActivityIndicator, Modal, StatusBar } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   ChevronLeft,
@@ -189,13 +188,10 @@ export default function AddressesScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <LinearGradient
-        colors={["#1D5A34", "#164829"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
+      <View}}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View className="flex-row items-center justify-between">
@@ -218,7 +214,7 @@ export default function AddressesScreen() {
             <Text className="text-white font-semibold ml-1.5">Add New</Text>
           </Pressable>
         </View>
-      </LinearGradient>
+      </View>
 
       {loading ? (
         <View className="flex-1 items-center justify-center">
@@ -307,7 +303,7 @@ export default function AddressesScreen() {
 
               {/* Address Preview */}
               {addressToDelete && (
-                <View className="bg-gray-50 p-4 rounded-xl mb-6">
+                <View className="bg-[#F1F8E9] p-4 rounded-xl mb-6">
                   <View className="flex-row items-center mb-2">
                     <View className="w-8 h-8 bg-gray-200 rounded-full items-center justify-center">
                       {(() => {

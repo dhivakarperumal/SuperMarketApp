@@ -167,7 +167,7 @@ export const createRazorpayOptions = (
       test_mode: RAZORPAY_TEST_MODE ? "true" : "false",
     },
     theme: {
-      color: "#1D5A34",
+      color: "#1D5C45",
     },
     retry: {
       enabled: true,
@@ -228,7 +228,9 @@ export const getRazorpayErrorMessage = (error: any): string => {
     GATEWAY_ERROR: "Payment gateway error. Please try again later.",
     SERVER_ERROR: "Server error. Please try again.",
     NETWORK_ERROR: "Network error. Please check your internet connection.",
-    PAYMENT_CANCELLED: "Payment was cancelled.",
+    PAYMENT_CANCELLED: "Your payment has been cancelled. Try again to complete the transaction.",
+    PAYMENT_CANCELED: "Your payment has been cancelled. Try again to complete the transaction.",
+    USER_CANCELLED: "Your payment was cancelled by the user.",
     PAYMENT_FAILED: "Payment failed. Please try again.",
   };
 
@@ -237,4 +239,29 @@ export const getRazorpayErrorMessage = (error: any): string => {
   }
 
   return "Payment failed. Please try again.";
+};
+
+export const isRazorpayCancelledError = (error: any): boolean => {
+  if (!error) return false;
+
+  const message =
+    typeof error === "string"
+      ? error
+      : error?.message || error?.error?.description || error?.error?.reason || "";
+
+  if (/cancelled|canceled|user cancelled|user canceled/i.test(message)) {
+    return true;
+  }
+
+  const code = error?.code || error?.error?.code || "";
+  if (/PAYMENT_CANCELLED|PAYMENT_CANCELED|USER_CANCELLED/i.test(code)) {
+    return true;
+  }
+
+  // sometimes Razorpay uses BAD_REQUEST_ERROR with cancellation message
+  if (code === "BAD_REQUEST_ERROR" && /cancelled|canceled/i.test(message)) {
+    return true;
+  }
+
+  return false;
 };

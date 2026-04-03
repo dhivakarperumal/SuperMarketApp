@@ -163,7 +163,7 @@ export default function StoreInfoScreen() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.surface }} edges={["top"]}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.surface }} edges={["top","bottom"]}>
       {/* Header */}
       <View
         style={{

@@ -143,7 +143,7 @@ export default function EditReelScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center">
+      <SafeAreaView className="flex-1 bg-[#F1F8E9] items-center justify-center">
         <ActivityIndicator size="large" color="#1D5A34" />
       </SafeAreaView>
     );
@@ -151,14 +151,14 @@ export default function EditReelScreen() {
 
   if (!reel) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center">
+      <SafeAreaView className="flex-1 bg-[#F1F8E9] items-center justify-center">
         <Text className="text-gray-500">Reel not found</Text>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       {/* Header */}
       <View className="flex-row items-center justify-between px-4 py-4 bg-white border-b border-gray-200">
         <View className="flex-row items-center">

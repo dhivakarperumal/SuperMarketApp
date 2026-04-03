@@ -246,7 +246,7 @@ export default function OffersScreen() {
         </View>
 
         {/* Footer */}
-        <View className="px-4 py-3 bg-gray-50 flex-row items-center justify-between">
+        <View className="px-4 py-3 bg-[#F1F8E9] flex-row items-center justify-between">
           {/* Validity & Usage */}
           <View className="flex-row items-center">
             <Calendar size={14} color="#9CA3AF" />
@@ -288,7 +288,7 @@ export default function OffersScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center" edges={["top", "bottom"]}>
+      <SafeAreaView className="flex-1 bg-[#F1F8E9] items-center justify-center" edges={["top", "bottom"]}>
         <ActivityIndicator size="large" color="#1D5A34" />
         <Text className="text-gray-500 mt-4">Loading offers...</Text>
       </SafeAreaView>
@@ -296,7 +296,7 @@ export default function OffersScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       {/* Header */}
       <View className="px-4 py-4 bg-gray-100 border-b border-gray-200">
         <View className="flex-row items-center mb-4">
@@ -396,7 +396,7 @@ export default function OffersScreen() {
           <Pressable
             onPress={() => setFilter("inactive")}
             className={`flex-1 rounded-xl py-2.5 ${
-              filter === "inactive" ? "bg-gray-500" : "bg-white"
+              filter === "inactive" ? "bg-[#F1F8E9]0" : "bg-white"
             }`}
           >
             <Text

@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
   StatusBar,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
@@ -75,7 +74,7 @@ const InputField = ({
     </Text>
     <View
       className={`flex-row items-start rounded-xl px-4 ${
-        editable ? "bg-gray-50" : "bg-gray-100"
+        editable ? "bg-[#F1F8E9]" : "bg-gray-100"
       } ${
         focusedInput === inputKey
           ? "border-2 border-primary"
@@ -176,13 +175,10 @@ export default function ContactScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <LinearGradient
-        colors={["#1D5A34", "#164829"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
+      <View}}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View className="flex-row items-center">
@@ -196,7 +192,7 @@ export default function ContactScreen() {
             Contact Support
           </Text>
         </View>
-      </LinearGradient>
+      </View>
 
       <KeyboardAwareScrollView
         contentContainerStyle={{ padding: 16 }}
@@ -263,7 +259,7 @@ export default function ContactScreen() {
             </Text>
             <Pressable
               onPress={() => setShowIssueDropdown(!showIssueDropdown)}
-              className={`flex-row items-center rounded-xl px-4 bg-gray-50 ${
+              className={`flex-row items-center rounded-xl px-4 bg-[#F1F8E9] ${
                 showIssueDropdown
                   ? "border-2 border-primary"
                   : "border border-gray-200"

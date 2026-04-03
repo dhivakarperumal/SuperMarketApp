@@ -237,7 +237,7 @@ export default function AddReelScreen() {
   const selectedProductData = products.find((p) => p.id === selectedProduct);
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       {/* Header */}
       <View className="flex-row items-center justify-between px-4 py-4 bg-white border-b border-gray-200">
         <View className="flex-row items-center">
@@ -517,7 +517,7 @@ export default function AddReelScreen() {
               {/* Record Video */}
               <Pressable
                 onPress={recordVideo}
-                className="flex-row items-center p-4 bg-gray-50 rounded-xl mb-3"
+                className="flex-row items-center p-4 bg-[#F1F8E9] rounded-xl mb-3"
               >
                 <View className="w-12 h-12 bg-red-100 rounded-full items-center justify-center">
                   <Camera size={24} color="#EF4444" />
@@ -531,7 +531,7 @@ export default function AddReelScreen() {
               {/* Pick from Gallery */}
               <Pressable
                 onPress={pickVideoFromGallery}
-                className="flex-row items-center p-4 bg-gray-50 rounded-xl mb-3"
+                className="flex-row items-center p-4 bg-[#F1F8E9] rounded-xl mb-3"
               >
                 <View className="w-12 h-12 bg-blue-100 rounded-full items-center justify-center">
                   <FolderOpen size={24} color="#3B82F6" />
@@ -543,7 +543,7 @@ export default function AddReelScreen() {
               </Pressable>
 
               {/* Paste URL */}
-              <View className="p-4 bg-gray-50 rounded-xl">
+              <View className="p-4 bg-[#F1F8E9] rounded-xl">
                 <View className="flex-row items-center mb-3">
                   <View className="w-12 h-12 bg-green-100 rounded-full items-center justify-center">
                     <Link2 size={24} color="#66BB6A" />

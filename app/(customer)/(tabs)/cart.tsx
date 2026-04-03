@@ -1,17 +1,16 @@
-import { useState, useEffect, useMemo } from "react";
-import { View, Text, Pressable, ScrollView, Image, Modal, ActivityIndicator, StatusBar } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import { Trash2, Plus, Minus, ShoppingBag, AlertTriangle, ChevronLeft, AlertCircle, Truck, Gift, Tag, Ticket } from "lucide-react-native";
 import { router } from "expo-router";
+import { AlertCircle, AlertTriangle, ChevronLeft, Gift, Minus, Plus, ShoppingBag, Tag, Ticket, Trash2, Truck } from "lucide-react-native";
+import { useEffect, useMemo, useState } from "react";
+import { ActivityIndicator, Image, Modal, Pressable, ScrollView, Text, View } from "react-native";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
+import { WhatsAppCheckoutButton } from "../../../src/components/whatsapp/WhatsAppOrderButton";
 import { useCart } from "../../../src/context/CartContext";
 import { useDeliveryConfig } from "../../../src/context/DeliveryConfigContext";
 import { useOffers } from "../../../src/context/OfferContext";
+import { CartItem } from "../../../src/types";
 import { formatCurrency } from "../../../src/utils/formatters";
 import { getProductStock } from "../../../src/utils/stockManager";
-import { CartItem } from "../../../src/types";
-import Toast from "react-native-toast-message";
-import { WhatsAppCheckoutButton } from "../../../src/components/whatsapp/WhatsAppOrderButton";
 
 export default function CartScreen() {
   const { cart, cartCount, cartTotal, updateQuantity, removeFromCart, clearCart } = useCart();
@@ -163,25 +162,19 @@ export default function CartScreen() {
 
   if (cart.length === 0) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#1D5A34" }} edges={['top']}>
-        <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
-        <LinearGradient
-          colors={["#1D5A34", "#164829"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
-        >
+      <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
+        <View className="px-4 py-4 bg-primary border-b border-primaryDark">
           <View className="flex-row items-center">
             <Pressable
               onPress={() => router.back()}
-              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-3"
+              className="w-10 h-10 bg-white rounded-full items-center justify-center mr-3"
             >
-              <ChevronLeft size={24} color="#FFFFFF" />
+              <ChevronLeft size={24} color="#1D5C45" />
             </Pressable>
             <Text className="text-2xl font-bold text-white">My Cart</Text>
           </View>
-        </LinearGradient>
-        <View className="flex-1 items-center justify-center px-4 bg-gray-50">
+        </View>
+        <View className="flex-1 items-center justify-center px-4">
           <View className="bg-gray-100 p-6 rounded-full mb-4">
             <ShoppingBag size={48} color="#9CA3AF" />
           </View>
@@ -203,22 +196,16 @@ export default function CartScreen() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#1D5A34" }} edges={['top']}>
-      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       {/* Header */}
-      <LinearGradient
-        colors={["#1D5A34", "#164829"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
-      >
+      <View className="px-4 py-4 bg-primary border-b border-primaryDark">
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
             <Pressable
               onPress={() => router.back()}
-              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-3"
+              className="w-10 h-10 bg-white rounded-full items-center justify-center mr-3"
             >
-              <ChevronLeft size={24} color="#FFFFFF" />
+              <ChevronLeft size={24} color="#1D5C45" />
             </Pressable>
             <View>
               <Text className="text-2xl font-bold text-white">My Cart</Text>
@@ -227,16 +214,16 @@ export default function CartScreen() {
           </View>
           <Pressable
             onPress={handleClearAllPress}
-            className="px-3 py-2 bg-white/20 rounded-full"
+            className="px-3 py-2 bg-red-50 rounded-full"
           >
-            <Text className="text-white font-medium">Clear All</Text>
+            <Text className="text-red-500 font-medium">Clear All</Text>
           </Pressable>
         </View>
-      </LinearGradient>
+      </View>
 
       {/* Cart Items */}
       <ScrollView
-        className="flex-1 bg-gray-50"
+        className="flex-1"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingTop: 6, paddingBottom: 12 }}
       >

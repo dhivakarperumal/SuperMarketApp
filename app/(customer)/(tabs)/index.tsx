@@ -14,7 +14,6 @@ import {
   NativeSyntheticEvent,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { LinearGradient } from "expo-linear-gradient";
 import {
   Search,
   Bell,
@@ -49,7 +48,7 @@ const banners = [
     title: "Fresh Grocery",
     subtitle: "20% OFF on first order",
     emoji: "🛒",
-    bgColors: ["#1D5A34", "#164829"],
+    bgColors: ["#4FAD21", "#2E7D11"],
   },
   {
     id: 2,
@@ -70,7 +69,7 @@ const banners = [
 // Quick categories with colors
 const quickCategories = [
   { id: "fruits", name: "Fruits", emoji: "🍎", color: "#FF6B6B", bgColor: "#FFE8E8" },
-  { id: "vegetables", name: "Vegetables", emoji: "🥬", color: "#1D5A34", bgColor: "#E8F5E9" },
+  { id: "vegetables", name: "Vegetables", emoji: "🥬", color: "#4FAD21", bgColor: "#E8F5E8" },
   { id: "dairy", name: "Dairy", emoji: "🥛", color: "#3B82F6", bgColor: "#E8F0FF" },
   { id: "bakery", name: "Bakery", emoji: "🍞", color: "#F59E0B", bgColor: "#FFF3E0" },
   { id: "meat", name: "Meat", emoji: "🍖", color: "#EF4444", bgColor: "#FEE2E2" },
@@ -79,14 +78,14 @@ const quickCategories = [
 
 // Features
 const features = [
-  { icon: Truck, title: "Free Delivery", color: "#1D5A34" },
+  { icon: Truck, title: "Free Delivery", color: "#4FAD21" },
   { icon: Clock, title: "Fast Service", color: "#3B82F6" },
   { icon: Shield, title: "Secure Pay", color: "#8B5CF6" },
   { icon: Gift, title: "Daily Offers", color: "#F59E0B" },
 ];
 
 export default function HomeScreen() {
-  const { products, loading: productsLoading, refresh: refreshProducts, isOffline } = useProducts();
+  const { products, loading: productsLoading, refresh: refreshProducts } = useProducts();
   const { categories, loading: categoriesLoading } = useCategories();
   const { cartCount } = useCart();
   const { favorites } = useFavorites();
@@ -138,19 +137,17 @@ export default function HomeScreen() {
     : [];
 
   return (
-<SafeAreaView
-  className="flex-1 bg-[#1D5A34]"
-  edges={["top"]}
->
-  <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
-
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
+      <StatusBar barStyle="light-content" backgroundColor="#1D5C45" />
 
       {/* Header */}
-      <LinearGradient
-        colors={["#1D5A34", "#164829"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
+      <View
+        style={{
+          backgroundColor: "#1D5C45",
+          paddingHorizontal: 16,
+          paddingTop: 12,
+          paddingBottom: 16,
+        }}
       >
         {/* Top Row */}
         <View className="flex-row items-center justify-between mb-4">
@@ -226,16 +223,15 @@ export default function HomeScreen() {
             </Pressable>
           )}
         </View>
-      </LinearGradient>
+      </View>
 
       {/* Offline Banner */}
       <OfflineBanner compact />
 
       <ScrollView
-        className="bg-gray-50"
         showsVerticalScrollIndicator={false}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={["#1D5A34"]} />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         contentContainerStyle={{ paddingBottom: 100 }}
       >
@@ -296,10 +292,7 @@ export default function HomeScreen() {
                     onPress={() => router.push("/(customer)/(tabs)/shop")}
                     style={{ width: BANNER_WIDTH, marginRight: index < banners.length - 1 ? 12 : 0 }}
                   >
-                    <LinearGradient
-                      colors={banner.bgColors}
-                      start={{ x: 0, y: 0 }}
-                      end={{ x: 1, y: 1 }}
+                    <View}}
                       style={{
                         height: 150,
                         borderRadius: 20,
@@ -320,7 +313,7 @@ export default function HomeScreen() {
                         </View>
                       </View>
                       <Text style={{ fontSize: 70 }}>{banner.emoji}</Text>
-                    </LinearGradient>
+                    </View>
                   </Pressable>
                 ))}
               </ScrollView>
@@ -334,7 +327,7 @@ export default function HomeScreen() {
                     style={{
                       width: activeBanner === index ? 24 : 8,
                       height: 8,
-                      backgroundColor: activeBanner === index ? "#1D5A34" : "#D1D5DB",
+                      backgroundColor: activeBanner === index ? "#4FAD21" : "#D1D5DB",
                     }}
                   />
                 ))}
@@ -368,7 +361,7 @@ export default function HomeScreen() {
                   className="flex-row items-center"
                 >
                   <Text className="text-primary font-semibold text-sm">See All</Text>
-                  <ChevronRight size={16} color="#1D5A34" />
+                  <ChevronRight size={16} color="#4FAD21" />
                 </Pressable>
               </View>
               <ScrollView
@@ -405,7 +398,7 @@ export default function HomeScreen() {
                       className="text-gray-700 text-xs font-medium text-center"
                       numberOfLines={1}
                     >
-                      {cat.cname || cat.name}
+                      {cat.name}
                     </Text>
                   </Pressable>
                 ))}
@@ -416,10 +409,7 @@ export default function HomeScreen() {
             <View className="px-4 pt-6 pb-3">
               {/* Offer 1 */}
               <Pressable onPress={() => router.push("/(customer)/(tabs)/shop")} className="mb-3">
-                <LinearGradient
-                  colors={["#FF9F43", "#FF6B6B"]}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
+                <View}}
                   style={{
                     borderRadius: 16,
                     padding: 16,
@@ -433,15 +423,12 @@ export default function HomeScreen() {
                     <Text className="text-white/80 text-xs">On all fresh vegetables</Text>
                   </View>
                   <Text style={{ fontSize: 40 }}>🥬</Text>
-                </LinearGradient>
+                </View>
               </Pressable>
 
               {/* Offer 2 */}
               <Pressable onPress={() => router.push("/(customer)/(tabs)/shop")} className="mb-3">
-                <LinearGradient
-                  colors={["#6C5CE7", "#A29BFE"]}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
+                <View}}
                   style={{
                     borderRadius: 16,
                     padding: 16,
@@ -455,15 +442,12 @@ export default function HomeScreen() {
                     <Text className="text-white/80 text-xs">On selected dairy products</Text>
                   </View>
                   <Text style={{ fontSize: 40 }}>🥛</Text>
-                </LinearGradient>
+                </View>
               </Pressable>
 
               {/* Offer 3 */}
               <Pressable onPress={() => router.push("/(customer)/(tabs)/shop")}>
-                <LinearGradient
-                  colors={["#00B894", "#00CEC9"]}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
+                <View}}
                   style={{
                     borderRadius: 16,
                     padding: 16,
@@ -477,7 +461,7 @@ export default function HomeScreen() {
                     <Text className="text-white/80 text-xs">No minimum order for members</Text>
                   </View>
                   <Text style={{ fontSize: 40 }}>🚚</Text>
-                </LinearGradient>
+                </View>
               </Pressable>
             </View>
 
@@ -490,13 +474,13 @@ export default function HomeScreen() {
                   className="flex-row items-center"
                 >
                   <Text className="text-primary font-semibold text-sm">View All</Text>
-                  <ChevronRight size={16} color="#1D5A34" />
+                  <ChevronRight size={16} color="#4FAD21" />
                 </Pressable>
               </View>
 
               {productsLoading ? (
                 <View className="items-center py-8">
-                  <ActivityIndicator size="large" color="#1D5A34" />
+                  <ActivityIndicator size="large" color="#4FAD21" />
                 </View>
               ) : (
                 <ScrollView
@@ -530,7 +514,7 @@ export default function HomeScreen() {
                           <View className="flex-row items-center justify-between mt-2">
                             <Text className="text-primary font-bold">{formatCurrency(price)}</Text>
                             <View className="bg-primary/10 p-1.5 rounded-lg">
-                              <ShoppingCart size={14} color="#1D5A34" />
+                              <ShoppingCart size={14} color="#4FAD21" />
                             </View>
                           </View>
                         </View>
@@ -550,14 +534,14 @@ export default function HomeScreen() {
                   className="flex-row items-center"
                 >
                   <Text className="text-primary font-semibold text-sm">View All</Text>
-                  <ChevronRight size={16} color="#1D5A34" />
+                  <ChevronRight size={16} color="#4FAD21" />
                 </Pressable>
               </View>
 
               <View style={{ paddingHorizontal: 16 }}>
                 {productsLoading ? (
                   <View className="items-center py-8">
-                    <ActivityIndicator size="large" color="#1D5A34" />
+                    <ActivityIndicator size="large" color="#4FAD21" />
                   </View>
                 ) : products.length > 0 ? (
                   <View style={{ flexDirection: "row", flexWrap: "wrap" }}>

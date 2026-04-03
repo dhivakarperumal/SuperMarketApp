@@ -1,62 +1,60 @@
-import { useState, useEffect, useMemo } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  Pressable,
-  TextInput,
-  Image,
-  ActivityIndicator,
-  Modal,
-  StatusBar,
-} from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { router } from "expo-router";
+import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import {
-  ChevronLeft,
-  MapPin,
-  CreditCard,
-  Truck,
-  Check,
-  ShoppingBag,
-  Search,
-  Home,
-  Briefcase,
-  MapPinned,
-  CheckCircle,
-  X,
-  Plus,
-  Info,
-  MessageCircle,
+    Briefcase,
+    Check,
+    CheckCircle,
+    ChevronLeft,
+    CreditCard,
+    Home,
+    Info,
+    MapPin,
+    MapPinned,
+    MessageCircle,
+    Plus,
+    Search,
+    ShoppingBag,
+    Truck,
+    X,
 } from "lucide-react-native";
+import { useEffect, useMemo, useState } from "react";
+import {
+    ActivityIndicator,
+    Image,
+    Modal,
+    Pressable,
+    ScrollView,
+    Text,
+    TextInput,
+    View,
+} from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
-import { useCart } from "../../src/context/CartContext";
-import { useAuth } from "../../src/context/AuthContext";
-import { useAddresses } from "../../src/hooks/useAddresses";
-import { useDeliveryConfig } from "../../src/context/DeliveryConfigContext";
-import { useOffers } from "../../src/context/OfferContext";
 import CouponInput from "../../src/components/CouponInput";
-import { formatCurrency } from "../../src/utils/formatters";
-import { DeliveryChargeResult } from "../../src/types/delivery";
-import { addDoc, collection, serverTimestamp, doc, updateDoc } from "firebase/firestore";
-import { createWhatsAppOrder } from "../../src/services/whatsapp/WhatsAppOrderService";
-import { generateOrderId } from "../../src/utils/orderIdGenerator";
-import { validateCartStock, reduceStockAfterOrder } from "../../src/utils/stockManager";
-import { db } from "../../src/services/firebase/config";
-import { offlineManager, OfflineOrder } from "../../src/services/offline/OfflineManager";
 import { OfflineBanner } from "../../src/components/OfflineBanner";
 import { RazorpayCheckout } from "../../src/components/RazorpayCheckout";
-import {
-  createRazorpayOptions,
-  RazorpayResponse,
-  RAZORPAY_TEST_MODE,
-  validateRazorpayResponse,
-  getRazorpayErrorMessage
-} from "../../src/services/razorpay/config";
-import { SavedAddress } from "../../src/types";
+import { useAuth } from "../../src/context/AuthContext";
+import { useCart } from "../../src/context/CartContext";
+import { useDeliveryConfig } from "../../src/context/DeliveryConfigContext";
+import { useOffers } from "../../src/context/OfferContext";
 import { useWhatsApp } from "../../src/context/WhatsAppContext";
+import { useAddresses } from "../../src/hooks/useAddresses";
+import { db } from "../../src/services/firebase/config";
+import { offlineManager, OfflineOrder } from "../../src/services/offline/OfflineManager";
+import {
+    createRazorpayOptions,
+    getRazorpayErrorMessage,
+    RAZORPAY_TEST_MODE,
+    RazorpayResponse,
+    validateRazorpayResponse
+} from "../../src/services/razorpay/config";
+import { createWhatsAppOrder } from "../../src/services/whatsapp/WhatsAppOrderService";
+import { SavedAddress } from "../../src/types";
+import { DeliveryChargeResult } from "../../src/types/delivery";
+import { formatCurrency } from "../../src/utils/formatters";
+import { generateOrderId } from "../../src/utils/orderIdGenerator";
+import { reduceStockAfterOrder, validateCartStock } from "../../src/utils/stockManager";
 
 const Logo = require("../../assets/images/logo.png");
 
@@ -694,12 +692,13 @@ export default function CheckoutScreen() {
     setShowRazorpay(false);
 
     const errorMessage = getRazorpayErrorMessage(error);
+    const isUserCancelled = /cancelled|canceled|user cancelled|user canceled/i.test(errorMessage);
 
     if (pendingOrderId) {
       try {
         await updateDoc(doc(db, "orders", pendingOrderId), {
-          status: "PaymentFailed",
-          paymentStatus: "failed",
+          status: isUserCancelled ? "Cancelled" : "PaymentFailed",
+          paymentStatus: isUserCancelled ? "cancelled" : "failed",
           paymentError: errorMessage,
           failedAt: serverTimestamp(),
         });
@@ -709,18 +708,29 @@ export default function CheckoutScreen() {
     }
 
     Toast.show({
-      type: "error",
-      text1: "Payment Failed",
+      type: isUserCancelled ? "info" : "error",
+      text1: isUserCancelled ? "Payment Cancelled" : "Payment Failed",
       text2: errorMessage,
     });
 
     setPendingOrderId(null);
   };
 
-  const handlePaymentClose = () => {
+  const handlePaymentClose = async () => {
     setShowRazorpay(false);
 
     if (pendingOrderId) {
+      try {
+        await updateDoc(doc(db, "orders", pendingOrderId), {
+          status: "Cancelled",
+          paymentStatus: "cancelled",
+          paymentError: "Payment flow was closed before completion",
+          failedAt: serverTimestamp(),
+        });
+      } catch (e) {
+        console.error("Failed to update order status on close:", e);
+      }
+
       Toast.show({
         type: "info",
         text1: "Payment Cancelled",
@@ -783,7 +793,6 @@ export default function CheckoutScreen() {
 
   const renderAddressStep = () => (
     <KeyboardAwareScrollView
-      className="flex-1 bg-gray-50"
       contentContainerStyle={{ paddingBottom: 20 }}
       enableOnAndroid={true}
       extraScrollHeight={120}
@@ -802,7 +811,7 @@ export default function CheckoutScreen() {
             className="bg-white rounded-xl p-4 mb-4 flex-row items-center border-2 border-primary"
           >
             <View className="w-12 h-12 bg-primary/10 rounded-full items-center justify-center">
-              <MapPin size={24} color="#1D5A34" />
+              <MapPin size={24} color="#1D5C45" />
             </View>
             <View className="flex-1 ml-3">
               {selectedAddressId ? (
@@ -938,7 +947,7 @@ export default function CheckoutScreen() {
   );
 
   const renderPaymentStep = () => (
-    <ScrollView className="flex-1 bg-gray-50" showsVerticalScrollIndicator={false}>
+    <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
       <View className="p-4">
         <Text className="text-lg font-bold text-gray-800 mb-4">
           Payment Method
@@ -958,7 +967,7 @@ export default function CheckoutScreen() {
             >
               {paymentMethod === "cod" && <Check size={14} color="#fff" />}
             </View>
-            <Truck size={24} color={paymentMethod === "cod" ? "#1D5A34" : "#6B7280"} />
+            <Truck size={24} color={paymentMethod === "cod" ? "#1D5C45" : "#6B7280"} />
             <View className="ml-4 flex-1">
               <Text className={`font-semibold ${paymentMethod === "cod" ? "text-primary" : "text-gray-800"}`}>
                 Cash on Delivery
@@ -980,7 +989,7 @@ export default function CheckoutScreen() {
             >
               {paymentMethod === "online" && <Check size={14} color="#fff" />}
             </View>
-            <CreditCard size={24} color={paymentMethod === "online" ? "#1D5A34" : "#6B7280"} />
+            <CreditCard size={24} color={paymentMethod === "online" ? "#1D5C45" : "#6B7280"} />
             <View className="ml-4 flex-1">
               <View className="flex-row items-center">
                 <Text className={`font-semibold ${paymentMethod === "online" ? "text-primary" : "text-gray-800"}`}>
@@ -1017,12 +1026,12 @@ export default function CheckoutScreen() {
   );
 
   const renderReviewStep = () => (
-    <ScrollView className="flex-1 bg-gray-50" showsVerticalScrollIndicator={false}>
+    <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
       <View className="p-4">
         {/* Delivery Address */}
         <View className="bg-white rounded-xl p-4 mb-4">
           <View className="flex-row items-center mb-3">
-            <MapPin size={20} color="#1D5A34" />
+            <MapPin size={20} color="#1D5C45" />
             <Text className="ml-2 font-bold text-gray-800">Delivery Address</Text>
           </View>
           <Text className="text-gray-800 font-medium">
@@ -1043,7 +1052,7 @@ export default function CheckoutScreen() {
             {paymentMethod === "whatsapp" ? (
               <MessageCircle size={20} color="#25D366" />
             ) : (
-              <CreditCard size={20} color="#1D5A34" />
+              <CreditCard size={20} color="#1D5C45" />
             )}
             <Text className="ml-2 font-bold text-gray-800">Payment Method</Text>
           </View>
@@ -1189,15 +1198,15 @@ export default function CheckoutScreen() {
 
   if (cart.length === 0) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#1D5A34" }} edges={["top"]}>
-        <View className="flex-row items-center px-4 py-4 bg-white border-b border-gray-200">
+      <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
+        <View className="flex-row items-center px-4 py-4 bg-primary border-b border-primaryDark">
           <Pressable
             onPress={() => router.back()}
-            className="w-10 h-10 bg-gray-100 rounded-full items-center justify-center mr-3"
+            className="w-10 h-10 bg-white rounded-full items-center justify-center mr-3"
           >
-            <ChevronLeft size={24} color="#374151" />
+            <ChevronLeft size={24} color="#1D5C45" />
           </Pressable>
-          <Text className="text-xl font-bold text-gray-800">Checkout</Text>
+          <Text className="text-xl font-bold text-white">Checkout</Text>
         </View>
         <View className="flex-1 items-center justify-center px-4">
           <ShoppingBag size={64} color="#9CA3AF" />
@@ -1215,28 +1224,20 @@ export default function CheckoutScreen() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#1D5A34" }} edges={["top"]}>
-      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       {/* Header */}
-      <LinearGradient
-        colors={["#1D5A34", "#164829"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
-      >
-        <View className="flex-row items-center justify-between">
-          <View className="flex-row items-center">
-            <Pressable
-              onPress={handleBack}
-              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-3"
-            >
-              <ChevronLeft size={24} color="#FFFFFF" />
-            </Pressable>
-            <Text className="text-xl font-bold text-white">Checkout</Text>
-          </View>
-          <Image source={Logo} style={{ width: 40, height: 40, tintColor: '#FFFFFF' }} resizeMode="contain" />
+      <View className="flex-row items-center justify-between px-4 py-4 bg-primary border-b border-primaryDark">
+        <View className="flex-row items-center">
+          <Pressable
+            onPress={handleBack}
+            className="w-10 h-10 bg-white rounded-full items-center justify-center mr-3"
+          >
+            <ChevronLeft size={24} color="#1D5C45" />
+          </Pressable>
+          <Text className="text-xl font-bold text-white">Checkout</Text>
         </View>
-      </LinearGradient>
+        <Image source={Logo} style={{ width: 40, height: 40 }} resizeMode="contain" />
+      </View>
 
       {/* Offline Banner */}
       {isOffline && <OfflineBanner />}
@@ -1257,8 +1258,8 @@ export default function CheckoutScreen() {
           disabled={loading}
           className="py-4 rounded-xl"
           style={{
-            backgroundColor: currentStep === "review" && paymentMethod === "whatsapp" ? "#25D366" : "#1D5A34",
-            shadowColor: currentStep === "review" && paymentMethod === "whatsapp" ? "#25D366" : "#1D5A34",
+            backgroundColor: currentStep === "review" && paymentMethod === "whatsapp" ? "#25D366" : "#1D5C45",
+            shadowColor: currentStep === "review" && paymentMethod === "whatsapp" ? "#25D366" : "#1D5C45",
             shadowOffset: { width: 0, height: 4 },
             shadowOpacity: 0.3,
             shadowRadius: 8,
@@ -1331,7 +1332,7 @@ export default function CheckoutScreen() {
             <ScrollView className="px-4" showsVerticalScrollIndicator={false}>
               {addressesLoading ? (
                 <View className="items-center py-8">
-                  <ActivityIndicator size="large" color="#1D5A34" />
+                  <ActivityIndicator size="large" color="#1D5C45" />
                 </View>
               ) : filteredAddresses.length === 0 ? (
                 <View className="items-center py-8">
@@ -1358,7 +1359,7 @@ export default function CheckoutScreen() {
                           isSelected ? "bg-primary/20" : "bg-gray-100"
                         }`}
                       >
-                        <LabelIcon size={18} color={isSelected ? "#1D5A34" : "#6B7280"} />
+                        <LabelIcon size={18} color={isSelected ? "#1D5C45" : "#6B7280"} />
                       </View>
 
                       <View className="flex-1 ml-3">
@@ -1368,7 +1369,7 @@ export default function CheckoutScreen() {
                           </Text>
                           {addr.isDefault && (
                             <View className="flex-row items-center ml-2 bg-primary/10 px-2 py-0.5 rounded-full">
-                              <CheckCircle size={10} color="#1D5A34" />
+                              <CheckCircle size={10} color="#1D5C45" />
                               <Text className="text-primary text-xs ml-1">Default</Text>
                             </View>
                           )}

@@ -1,4 +1,3 @@
-import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import {
   AlertTriangle,
@@ -147,7 +146,7 @@ export default function DashboardScreen() {
 
   if (ordersLoading || productsLoading) {
     return (
-      <SafeAreaView className="flex-1 bg-white items-center justify-center" edges={['top']}>
+      <SafeAreaView className="flex-1 bg-white items-center justify-center" edges={["top","bottom"]}>
         <ActivityIndicator size="large" color="#1D5A34" />
         <Text className="text-gray-500 mt-4">Loading dashboard...</Text>
       </SafeAreaView>
@@ -155,20 +154,17 @@ export default function DashboardScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 120 }}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={["#1D5A34"]} />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
         {/* Header with Gradient */}
-        <LinearGradient
-          colors={["#1D5A34", "#164829"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
+        <View}}
           className="px-5 pt-4 pb-24"
         >
           <View className="flex-row items-center justify-between">
@@ -238,7 +234,7 @@ export default function DashboardScreen() {
               {today.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
             </Text>
           </View>
-        </LinearGradient>
+        </View>
 
         {/* Stats Cards - Overlapping Header */}
         <View className="px-4 -mt-16">
@@ -293,12 +289,11 @@ export default function DashboardScreen() {
               className="w-[48%] bg-white rounded-2xl p-4 mb-3"
               style={{ shadowColor: "#000", shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.08, shadowRadius: 12, elevation: 4 }}
             >
-              <LinearGradient
-                colors={["#1D5A34", "#66BB6A"]}
+              <View
                 className="w-11 h-11 rounded-md items-center justify-center mb-3"
               >
                 <ShoppingCart size={22} color="#fff" />
-              </LinearGradient>
+              </View>
               <Text className="text-2xl font-bold text-gray-800">{orders.length}</Text>
               <Text className="text-gray-500 text-sm">Total Orders</Text>
               <View className="flex-row items-center mt-2">
@@ -313,12 +308,11 @@ export default function DashboardScreen() {
               className="w-[48%] bg-white rounded-2xl p-4 mb-3"
               style={{ shadowColor: "#000", shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.08, shadowRadius: 12, elevation: 4 }}
             >
-              <LinearGradient
-                colors={["#3B82F6", "#60A5FA"]}
+              <View
                 className="w-11 h-11 rounded-md items-center justify-center mb-3"
               >
                 <Package size={22} color="#fff" />
-              </LinearGradient>
+              </View>
               <Text className="text-2xl font-bold text-gray-800">{products.length}</Text>
               <Text className="text-gray-500 text-sm">Products</Text>
               <View className="flex-row items-center mt-2">
@@ -341,12 +335,11 @@ export default function DashboardScreen() {
               className="w-[48%] bg-white rounded-2xl p-4 mb-3"
               style={{ shadowColor: "#000", shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.08, shadowRadius: 12, elevation: 4 }}
             >
-              <LinearGradient
-                colors={["#10B981", "#34D399"]}
+              <View
                 className="w-11 h-11 rounded-md items-center justify-center mb-3"
               >
                 <IndianRupee size={22} color="#fff" />
-              </LinearGradient>
+              </View>
               <Text className="text-xl font-bold text-gray-800" numberOfLines={1} adjustsFontSizeToFit>
                 {formatCurrency(totalRevenue)}
               </Text>
@@ -363,12 +356,11 @@ export default function DashboardScreen() {
               className="w-[48%] bg-white rounded-2xl p-4 mb-3"
               style={{ shadowColor: "#000", shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.08, shadowRadius: 12, elevation: 4 }}
             >
-              <LinearGradient
-                colors={["#25D366", "#128C7E"]}
+              <View
                 className="w-11 h-11 rounded-md items-center justify-center mb-3"
               >
                 <MessageCircle size={22} color="#fff" />
-              </LinearGradient>
+              </View>
               <Text className="text-2xl font-bold text-gray-800">
                 {whatsappLoading ? "-" : whatsappPendingCount}
               </Text>
@@ -451,8 +443,7 @@ export default function DashboardScreen() {
             onPress={() => router.push("/(admin)/(tabs)/products")}
             className="mx-4 mt-4"
           >
-            <LinearGradient
-              colors={["#FEE2E2", "#FECACA"]}
+            <View
               className="rounded-2xl p-4 border border-red-200"
             >
               <View className="flex-row items-center">
@@ -469,7 +460,7 @@ export default function DashboardScreen() {
                   <ChevronRight size={20} color="#EF4444" />
                 </View>
               </View>
-            </LinearGradient>
+            </View>
           </Pressable>
         )}
 

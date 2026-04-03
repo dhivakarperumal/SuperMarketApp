@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import {
     ActivityIndicator,
     Dimensions,
+    Linking,
     Modal,
     Pressable,
     StyleSheet,
@@ -122,14 +123,14 @@ html,body{width:100%;height:100%;margin:0;padding:0;background:#f5f5f5}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh}
 .container{background:white;border-radius:12px;padding:40px 20px;max-width:400px;width:100%;box-shadow:0 4px 12px rgba(0,0,0,0.15);text-align:center}
 .loader{display:flex;flex-direction:column;align-items:center;gap:16px}
-.spinner{width:50px;height:50px;border:4px solid rgba(46,125,50,0.1);border-top:4px solid #1D5A34;border-radius:50%;animation:spin 1s linear infinite}
+.spinner{width:50px;height:50px;border:4px solid rgba(46,125,50,0.1);border-top:4px solid #1D5C45;border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .text{color:#333;font-size:16px;line-height:1.4;margin:0}
 .sub{color:#999;font-size:14px}
 .error{color:#DC2626;font-size:15px;font-weight:600;margin-bottom:8px}
 .debug{font-size:12px;color:#666;background:#f9fafb;padding:8px 12px;border-radius:6px;margin-top:12px;font-family:monospace;word-break:break-all;text-align:left}
-.button{display:inline-block;background:#1D5A34;color:white;border:none;padding:12px 28px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;margin-top:16px;transition:background 0.2s;font-family:inherit}
-.button:active{background:#164829;opacity:0.9}
+.button{display:inline-block;background:#1D5C45;color:white;border:none;padding:12px 28px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;margin-top:16px;transition:background 0.2s;font-family:inherit}
+.button:active{background:#16482F;opacity:0.9}
 #error-box{display:none}
 #loader{display:flex}
 </style>
@@ -178,8 +179,12 @@ function showErr(msg, code) {
   postMsg('error', { message: msg, code: code });
 }
 
+var razorpayLoadAttempts = 0;
+var RAZORPAY_LOAD_MAX_ATTEMPTS = 50; // 50 * 200ms = 10 seconds
+
 function retry() {
   attemptCount++;
+  razorpayLoadAttempts = 0;
   if (attemptCount >= maxAttempts) {
     showErr('Too many attempts', 'MAX_RETRIES');
     return;
@@ -190,9 +195,14 @@ function retry() {
 }
 
 function openPayment() {
-  log('Attempt ' + (attemptCount + 1) + '/' + maxAttempts);
+  log('Attempt ' + (attemptCount + 1) + '/' + maxAttempts + ', Razorpay load attempt ' + (razorpayLoadAttempts + 1) + '/' + RAZORPAY_LOAD_MAX_ATTEMPTS);
   
   if (typeof window.Razorpay === 'undefined') {
+    razorpayLoadAttempts++;
+    if (razorpayLoadAttempts >= RAZORPAY_LOAD_MAX_ATTEMPTS) {
+      showErr('Unable to load Razorpay SDK. Check internet connection and try again.', 'RZP_LOAD_TIMEOUT');
+      return;
+    }
     log('Waiting for Razorpay...');
     setTimeout(openPayment, 200);
     return;
@@ -210,7 +220,7 @@ function openPayment() {
       name: config.name,
       description: config.description,
       prefill: config.prefill,
-      theme: { color: '#1D5A34' },
+      theme: { color: '#1D5C45' },
       handler: function(response) {
         log('Payment success: ' + response.razorpay_payment_id);
         postMsg('success', {
@@ -279,10 +289,17 @@ setTimeout(openPayment, 500);
           break;
 
         case "failure":
-          console.error("[RazorpayCheckout] ❌ Payment failure:", data);
           const errorMsg =
             typeof data === "string" ? data : getRazorpayErrorMessage(data);
-          onFailure(errorMsg);
+          const isCancelled = isRazorpayCancelledError(data) || isRazorpayCancelledError(errorMsg);
+
+          if (isCancelled) {
+            console.log("[RazorpayCheckout] ⏸️ Payment cancelled:", errorMsg);
+            onClose();
+          } else {
+            console.error("[RazorpayCheckout] ❌ Payment failure:", data);
+            onFailure(errorMsg);
+          }
           break;
 
         case "dismiss":
@@ -407,6 +424,23 @@ setTimeout(openPayment, 500);
             }}
             onError={handleWebViewError}
             onHttpError={handleHttpError}
+            onShouldStartLoadWithRequest={(request) => {
+              const { url } = request;
+
+              // Allow the Razorpay plugin and our local generated page
+              if (url.startsWith("data:") || url.startsWith("https://checkout.razorpay.com") || url.startsWith("https://razorpay.com")) {
+                return true;
+              }
+
+              // External redirects should open in default browser
+              if (url.startsWith("http://") || url.startsWith("https://")) {
+                Linking.openURL(url).catch((err) => {
+                  console.warn("[RazorpayCheckout] Failed to open external URL", err);
+                });
+                return false;
+              }
+              return true;
+            }}
             javaScriptEnabled={true}
             domStorageEnabled={true}
             originWhitelist={["*"]}
@@ -432,7 +466,7 @@ setTimeout(openPayment, 500);
         {/* Loading Overlay */}
         {loading && !error && (
           <View style={styles.loadingOverlay}>
-            <ActivityIndicator size="large" color="#1D5A34" />
+            <ActivityIndicator size="large" color="#1D5C45" />
             <Text style={styles.loadingText}>Preparing payment...</Text>
           </View>
         )}
@@ -453,7 +487,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 50,
     paddingBottom: 14,
-    backgroundColor: "#1D5A34",
+    backgroundColor: "#1D5C45",
   },
   headerLeft: {
     flexDirection: "row",
@@ -551,7 +585,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 28,
     paddingVertical: 14,
-    backgroundColor: "#1D5A34",
+    backgroundColor: "#1D5C45",
     borderRadius: 12,
     gap: 8,
   },

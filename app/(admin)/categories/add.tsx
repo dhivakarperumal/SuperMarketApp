@@ -170,7 +170,7 @@ export default function AddCategoryScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       {/* Header */}
       <View className="flex-row items-center justify-between px-4 py-4 bg-gray-100 border-b border-gray-200">
         <View className="flex-row items-center">
@@ -232,7 +232,7 @@ export default function AddCategoryScreen() {
                 value={category.name}
                 onChangeText={(text) => setCategory({ ...category, name: text })}
                 placeholder="Enter category name"
-                className="border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50"
+                className="border-2 border-gray-200 rounded-xl px-4 py-3 bg-[#F1F8E9]"
                 placeholderTextColor="#9CA3AF"
               />
             </View>
@@ -258,7 +258,7 @@ export default function AddCategoryScreen() {
                 placeholder="Enter category description"
                 multiline
                 numberOfLines={3}
-                className="border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50"
+                className="border-2 border-gray-200 rounded-xl px-4 py-3 bg-[#F1F8E9]"
                 placeholderTextColor="#9CA3AF"
                 textAlignVertical="top"
               />
@@ -293,7 +293,7 @@ export default function AddCategoryScreen() {
                 value={newSubcategory}
                 onChangeText={setNewSubcategory}
                 placeholder="Add subcategory"
-                className="flex-1 border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50"
+                className="flex-1 border-2 border-gray-200 rounded-xl px-4 py-3 bg-[#F1F8E9]"
                 placeholderTextColor="#9CA3AF"
                 onSubmitEditing={addSubcategory}
               />

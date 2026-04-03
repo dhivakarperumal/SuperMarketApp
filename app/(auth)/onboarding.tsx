@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import { CreditCard, ShoppingBag, Truck, ChevronRight } from "lucide-react-native";
 import { useRef, useState } from "react";
@@ -24,7 +23,7 @@ const slides = [
     title: "Fresh groceries",
     subtitle: "Picked daily, delivered fast",
     description: "Browse fruits, veggies, and daily essentials in a clean shopping experience.",
-    color: "#1D5A34",
+    color: "#1D5C45",
     bgColor: "#E9F7E1",
     badge: "Daily fresh",
   },
@@ -76,8 +75,7 @@ export default function OnboardingScreen() {
 
     return (
       <View style={{ width }} className="px-6 pt-2">
-        <LinearGradient
-          colors={[item.bgColor, "#FFFFFF"]}
+        <View
           style={{
             minHeight: height * 0.5,
             borderRadius: 30,
@@ -136,7 +134,7 @@ export default function OnboardingScreen() {
               ))}
             </View>
           </View>
-        </LinearGradient>
+        </View>
       </View>
     );
   };
@@ -220,12 +218,11 @@ export default function OnboardingScreen() {
         {isLastSlide ? (
           <View>
             <Pressable onPress={handleGetStarted} className="overflow-hidden rounded-2xl">
-              <LinearGradient
-                colors={["#5AC42A", "#3D971B"]}
+              <View
                 style={{ paddingVertical: 16, borderRadius: 16 }}
               >
                 <Text className="text-center text-lg font-bold text-white">Get Started</Text>
-              </LinearGradient>
+              </View>
             </Pressable>
 
             <Pressable

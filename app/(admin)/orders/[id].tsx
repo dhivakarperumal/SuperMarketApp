@@ -180,7 +180,7 @@ export default function AdminOrderDetailScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView className="flex-1 bg-white items-center justify-center" edges={["top"]}>
+      <SafeAreaView className="flex-1 bg-white items-center justify-center" edges={["top","bottom"]}>
         <ActivityIndicator size="large" color="#1D5A34" />
       </SafeAreaView>
     );
@@ -188,7 +188,7 @@ export default function AdminOrderDetailScreen() {
 
   if (!order) {
     return (
-      <SafeAreaView className="flex-1 bg-white" edges={["top"]}>
+      <SafeAreaView className="flex-1 bg-white" edges={["top","bottom"]}>
         <View className="flex-row items-center px-4 py-4 bg-gray-100 border-b border-gray-200">
           <Pressable
             onPress={() => router.back()}
@@ -210,7 +210,7 @@ export default function AdminOrderDetailScreen() {
   const currentStatus = statusOptions.find(s => s.key === order.status);
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       {/* Header */}
       <View className="flex-row items-center justify-between px-4 py-4 bg-gray-100 border-b border-gray-200">
         <View className="flex-row items-center">

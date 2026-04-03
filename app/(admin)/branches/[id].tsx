@@ -192,7 +192,7 @@ export default function EditBranchScreen() {
 
   if (isLoading) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center">
+      <SafeAreaView className="flex-1 bg-[#F1F8E9] items-center justify-center">
         <ActivityIndicator size="large" color="#1D5A34" />
       </SafeAreaView>
     );
@@ -200,7 +200,7 @@ export default function EditBranchScreen() {
 
   if (!branch) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center">
+      <SafeAreaView className="flex-1 bg-[#F1F8E9] items-center justify-center">
         <Building2 size={48} color="#D1D5DB" />
         <Text className="text-gray-400 text-base mt-4">Branch not found</Text>
         <Pressable
@@ -214,7 +214,7 @@ export default function EditBranchScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       {/* Header */}
       <View className="bg-white px-4 py-3 border-b border-gray-100">
         <View className="flex-row items-center justify-between">
@@ -325,7 +325,7 @@ export default function EditBranchScreen() {
             <View className="mb-4">
               <Text className="text-gray-700 font-medium mb-2">Branch Code</Text>
               <View
-                className="flex-row items-center border border-gray-200 rounded-xl px-4 bg-gray-50"
+                className="flex-row items-center border border-gray-200 rounded-xl px-4 bg-[#F1F8E9]"
                 style={{ height: 50 }}
               >
                 <Hash size={20} color="#9CA3AF" />

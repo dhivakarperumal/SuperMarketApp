@@ -238,7 +238,7 @@ const InfoToast = ({ text1, text2, hide, props }: CustomToastProps) => {
         {isOffline ? (
           <WifiOff size={22} color="#D97706" />
         ) : isOnline ? (
-          <Wifi size={22} color="#1D5A34" />
+          <Wifi size={22} color="#1D5C45" />
         ) : (
           <Info size={22} color="#3B82F6" />
         )}
@@ -251,7 +251,7 @@ const InfoToast = ({ text1, text2, hide, props }: CustomToastProps) => {
             style={{
               fontSize: 15,
               fontWeight: "700",
-              color: isOffline ? "#D97706" : isOnline ? "#1D5A34" : "#1D4ED8",
+              color: isOffline ? "#D97706" : isOnline ? "#1D5C45" : "#1D4ED8",
               marginBottom: 2,
             }}
             numberOfLines={1}
@@ -382,13 +382,13 @@ const CartToast = ({ text1, text2, hide, onPress }: CustomToastProps) => {
       onPress={onPress}
       style={{
         width: "92%",
-        backgroundColor: "#1D5A34",
+        backgroundColor: "#1D5C45",
         borderRadius: 16,
         flexDirection: "row",
         alignItems: "center",
         paddingVertical: 14,
         paddingHorizontal: 16,
-        shadowColor: "#1D5A34",
+        shadowColor: "#1D5C45",
         shadowOffset: { width: 0, height: 8 },
         shadowOpacity: 0.3,
         shadowRadius: 16,
@@ -447,7 +447,7 @@ const CartToast = ({ text1, text2, hide, onPress }: CustomToastProps) => {
           borderRadius: 10,
         }}
       >
-        <Text style={{ color: "#1D5A34", fontWeight: "700", fontSize: 13 }}>
+        <Text style={{ color: "#1D5C45", fontWeight: "700", fontSize: 13 }}>
           View
         </Text>
       </View>

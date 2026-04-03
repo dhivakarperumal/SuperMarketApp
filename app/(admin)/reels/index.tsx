@@ -135,7 +135,7 @@ export default function AdminReelsScreen() {
             {/* Status badge */}
             <View
               className={`absolute top-2 left-2 px-2 py-1 rounded ${
-                item.isActive ? "bg-green-500" : "bg-gray-500"
+                item.isActive ? "bg-green-500" : "bg-[#F1F8E9]0"
               }`}
             >
               <Text className="text-white text-xs font-semibold">
@@ -244,7 +244,7 @@ export default function AdminReelsScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       {/* Header */}
       <View className="flex-row items-center justify-between px-4 py-4 bg-white border-b border-gray-200">
         <View className="flex-row items-center">

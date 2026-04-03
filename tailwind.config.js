@@ -9,13 +9,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#2E7D32",
-        primaryLight: "#66BB6A",
-        primaryDark: "#1B5E20",
-        bgLight: "#F1F8E9",
-        softGreen: "#E8F5E9",
+        primary: "#1D5C45",
+        primaryLight: "#47A876",
+        primaryDark: "#16482F",
+        bgLight: "#E7F6EE",
+        softGreen: "#DEF2E9",
         accentOrange: "#FF9800",
-        secondary: "#F1F8E9",
+        secondary: "#E7F6EE",
       },
     },
   },

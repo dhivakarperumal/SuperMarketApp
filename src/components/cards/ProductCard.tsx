@@ -152,7 +152,7 @@ export function ProductCard({ product, onPress, horizontal }: ProductCardProps) 
                 position: 'absolute',
                 top: 8,
                 left: 8,
-                backgroundColor: '#1D5A34',
+                backgroundColor: '#1D5C45',
                 paddingHorizontal: 8,
                 paddingVertical: 4,
                 borderRadius: 6,
@@ -198,7 +198,7 @@ export function ProductCard({ product, onPress, horizontal }: ProductCardProps) 
             {product.name}
           </Text>
           <Text style={{ color: '#9ca3af', fontSize: 11, marginTop: 3 }}>{product.category}</Text>
-          <Text style={{ color: isOutOfStock ? '#9ca3af' : '#1D5A34', fontWeight: '700', fontSize: 15, marginTop: 6 }}>
+          <Text style={{ color: isOutOfStock ? '#9ca3af' : '#1D5C45', fontWeight: '700', fontSize: 15, marginTop: 6 }}>
             {formatCurrency(firstPrice)}
           </Text>
         </View>
@@ -262,7 +262,7 @@ export function ProductCard({ product, onPress, horizontal }: ProductCardProps) 
               position: 'absolute',
               top: 10,
               left: 10,
-              backgroundColor: '#1D5A34',
+              backgroundColor: '#1D5C45',
               paddingHorizontal: 8,
               paddingVertical: 4,
               borderRadius: 6,
@@ -318,7 +318,7 @@ export function ProductCard({ product, onPress, horizontal }: ProductCardProps) 
 
         {/* Price and Cart */}
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 10 }}>
-          <Text style={{ color: isOutOfStock ? '#9ca3af' : '#1D5A34', fontWeight: '700', fontSize: 16 }}>
+          <Text style={{ color: isOutOfStock ? '#9ca3af' : '#1D5C45', fontWeight: '700', fontSize: 16 }}>
             {formatCurrency(firstPrice)}
           </Text>
           <Pressable
@@ -326,7 +326,7 @@ export function ProductCard({ product, onPress, horizontal }: ProductCardProps) 
             style={{
               width: 36,
               height: 36,
-              backgroundColor: isOutOfStock ? '#D1D5DB' : '#1D5A34',
+              backgroundColor: isOutOfStock ? '#D1D5DB' : '#1D5C45',
               borderRadius: 10,
               alignItems: 'center',
               justifyContent: 'center',

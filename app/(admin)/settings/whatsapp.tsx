@@ -270,7 +270,7 @@ export default function WhatsAppSettingsScreen() {
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: colors.surface }}
-      edges={["top"]}
+      edges={["top","bottom"]}
     >
       {/* Header */}
       <View

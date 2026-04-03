@@ -247,7 +247,7 @@ export default function WhatsAppOrderDetailScreen() {
           justifyContent: "center",
           alignItems: "center",
         }}
-        edges={["top"]}
+        edges={["top","bottom"]}
       >
         <ActivityIndicator size="large" color={WHATSAPP_GREEN} />
       </SafeAreaView>
@@ -258,7 +258,7 @@ export default function WhatsAppOrderDetailScreen() {
     return (
       <SafeAreaView
         style={{ flex: 1, backgroundColor: colors.surface }}
-        edges={["top"]}
+        edges={["top","bottom"]}
       >
         <View
           style={{
@@ -314,7 +314,7 @@ export default function WhatsAppOrderDetailScreen() {
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: colors.surface }}
-      edges={["top"]}
+      edges={["top","bottom"]}
     >
       {/* Header */}
       <View

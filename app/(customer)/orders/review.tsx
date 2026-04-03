@@ -8,7 +8,6 @@ import {
   Image,
   StatusBar,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ChevronLeft, Star, ShoppingBag } from "lucide-react-native";
@@ -150,13 +149,10 @@ export default function ReviewScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <LinearGradient
-        colors={["#1D5A34", "#164829"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
+      <View}}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View className="flex-row items-center">
@@ -170,7 +166,7 @@ export default function ReviewScreen() {
             Write a Review
           </Text>
         </View>
-      </LinearGradient>
+      </View>
 
       <KeyboardAwareScrollView
         contentContainerStyle={{ padding: 16 }}
@@ -252,7 +248,7 @@ export default function ReviewScreen() {
               Write your review
             </Text>
             <View
-              className={`rounded-xl bg-gray-50 ${
+              className={`rounded-xl bg-[#F1F8E9] ${
                 focusedInput
                   ? "border-2 border-primary"
                   : "border border-gray-200"

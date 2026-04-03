@@ -1,6 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
 import { View, Text, Pressable, TextInput, ActivityIndicator, StatusBar } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FlashList } from "@shopify/flash-list";
 import { Search, Filter, ChevronRight } from "lucide-react-native";
@@ -70,13 +69,10 @@ export default function OrdersScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <LinearGradient
-        colors={["#1D5A34", "#164829"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
+      <View}}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <Text className="text-2xl font-bold text-white mb-4">Orders</Text>
@@ -92,7 +88,7 @@ export default function OrdersScreen() {
             className="flex-1 ml-3 text-gray-800"
           />
         </View>
-      </LinearGradient>
+      </View>
 
       {/* Status Filters */}
       <View className="bg-white py-3 border-b border-gray-100">

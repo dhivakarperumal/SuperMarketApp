@@ -1,18 +1,14 @@
 import { View, Text, ScrollView, Pressable, StatusBar } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ChevronLeft, Truck } from "lucide-react-native";
 import { router } from "expo-router";
 
 export default function ShippingPolicyScreen() {
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top", "bottom"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top", "bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <LinearGradient
-        colors={["#1D5A34", "#164829"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
+      <View}}
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <View className="flex-row items-center">
@@ -26,7 +22,7 @@ export default function ShippingPolicyScreen() {
             Shipping Policy
           </Text>
         </View>
-      </LinearGradient>
+      </View>
 
       <ScrollView
         className="flex-1"

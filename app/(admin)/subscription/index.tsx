@@ -3,7 +3,6 @@ import { View, Text, Pressable, ScrollView, ActivityIndicator } from "react-nati
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ChevronLeft, Check, Crown, Calendar, AlertCircle } from "lucide-react-native";
 import { router } from "expo-router";
-import { LinearGradient } from "expo-linear-gradient";
 import Toast from "react-native-toast-message";
 import { useSubscription } from "../../../src/hooks/useSubscription";
 import { SubscriptionPlanType, BillingCycle } from "../../../src/types";
@@ -48,7 +47,7 @@ export default function SubscriptionScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50 items-center justify-center" edges={["top"]}>
+      <SafeAreaView className="flex-1 bg-[#F1F8E9] items-center justify-center" edges={["top","bottom"]}>
         <ActivityIndicator size="large" color="#1D5A34" />
         <Text className="text-gray-500 mt-4">Loading subscription...</Text>
       </SafeAreaView>
@@ -56,7 +55,7 @@ export default function SubscriptionScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={["top"]}>
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       {/* Header */}
       <View className="flex-row items-center px-4 py-4 bg-white border-b border-gray-100">
         <Pressable
@@ -199,7 +198,7 @@ export default function SubscriptionScreen() {
                 </View>
 
                 {/* Limits */}
-                <View className="flex-row mb-3 py-2 bg-gray-50 rounded-xl">
+                <View className="flex-row mb-3 py-2 bg-[#F1F8E9] rounded-xl">
                   <View className="flex-1 items-center">
                     <Text className="text-gray-500 text-xs">Branches</Text>
                     <Text className="text-gray-800 font-semibold text-sm">
@@ -233,10 +232,7 @@ export default function SubscriptionScreen() {
                   className="mt-4"
                   style={{ opacity: isCurrentPlan ? 0.5 : 1 }}
                 >
-                  <LinearGradient
-                    colors={isCurrentPlan ? ["#9CA3AF", "#9CA3AF"] : colors}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
+                  <View}}
                     style={{ borderRadius: 12, padding: 14 }}
                   >
                     <Text className="text-white text-center font-semibold">
@@ -250,7 +246,7 @@ export default function SubscriptionScreen() {
                               ? "Get Started"
                               : "Choose Plan"}
                     </Text>
-                  </LinearGradient>
+                  </View>
                 </Pressable>
               </View>
             </View>

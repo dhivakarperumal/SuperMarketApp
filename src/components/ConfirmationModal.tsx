@@ -81,8 +81,8 @@ const getTypeConfig = (type: ConfirmationType) => {
     success: {
       icon: CheckCircle,
       iconBg: "#E8F5E9",
-      iconColor: "#1D5A34",
-      confirmBg: "#1D5A34",
+      iconColor: "#1D5C45",
+      confirmBg: "#1D5C45",
       confirmText: "#FFFFFF",
     },
     logout: {
@@ -116,8 +116,8 @@ const getTypeConfig = (type: ConfirmationType) => {
     activate: {
       icon: UserCheck,
       iconBg: "#E8F5E9",
-      iconColor: "#1D5A34",
-      confirmBg: "#1D5A34",
+      iconColor: "#1D5C45",
+      confirmBg: "#1D5C45",
       confirmText: "#FFFFFF",
     },
   };
