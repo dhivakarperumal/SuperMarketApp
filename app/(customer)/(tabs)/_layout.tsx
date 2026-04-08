@@ -1,5 +1,6 @@
 import { Tabs } from "expo-router";
 import { Home, ShoppingBag, ShoppingCart, Play, User } from "lucide-react-native";
+import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function CustomerTabsLayout() {
@@ -23,6 +24,9 @@ export default function CustomerTabsLayout() {
           shadowOpacity: 0.08,
           shadowRadius: 6,
         },
+        tabBarBackground: () => (
+          <View style={{ flex: 1, backgroundColor: "#1D5C45" }} />
+        ),
         tabBarLabelStyle: {
           fontSize: 11,
           fontWeight: "600",
