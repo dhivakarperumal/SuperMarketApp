@@ -106,7 +106,7 @@ export default function AccountScreen() {
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       <ScrollView showsVerticalScrollIndicator={false} className="bg-[#F1F8E9]">
         {/* Header */}
-        <View}}
+        <View
           style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
         >
           <View className="flex-row items-center justify-between">

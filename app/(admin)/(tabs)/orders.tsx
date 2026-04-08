@@ -72,7 +72,7 @@ export default function OrdersScreen() {
     <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
       <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
       {/* Header */}
-      <View}}
+      <View
         style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
       >
         <Text className="text-2xl font-bold text-white mb-4">Orders</Text>

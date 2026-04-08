@@ -292,7 +292,7 @@ export default function HomeScreen() {
                     onPress={() => router.push("/(customer)/(tabs)/shop")}
                     style={{ width: BANNER_WIDTH, marginRight: index < banners.length - 1 ? 12 : 0 }}
                   >
-                    <View}}
+                    <View
                       style={{
                         height: 150,
                         borderRadius: 20,
@@ -409,7 +409,7 @@ export default function HomeScreen() {
             <View className="px-4 pt-6 pb-3">
               {/* Offer 1 */}
               <Pressable onPress={() => router.push("/(customer)/(tabs)/shop")} className="mb-3">
-                <View}}
+                <View
                   style={{
                     borderRadius: 16,
                     padding: 16,
@@ -428,7 +428,7 @@ export default function HomeScreen() {
 
               {/* Offer 2 */}
               <Pressable onPress={() => router.push("/(customer)/(tabs)/shop")} className="mb-3">
-                <View}}
+                <View
                   style={{
                     borderRadius: 16,
                     padding: 16,
@@ -447,7 +447,7 @@ export default function HomeScreen() {
 
               {/* Offer 3 */}
               <Pressable onPress={() => router.push("/(customer)/(tabs)/shop")}>
-                <View}}
+                <View
                   style={{
                     borderRadius: 16,
                     padding: 16,

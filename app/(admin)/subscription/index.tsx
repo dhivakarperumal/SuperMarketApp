@@ -232,7 +232,7 @@ export default function SubscriptionScreen() {
                   className="mt-4"
                   style={{ opacity: isCurrentPlan ? 0.5 : 1 }}
                 >
-                  <View}}
+                  <View
                     style={{ borderRadius: 12, padding: 14 }}
                   >
                     <Text className="text-white text-center font-semibold">

@@ -136,7 +136,7 @@ export default function SettingsScreen() {
         className="bg-transparent"
       >
         {/* Header */}
-        <View}}
+        <View
           className="px-5 pt-4 pb-8"
         >
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>

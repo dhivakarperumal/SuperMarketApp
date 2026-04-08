@@ -1,1424 +1,525 @@
 import { router } from "expo-router";
-import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import {
-    Briefcase,
-    Check,
-    CheckCircle,
-    ChevronLeft,
-    CreditCard,
-    Home,
-    Info,
-    MapPin,
-    MapPinned,
-    MessageCircle,
-    Plus,
-    Search,
-    ShoppingBag,
-    Truck,
-    X,
-} from "lucide-react-native";
-import { useEffect, useMemo, useState } from "react";
-import {
-    ActivityIndicator,
-    Image,
-    Modal,
-    Pressable,
-    ScrollView,
-    Text,
-    TextInput,
-    View,
+  ActivityIndicator,
+  Alert,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  Text,
+  View,
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import Toast from "react-native-toast-message";
-import CouponInput from "../../src/components/CouponInput";
-import { OfflineBanner } from "../../src/components/OfflineBanner";
-import { RazorpayCheckout } from "../../src/components/RazorpayCheckout";
-import { useAuth } from "../../src/context/AuthContext";
-import { useCart } from "../../src/context/CartContext";
-import { useDeliveryConfig } from "../../src/context/DeliveryConfigContext";
-import { useOffers } from "../../src/context/OfferContext";
-import { useWhatsApp } from "../../src/context/WhatsAppContext";
-import { useAddresses } from "../../src/hooks/useAddresses";
-import { db } from "../../src/services/firebase/config";
-import { offlineManager, OfflineOrder } from "../../src/services/offline/OfflineManager";
-import {
-    createRazorpayOptions,
-    getRazorpayErrorMessage,
-    RAZORPAY_TEST_MODE,
-    RazorpayResponse,
-    validateRazorpayResponse
-} from "../../src/services/razorpay/config";
-import { createWhatsAppOrder } from "../../src/services/whatsapp/WhatsAppOrderService";
-import { SavedAddress } from "../../src/types";
-import { DeliveryChargeResult } from "../../src/types/delivery";
-import { formatCurrency } from "../../src/utils/formatters";
-import { generateOrderId } from "../../src/utils/orderIdGenerator";
-import { reduceStockAfterOrder, validateCartStock } from "../../src/utils/stockManager";
+import { ChevronRight, MapPin } from "lucide-react-native";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { useCart } from "@/src/context/CartContext";
+import { useAddresses } from "@/src/hooks/useAddresses";
+import { RazorpayCheckout } from "@/src/components/RazorpayCheckout";
+import { RazorpayOptions, RazorpayResponse } from "@/src/services/razorpay/config";
+import { useAuth } from "@/src/context/AuthContext";
+import { db } from "@/src/services/firebase/config";
 
-const Logo = require("../../assets/images/logo.png");
+const DELIVERY_CHARGES = 50; // Fixed delivery charges in INR
+const MIN_ORDER_AMOUNT = 50; // Minimum order amount in INR
 
-type Step = "address" | "payment" | "review";
-
-// WhatsApp Payment Option Component
-function WhatsAppPaymentOption({
-  selected,
-  onSelect,
-}: {
-  selected: boolean;
-  onSelect: () => void;
-}) {
-  const { isAvailable, config, checkAvailability } = useWhatsApp();
-
-  // Don't show if cart orders feature is disabled
-  if (!config.enableCartOrders) {
-    return null;
-  }
-
-  // Check why WhatsApp might not be available
-  const isFullyConfigured = config.isEnabled && config.phoneNumber;
-  const isWithinHours = checkAvailability();
-  const canUseWhatsApp = isAvailable && isFullyConfigured;
-
-  // Show disabled state if enabled but not configured
-  if (!canUseWhatsApp) {
-    let unavailableMessage = "WhatsApp ordering not available";
-    if (!config.isEnabled) {
-      unavailableMessage = "WhatsApp ordering is disabled";
-    } else if (!config.phoneNumber) {
-      unavailableMessage = "WhatsApp number not configured";
-    } else if (!isWithinHours) {
-      unavailableMessage = `Available ${config.availableFromTime} - ${config.availableToTime}`;
-    }
-
-    return (
-      <View className="flex-row items-center p-4 opacity-50">
-        <View className="w-6 h-6 rounded-full border-2 mr-4 items-center justify-center border-gray-300" />
-        <View className="w-10 h-10 rounded-full items-center justify-center bg-gray-100">
-          <MessageCircle size={22} color="#9CA3AF" strokeWidth={2} />
-        </View>
-        <View className="ml-4 flex-1">
-          <Text className="font-bold text-base text-gray-400">Order via WhatsApp</Text>
-          <Text className="text-gray-400 text-sm mt-0.5">{unavailableMessage}</Text>
-        </View>
-      </View>
-    );
-  }
-
-  return (
-    <Pressable
-      onPress={onSelect}
-      className={`flex-row items-center p-4 ${selected ? "bg-green-50" : ""}`}
-      style={selected ? { borderLeftWidth: 3, borderLeftColor: "#25D366" } : {}}
-    >
-      <View
-        className={`w-6 h-6 rounded-full border-2 mr-4 items-center justify-center ${
-          selected ? "border-green-500 bg-green-500" : "border-gray-300"
-        }`}
-      >
-        {selected && <Check size={14} color="#fff" />}
-      </View>
-      <View
-        className={`w-10 h-10 rounded-full items-center justify-center ${
-          selected ? "bg-green-100" : "bg-gray-100"
-        }`}
-      >
-        <MessageCircle size={22} color={selected ? "#25D366" : "#6B7280"} strokeWidth={2} />
-      </View>
-      <View className="ml-4 flex-1">
-        <Text className={`font-bold text-base ${selected ? "text-green-600" : "text-gray-800"}`}>
-          Order via WhatsApp
-        </Text>
-        <Text className="text-gray-500 text-sm mt-0.5">Complete order in WhatsApp chat</Text>
-      </View>
-    </Pressable>
-  );
+interface CheckoutState {
+  selectedAddressId: string | null;
+  paymentMethod: "online" | "cod";
+  isProcessing: boolean;
+  error: string | null;
+  showPaymentModal: boolean;
 }
 
 export default function CheckoutScreen() {
-  const { cart, cartCount, cartTotal, clearCart } = useCart();
+  const { cart, cartTotal, clearCart } = useCart();
+  const { addresses, loading: addressLoading } = useAddresses();
   const { user } = useAuth();
-  const { addresses, loading: addressesLoading } = useAddresses();
-  const { cartTotals, appliedCoupon, couponDiscount, logAppliedOffers, cartWithOffers } = useOffers();
-  const { isAvailable: whatsappAvailable, generateOrderMessage, sendWhatsAppMessage, config: whatsappConfig } = useWhatsApp();
-  const insets = useSafeAreaInsets();
-  const [currentStep, setCurrentStep] = useState<Step>("address");
-  const [loading, setLoading] = useState(false);
-  const [isOffline, setIsOffline] = useState(false);
 
-  // Check network status
-  useEffect(() => {
-    offlineManager.checkNetworkStatus().then((online) => setIsOffline(!online));
-
-    const unsubscribe = offlineManager.addNetworkListener((online) => {
-      setIsOffline(!online);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  // Address selection
-  const [showAddressPicker, setShowAddressPicker] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
-
-  // Address form
-  const [address, setAddress] = useState({
-    firstname: "",
-    lastname: "",
-    phone: "",
-    street: "",
-    city: "",
-    state: "",
-    pincode: "",
+  const [state, setState] = useState<CheckoutState>({
+    selectedAddressId: null,
+    paymentMethod: "online",
+    isProcessing: false,
+    error: null,
+    showPaymentModal: false,
   });
 
-  // Payment
-  const [paymentMethod, setPaymentMethod] = useState("cod");
-
-  // Razorpay state
-  const [showRazorpay, setShowRazorpay] = useState(false);
-  const [pendingOrderId, setPendingOrderId] = useState<string | null>(null);
-
-  // Delivery charges
-  const { calculateCharge, isEnabled: deliveryEnabled, config: deliveryConfig } = useDeliveryConfig();
-
-  // Calculate delivery charge based on address and cart total
-  const deliveryResult: DeliveryChargeResult = useMemo(() => {
-    if (!deliveryEnabled || !address.pincode) {
-      return {
-        baseCharge: 0,
-        discount: 0,
-        additionalCharges: 0,
-        finalCharge: 0,
-        isFree: true,
-        appliedRules: [],
-        message: "Free Delivery",
-        minOrderMet: true,
-      };
-    }
-    return calculateCharge({
-      pincode: address.pincode,
-      orderValue: cartTotal,
-    });
-  }, [address.pincode, cartTotal, deliveryEnabled, calculateCharge]);
-
-  // Total amount including delivery and discounts
-  const totalAfterDiscounts = cartTotals.total; // This already has offers applied
-  const totalAmount = totalAfterDiscounts + deliveryResult.finalCharge;
-
-  // Auto-select default address on load
+  // Auto-select first address if available
   useEffect(() => {
-    if (addresses.length > 0 && !selectedAddressId) {
-      const defaultAddress = addresses.find((addr) => addr.isDefault) || addresses[0];
-      if (defaultAddress) {
-        selectAddress(defaultAddress);
-      }
+    if (
+      addresses.length > 0 &&
+      !state.selectedAddressId &&
+      addresses[0]?.id
+    ) {
+      setState((prev) => ({ ...prev, selectedAddressId: addresses[0].id }));
     }
   }, [addresses]);
 
-  const selectAddress = (addr: SavedAddress) => {
-    setSelectedAddressId(addr.id);
-    setAddress({
-      firstname: addr.firstname,
-      lastname: addr.lastname,
-      phone: addr.phone,
-      street: addr.address,
-      city: addr.city,
-      state: addr.state,
-      pincode: addr.zip,
-    });
-    setShowAddressPicker(false);
-  };
-
-  const filteredAddresses = addresses.filter((addr) => {
-    const query = searchQuery.toLowerCase();
-    return (
-      addr.firstname.toLowerCase().includes(query) ||
-      addr.lastname.toLowerCase().includes(query) ||
-      addr.address.toLowerCase().includes(query) ||
-      addr.city.toLowerCase().includes(query) ||
-      addr.phone.includes(query) ||
-      (addr.label?.toLowerCase().includes(query) ?? false)
-    );
-  });
-
-  const getLabelIcon = (label?: string) => {
-    switch (label?.toLowerCase()) {
-      case "home":
-        return Home;
-      case "work":
-        return Briefcase;
-      default:
-        return MapPinned;
-    }
-  };
-
-  const steps = [
-    { id: "address", label: "Address" },
-    { id: "payment", label: "Payment" },
-    { id: "review", label: "Review" },
-  ];
-
-  const handlePlaceOrder = async () => {
-    if (!address.firstname || !address.phone || !address.street || !address.city) {
-      Toast.show({
-        type: "error",
-        text1: "Missing Information",
-        text2: "Please fill all required fields",
-      });
-      return;
-    }
-
-    // Check if offline - only COD allowed offline
-    if (isOffline && paymentMethod === "online") {
-      Toast.show({
-        type: "error",
-        text1: "Offline Mode",
-        text2: "Online payment not available offline. Please use Cash on Delivery.",
-      });
-      return;
-    }
-
-    // Handle WhatsApp order
-    if (paymentMethod === "whatsapp") {
-      try {
-        setLoading(true);
-
-        // Create WhatsApp order items
-        const whatsappOrderItems = cart.map(item => ({
-          productId: item.productId || "",
-          productName: item.name,
-          quantity: item.quantity,
-          price: item.price,
-          selectedWeight: item.selectedWeight,
-          image: item.image,
-        }));
-
-        // Create delivery address object
-        const deliveryAddr = {
-          id: selectedAddressId || "",
-          firstname: address.firstname,
-          lastname: address.lastname,
-          phone: address.phone,
-          address: address.street,
-          city: address.city,
-          state: address.state,
-          zip: address.pincode,
-          label: "Home" as const,
-          isDefault: false,
-        };
-
-        // Create WhatsApp order in Firebase FIRST
-        const whatsappOrder = await createWhatsAppOrder({
-          items: whatsappOrderItems,
-          subtotal: cartTotals.subtotal,
-          deliveryFee: deliveryResult.finalCharge,
-          discount: cartTotals.totalDiscount,
-          totalAmount: totalAmount,
-          customerName: `${address.firstname} ${address.lastname}`.trim(),
-          customerPhone: address.phone,
-          deliveryAddress: deliveryAddr,
-          deliveryNotes: "",
-          paymentMethod: "cod",
-          appliedOffers: cartTotals.appliedOffers.map(offer => ({
-            offerId: offer.offerId,
-            offerName: offer.offerName,
-            offerType: offer.offerType,
-            discountAmount: offer.discountAmount,
-          })),
-        });
-
-        // Generate WhatsApp message
-        const message = generateOrderMessage({
-          items: cart.map(item => ({
-            name: item.name,
-            quantity: item.quantity,
-            price: item.price,
-            selectedWeight: item.selectedWeight,
-          })),
-          subtotal: cartTotals.subtotal,
-          discount: cartTotals.totalDiscount,
-          discountLabel: appliedCoupon?.couponCode || cartTotals.appliedOffers?.[0]?.offerName,
-          deliveryFee: deliveryResult.finalCharge,
-          total: totalAmount,
-          customerName: `${address.firstname} ${address.lastname}`.trim(),
-          customerPhone: address.phone,
-          deliveryAddress: deliveryAddr,
-          paymentMethod: "cod",
-          notes: `Order ID: ${whatsappOrder.whatsappOrderId}`,
-        });
-
-        // Open WhatsApp
-        const success = await sendWhatsAppMessage(message);
-
-        if (success) {
-          // Clear the cart after successful WhatsApp message
-          await clearCart();
-
-          Toast.show({
-            type: "success",
-            text1: "Order Sent!",
-            text2: `Order ${whatsappOrder.whatsappOrderId} sent to WhatsApp`,
-          });
-
-          // Navigate to home or orders page
-          router.replace("/(customer)/(tabs)");
-        }
-
-        setLoading(false);
-        return;
-      } catch (error) {
-        console.error("WhatsApp order error:", error);
-        setLoading(false);
-        Toast.show({
-          type: "error",
-          text1: "Error",
-          text2: "Failed to place WhatsApp order",
-        });
-        return;
-      }
-    }
-
-    setLoading(true);
-
-    try {
-      const orderItems = cart.map((item) => ({
-        productId: item.productId || "",
-        name: item.name || "",
-        price: Number(item.price) || 0,
-        quantity: Number(item.quantity) || 1,
-        selectedWeight: item.selectedWeight || "",
-        image: item.image || "",
-      }));
-
-      // If offline, save order locally
-      if (isOffline) {
-        const offlineOrderId = `OFFLINE_${Date.now()}`;
-        const offlineOrder: OfflineOrder = {
-          id: offlineOrderId,
-          orderId: offlineOrderId,
-          items: orderItems,
-          address: {
-            firstname: address.firstname || "",
-            lastname: address.lastname || "",
-            phone: address.phone || "",
-            street: address.street || "",
-            city: address.city || "",
-            state: address.state || "",
-            pincode: address.pincode || "",
-          },
-          paymentMethod: "cod",
-          totalAmount: Number(cartTotal) || 0,
-          userId: user?.uid || "",
-          userEmail: user?.email || "",
-          status: "pending_sync",
-          createdAt: Date.now(),
-        };
-
-        await offlineManager.saveOfflineOrder(offlineOrder);
-        await clearCart();
-
-        Toast.show({
-          type: "info",
-          text1: "Order Saved Offline",
-          text2: "Your order will be synced when you're back online",
-          props: { icon: "offline" },
-        });
-
-        setLoading(false);
-        router.replace("/(customer)/(tabs)");
-        return;
-      }
-
-      // Online flow - Validate stock before placing order
-      const stockValidation = await validateCartStock(cart);
-
-      if (!stockValidation.isValid) {
-        const outOfStockNames = stockValidation.outOfStockItems.map((i) => i.name).join(", ");
-        const insufficientNames = stockValidation.insufficientStockItems
-          .map((i) => `${i.name} (only ${i.availableQty} left)`)
-          .join(", ");
-
-        let errorMessage = "";
-        if (outOfStockNames) {
-          errorMessage += `Out of stock: ${outOfStockNames}. `;
-        }
-        if (insufficientNames) {
-          errorMessage += `Insufficient stock: ${insufficientNames}`;
-        }
-
-        Toast.show({
-          type: "warning",
-          text1: "Stock Issue",
-          text2: errorMessage || "Some items are unavailable",
-        });
-        setLoading(false);
-        return;
-      }
-
-      // Generate sequential order ID (ORD001, ORD002, etc.)
-      const orderId = await generateOrderId();
-
-      const orderData = {
-        orderId: orderId,
-        userId: user?.uid || "",
-        userEmail: user?.email || "",
-        items: orderItems,
-        address: {
-          firstname: address.firstname || "",
-          lastname: address.lastname || "",
-          phone: address.phone || "",
-          street: address.street || "",
-          city: address.city || "",
-          state: address.state || "",
-          pincode: address.pincode || "",
-        },
-        paymentMethod: paymentMethod || "cod",
-        subtotal: cartTotals.subtotal,
-        discount: cartTotals.totalDiscount,
-        deliveryFee: deliveryResult.finalCharge,
-        totalAmount: totalAmount,
-        status: paymentMethod === "online" ? "PendingPayment" : "OrderPlaced",
-        paymentStatus: paymentMethod === "online" ? "pending" : "cod",
-        createdAt: serverTimestamp(),
-        // Applied offers & coupons
-        appliedOffers: cartTotals.appliedOffers.map((offer) => ({
-          offerId: offer.offerId,
-          offerName: offer.offerName,
-          offerType: offer.offerType,
-          discountAmount: offer.discountAmount,
-        })),
-        appliedCoupon: appliedCoupon ? {
-          couponId: appliedCoupon.id,
-          couponCode: appliedCoupon.couponCode,
-          discountAmount: couponDiscount?.discountAmount || 0,
-        } : null,
-        totalDiscount: cartTotals.totalDiscount,
-        // Delivery audit trail
-        deliveryDetails: {
-          calculatedAt: serverTimestamp(),
-          configSnapshot: {
-            isEnabled: deliveryEnabled,
-            defaultCharge: deliveryConfig?.defaultCharge || 0,
-            zoneId: deliveryResult.zone?.id || null,
-            zoneName: deliveryResult.zone?.name || null,
-          },
-          inputData: {
-            pincode: address.pincode || "",
-            orderValue: cartTotals.total,
-          },
-          result: {
-            baseCharge: deliveryResult.baseCharge,
-            discount: deliveryResult.discount,
-            additionalCharges: deliveryResult.additionalCharges,
-            finalCharge: deliveryResult.finalCharge,
-            isFree: deliveryResult.isFree,
-            appliedRules: deliveryResult.appliedRules,
-            message: deliveryResult.message,
-          },
-        },
-      };
-
-      const docRef = await addDoc(collection(db, "orders"), orderData);
-
-      if (paymentMethod === "online") {
-        // Validate amount before opening Razorpay
-        if (totalAmount < 1) {
-          Toast.show({
-            type: "error",
-            text1: "Invalid Amount",
-            text2: "Order total must be at least ₹1",
-          });
-          setLoading(false);
-          return;
-        }
-
-        setPendingOrderId(docRef.id);
-        setShowRazorpay(true);
-        setLoading(false);
-      } else {
-        // Reduce stock for COD orders
-        const stockResult = await reduceStockAfterOrder(
-          orderItems.map((item) => ({
-            productId: item.productId,
-            quantity: item.quantity,
-            name: item.name,
-          })),
-          docRef.id,
-          user?.uid || ""
-        );
-
-        if (!stockResult.success) {
-          console.error("Stock reduction failed:", stockResult.error);
-          // Order is already placed, just log the error
-        }
-
-        // Log applied offers for analytics
-        if (cartTotals.appliedOffers.length > 0) {
-          await logAppliedOffers(
-            docRef.id,
-            orderId,
-            cartTotals.appliedOffers,
-            cartWithOffers
-          );
-        }
-
-        await clearCart();
-
-        Toast.show({
-          type: "success",
-          text1: "Order Placed!",
-          text2: `Order ${orderId} has been placed successfully`,
-          props: { icon: "truck" },
-        });
-
-        router.replace(`/(customer)/orders/${docRef.id}`);
-      }
-    } catch (error) {
-      console.error("Order error:", error);
-      Toast.show({
-        type: "error",
-        text1: "Order Failed",
-        text2: "Failed to place order. Please try again.",
-      });
-      setLoading(false);
-    }
-  };
-
-  const handlePaymentSuccess = async (response: RazorpayResponse) => {
-    setShowRazorpay(false);
-    setLoading(true);
-
-    try {
-      // Validate the payment response first
-      const validation = validateRazorpayResponse(response);
-      if (!validation.isValid) {
-        Toast.show({
-          type: "error",
-          text1: "Payment Verification Failed",
-          text2: validation.error || "Invalid payment response",
-        });
-        // Update order to failed status
-        if (pendingOrderId) {
-          try {
-            await updateDoc(doc(db, "orders", pendingOrderId), {
-              status: "PaymentFailed",
-              paymentStatus: "failed",
-              paymentError: validation.error,
-            });
-          } catch (e) {
-            console.error("Failed to update order status:", e);
-          }
-        }
-        setLoading(false);
-        setPendingOrderId(null);
-        return;
-      }
-
-      if (pendingOrderId) {
-        // Build payment details object, excluding undefined values
-        const paymentDetails: Record<string, string> = {
-          razorpay_payment_id: response.razorpay_payment_id || "",
-        };
-
-        // Only add these fields if they exist (they may be undefined in test mode)
-        if (response.razorpay_order_id) {
-          paymentDetails.razorpay_order_id = response.razorpay_order_id;
-        }
-        if (response.razorpay_signature) {
-          paymentDetails.razorpay_signature = response.razorpay_signature;
-        }
-
-        await updateDoc(doc(db, "orders", pendingOrderId), {
-          status: "OrderPlaced",
-          paymentStatus: "paid",
-          paymentId: response.razorpay_payment_id || "",
-          paymentDetails,
-          paidAt: serverTimestamp(),
-        });
-
-        // Reduce stock after successful online payment
-        const stockResult = await reduceStockAfterOrder(
-          cart.map((item) => ({
-            productId: item.productId,
-            quantity: item.quantity,
-            name: item.name,
-          })),
-          pendingOrderId,
-          user?.uid || ""
-        );
-
-        if (!stockResult.success) {
-          console.error("Stock reduction failed:", stockResult.error);
-          // Payment is successful, order is placed, just log the error
-        }
-
-        // Log applied offers for analytics
-        if (cartTotals.appliedOffers.length > 0) {
-          await logAppliedOffers(
-            pendingOrderId,
-            pendingOrderId, // Will be updated with proper order number
-            cartTotals.appliedOffers,
-            cartWithOffers
-          );
-        }
-
-        await clearCart();
-
-        Toast.show({
-          type: "success",
-          text1: "Payment Successful!",
-          text2: "Your order has been placed successfully",
-          props: { icon: "truck" },
-        });
-
-        router.replace(`/(customer)/orders/${pendingOrderId}`);
-      }
-    } catch (error) {
-      console.error("Payment update error:", error);
-      Toast.show({
-        type: "error",
-        text1: "Error",
-        text2: "Payment received but failed to update order. Please contact support.",
-      });
-    } finally {
-      setLoading(false);
-      setPendingOrderId(null);
-    }
-  };
-
-  const handlePaymentFailure = async (error: string) => {
-    setShowRazorpay(false);
-
-    const errorMessage = getRazorpayErrorMessage(error);
-    const isUserCancelled = /cancelled|canceled|user cancelled|user canceled/i.test(errorMessage);
-
-    if (pendingOrderId) {
-      try {
-        await updateDoc(doc(db, "orders", pendingOrderId), {
-          status: isUserCancelled ? "Cancelled" : "PaymentFailed",
-          paymentStatus: isUserCancelled ? "cancelled" : "failed",
-          paymentError: errorMessage,
-          failedAt: serverTimestamp(),
-        });
-      } catch (e) {
-        console.error("Failed to update order status:", e);
-      }
-    }
-
-    Toast.show({
-      type: isUserCancelled ? "info" : "error",
-      text1: isUserCancelled ? "Payment Cancelled" : "Payment Failed",
-      text2: errorMessage,
-    });
-
-    setPendingOrderId(null);
-  };
-
-  const handlePaymentClose = async () => {
-    setShowRazorpay(false);
-
-    if (pendingOrderId) {
-      try {
-        await updateDoc(doc(db, "orders", pendingOrderId), {
-          status: "Cancelled",
-          paymentStatus: "cancelled",
-          paymentError: "Payment flow was closed before completion",
-          failedAt: serverTimestamp(),
-        });
-      } catch (e) {
-        console.error("Failed to update order status on close:", e);
-      }
-
-      Toast.show({
-        type: "info",
-        text1: "Payment Cancelled",
-        text2: "You can retry payment from your orders",
-      });
-    }
-
-    setPendingOrderId(null);
-  };
-
-  const getRazorpayOptions = () => {
-    return createRazorpayOptions(
-      totalAmount,
-      pendingOrderId || "temp",
-      `${address.firstname} ${address.lastname}`.trim(),
-      user?.email || "",
-      address.phone
-    );
-  };
-
-  const renderStepIndicator = () => (
-    <View className="flex-row items-center justify-center py-4 px-6 bg-white">
-      {steps.map((step, index) => (
-        <View key={step.id} className="flex-row items-center">
-          <View
-            className={`w-8 h-8 rounded-full items-center justify-center ${
-              currentStep === step.id
-                ? "bg-primary"
-                : steps.indexOf(steps.find((s) => s.id === currentStep)!) > index
-                ? "bg-primary"
-                : "bg-gray-200"
-            }`}
-          >
-            {steps.indexOf(steps.find((s) => s.id === currentStep)!) > index ? (
-              <Check size={16} color="#fff" />
-            ) : (
-              <Text
-                className={`font-bold ${
-                  currentStep === step.id ? "text-white" : "text-gray-500"
-                }`}
-              >
-                {index + 1}
-              </Text>
-            )}
-          </View>
-          <Text
-            className={`ml-2 font-medium ${
-              currentStep === step.id ? "text-primary" : "text-gray-500"
-            }`}
-          >
-            {step.label}
-          </Text>
-          {index < steps.length - 1 && (
-            <View className="w-8 h-0.5 mx-2 bg-gray-200" />
-          )}
-        </View>
-      ))}
-    </View>
-  );
-
-  const renderAddressStep = () => (
-    <KeyboardAwareScrollView
-      contentContainerStyle={{ paddingBottom: 20 }}
-      enableOnAndroid={true}
-      extraScrollHeight={120}
-      keyboardShouldPersistTaps="handled"
-      showsVerticalScrollIndicator={false}
-    >
-      <View className="p-4">
-        <Text className="text-lg font-bold text-gray-800 mb-4">
-          Delivery Address
-        </Text>
-
-        {/* Saved Addresses Section */}
-        {addresses.length > 0 && (
-          <Pressable
-            onPress={() => setShowAddressPicker(true)}
-            className="bg-white rounded-xl p-4 mb-4 flex-row items-center border-2 border-primary"
-          >
-            <View className="w-12 h-12 bg-primary/10 rounded-full items-center justify-center">
-              <MapPin size={24} color="#1D5C45" />
-            </View>
-            <View className="flex-1 ml-3">
-              {selectedAddressId ? (
-                <>
-                  <Text className="text-gray-800 font-semibold">
-                    {address.firstname} {address.lastname}
-                  </Text>
-                  <Text className="text-gray-500 text-sm" numberOfLines={1}>
-                    {address.street}, {address.city}
-                  </Text>
-                </>
-              ) : (
-                <>
-                  <Text className="text-gray-800 font-semibold">Select Saved Address</Text>
-                  <Text className="text-gray-500 text-sm">Tap to choose from your addresses</Text>
-                </>
-              )}
-            </View>
-            <View className="bg-primary px-3 py-1.5 rounded-lg">
-              <Text className="text-white font-semibold text-sm">Change</Text>
-            </View>
-          </Pressable>
-        )}
-
-        {/* Add New Address Link */}
-        {addresses.length === 0 && (
-          <Pressable
-            onPress={() => router.push("/(customer)/addresses/add")}
-            className="bg-white rounded-xl p-4 mb-4 flex-row items-center border-2 border-dashed border-gray-300"
-          >
-            <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
-              <Plus size={24} color="#6B7280" />
-            </View>
-            <View className="flex-1 ml-3">
-              <Text className="text-gray-800 font-semibold">Add New Address</Text>
-              <Text className="text-gray-500 text-sm">Save address for faster checkout</Text>
-            </View>
-          </Pressable>
-        )}
-
-        {/* Manual Entry Form */}
-        <View className="bg-white rounded-xl p-4">
-          <Text className="text-gray-600 font-semibold mb-3">
-            {selectedAddressId ? "Delivery Details" : "Enter Address Manually"}
-          </Text>
-
-          <View className="flex-row mb-4">
-            <View className="flex-1 mr-2">
-              <Text className="text-gray-600 font-medium mb-2">First Name *</Text>
-              <TextInput
-                value={address.firstname}
-                onChangeText={(text) => setAddress({ ...address, firstname: text })}
-                placeholder="John"
-                placeholderTextColor="#9CA3AF"
-                style={{ borderWidth: 1, borderColor: "#E5E7EB", borderRadius: 12, paddingHorizontal: 16, paddingVertical: 12, backgroundColor: "#F9FAFB", fontSize: 15, color: "#1F2937" }}
-              />
-            </View>
-            <View className="flex-1 ml-2">
-              <Text className="text-gray-600 font-medium mb-2">Last Name</Text>
-              <TextInput
-                value={address.lastname}
-                onChangeText={(text) => setAddress({ ...address, lastname: text })}
-                placeholder="Doe"
-                placeholderTextColor="#9CA3AF"
-                style={{ borderWidth: 1, borderColor: "#E5E7EB", borderRadius: 12, paddingHorizontal: 16, paddingVertical: 12, backgroundColor: "#F9FAFB", fontSize: 15, color: "#1F2937" }}
-              />
-            </View>
-          </View>
-
-          <View className="mb-4">
-            <Text className="text-gray-600 font-medium mb-2">Phone Number *</Text>
-            <TextInput
-              value={address.phone}
-              onChangeText={(text) => setAddress({ ...address, phone: text.replace(/[^0-9]/g, "") })}
-              placeholder="8940450960"
-              keyboardType="phone-pad"
-              maxLength={10}
-              placeholderTextColor="#9CA3AF"
-              style={{ borderWidth: 1, borderColor: "#E5E7EB", borderRadius: 12, paddingHorizontal: 16, paddingVertical: 12, backgroundColor: "#F9FAFB", fontSize: 15, color: "#1F2937" }}
-            />
-          </View>
-
-          <View className="mb-4">
-            <Text className="text-gray-600 font-medium mb-2">Street Address *</Text>
-            <TextInput
-              value={address.street}
-              onChangeText={(text) => setAddress({ ...address, street: text })}
-              placeholder="House/Flat No, Building, Street, Area"
-              multiline
-              placeholderTextColor="#9CA3AF"
-              style={{ borderWidth: 1, borderColor: "#E5E7EB", borderRadius: 12, paddingHorizontal: 16, paddingVertical: 12, backgroundColor: "#F9FAFB", fontSize: 15, color: "#1F2937", minHeight: 70, textAlignVertical: "top" }}
-            />
-          </View>
-
-          <View className="flex-row mb-4">
-            <View className="flex-1 mr-2">
-              <Text className="text-gray-600 font-medium mb-2">City *</Text>
-              <TextInput
-                value={address.city}
-                onChangeText={(text) => setAddress({ ...address, city: text })}
-                placeholder="Chennai"
-                placeholderTextColor="#9CA3AF"
-                style={{ borderWidth: 1, borderColor: "#E5E7EB", borderRadius: 12, paddingHorizontal: 16, paddingVertical: 12, backgroundColor: "#F9FAFB", fontSize: 15, color: "#1F2937" }}
-              />
-            </View>
-            <View className="flex-1 ml-2">
-              <Text className="text-gray-600 font-medium mb-2">State</Text>
-              <TextInput
-                value={address.state}
-                onChangeText={(text) => setAddress({ ...address, state: text })}
-                placeholder="Tamil Nadu"
-                placeholderTextColor="#9CA3AF"
-                style={{ borderWidth: 1, borderColor: "#E5E7EB", borderRadius: 12, paddingHorizontal: 16, paddingVertical: 12, backgroundColor: "#F9FAFB", fontSize: 15, color: "#1F2937" }}
-              />
-            </View>
-          </View>
-
-          <View className="mb-2">
-            <Text className="text-gray-600 font-medium mb-2">Pincode</Text>
-            <TextInput
-              value={address.pincode}
-              onChangeText={(text) => setAddress({ ...address, pincode: text.replace(/[^0-9]/g, "") })}
-              placeholder="600001"
-              keyboardType="number-pad"
-              maxLength={6}
-              placeholderTextColor="#9CA3AF"
-              style={{ borderWidth: 1, borderColor: "#E5E7EB", borderRadius: 12, paddingHorizontal: 16, paddingVertical: 12, backgroundColor: "#F9FAFB", fontSize: 15, color: "#1F2937" }}
-            />
-          </View>
-        </View>
-      </View>
-    </KeyboardAwareScrollView>
-  );
-
-  const renderPaymentStep = () => (
-    <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-      <View className="p-4">
-        <Text className="text-lg font-bold text-gray-800 mb-4">
-          Payment Method
-        </Text>
-
-        <View className="bg-white rounded-xl overflow-hidden">
-          <Pressable
-            onPress={() => setPaymentMethod("cod")}
-            className={`flex-row items-center p-4 border-b border-gray-100 ${
-              paymentMethod === "cod" ? "bg-primary/5" : ""
-            }`}
-          >
-            <View
-              className={`w-6 h-6 rounded-full border-2 mr-4 items-center justify-center ${
-                paymentMethod === "cod" ? "border-primary bg-primary" : "border-gray-300"
-              }`}
-            >
-              {paymentMethod === "cod" && <Check size={14} color="#fff" />}
-            </View>
-            <Truck size={24} color={paymentMethod === "cod" ? "#1D5C45" : "#6B7280"} />
-            <View className="ml-4 flex-1">
-              <Text className={`font-semibold ${paymentMethod === "cod" ? "text-primary" : "text-gray-800"}`}>
-                Cash on Delivery
-              </Text>
-              <Text className="text-gray-500 text-sm">Pay when you receive</Text>
-            </View>
-          </Pressable>
-
-          <Pressable
-            onPress={() => setPaymentMethod("online")}
-            className={`flex-row items-center p-4 border-b border-gray-100 ${
-              paymentMethod === "online" ? "bg-primary/5" : ""
-            }`}
-          >
-            <View
-              className={`w-6 h-6 rounded-full border-2 mr-4 items-center justify-center ${
-                paymentMethod === "online" ? "border-primary bg-primary" : "border-gray-300"
-              }`}
-            >
-              {paymentMethod === "online" && <Check size={14} color="#fff" />}
-            </View>
-            <CreditCard size={24} color={paymentMethod === "online" ? "#1D5C45" : "#6B7280"} />
-            <View className="ml-4 flex-1">
-              <View className="flex-row items-center">
-                <Text className={`font-semibold ${paymentMethod === "online" ? "text-primary" : "text-gray-800"}`}>
-                  Online Payment
-                </Text>
-                {RAZORPAY_TEST_MODE && (
-                  <View className="bg-yellow-100 px-2 py-0.5 rounded ml-2">
-                    <Text className="text-yellow-700 text-xs font-medium">TEST</Text>
-                  </View>
-                )}
-              </View>
-              <Text className="text-gray-500 text-sm">UPI, Cards, Net Banking</Text>
-            </View>
-          </Pressable>
-
-          <WhatsAppPaymentOption
-            selected={paymentMethod === "whatsapp"}
-            onSelect={() => setPaymentMethod("whatsapp")}
-          />
-        </View>
-
-        {/* Test Mode Info */}
-        {RAZORPAY_TEST_MODE && paymentMethod === "online" && (
-          <View className="bg-yellow-50 mx-4 mt-4 p-4 rounded-xl border border-yellow-200">
-            <Text className="text-yellow-800 font-semibold mb-1">Test Mode Active</Text>
-            <Text className="text-yellow-700 text-sm">
-              Use test card: 4111 1111 1111 1111{"\n"}
-              Expiry: Any future date | CVV: Any 3 digits
-            </Text>
-          </View>
-        )}
-      </View>
-    </ScrollView>
-  );
-
-  const renderReviewStep = () => (
-    <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-      <View className="p-4">
-        {/* Delivery Address */}
-        <View className="bg-white rounded-xl p-4 mb-4">
-          <View className="flex-row items-center mb-3">
-            <MapPin size={20} color="#1D5C45" />
-            <Text className="ml-2 font-bold text-gray-800">Delivery Address</Text>
-          </View>
-          <Text className="text-gray-800 font-medium">
-            {address.firstname} {address.lastname}
-          </Text>
-          <Text className="text-gray-500">{address.phone}</Text>
-          <Text className="text-gray-500 mt-1">
-            {address.street}, {address.city}
-          </Text>
-          <Text className="text-gray-500">
-            {address.state} - {address.pincode}
-          </Text>
-        </View>
-
-        {/* Payment Method */}
-        <View className="bg-white rounded-xl p-4 mb-4">
-          <View className="flex-row items-center mb-3">
-            {paymentMethod === "whatsapp" ? (
-              <MessageCircle size={20} color="#25D366" />
-            ) : (
-              <CreditCard size={20} color="#1D5C45" />
-            )}
-            <Text className="ml-2 font-bold text-gray-800">Payment Method</Text>
-          </View>
-          <Text className={`font-medium ${paymentMethod === "whatsapp" ? "text-green-600" : "text-gray-700"}`}>
-            {paymentMethod === "cod" ? "Cash on Delivery" : paymentMethod === "whatsapp" ? "Order via WhatsApp" : "Online Payment"}
-          </Text>
-        </View>
-
-        {/* Order Items */}
-        <View className="bg-white rounded-xl p-4 mb-4">
-          <Text className="font-bold text-gray-800 mb-3">
-            Order Items ({cartCount})
-          </Text>
-          {cart.map((item, index) => (
-            <View key={`${item.id}-${index}`} className="flex-row items-center py-3 border-b border-gray-100 last:border-b-0">
-              <View className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
-                {item.image ? (
-                  <Image source={{ uri: item.image }} className="w-full h-full" resizeMode="cover" />
-                ) : (
-                  <View className="w-full h-full items-center justify-center">
-                    <ShoppingBag size={20} color="#9CA3AF" />
-                  </View>
-                )}
-              </View>
-              <View className="flex-1 ml-3">
-                <Text className="text-gray-800 font-medium" numberOfLines={1}>
-                  {item.name}
-                </Text>
-                <Text className="text-gray-500 text-sm">
-                  {item.selectedWeight} x {item.quantity}
-                </Text>
-              </View>
-              <Text className="font-bold text-primary">
-                {formatCurrency(item.price * item.quantity)}
-              </Text>
-            </View>
-          ))}
-        </View>
-
-        {/* Coupon Section */}
-        <View className="bg-white rounded-xl p-4 mb-4">
-          <Text className="font-bold text-gray-800 mb-3">Apply Coupon</Text>
-          <CouponInput />
-        </View>
-
-        {/* Order Summary */}
-        <View className="bg-white rounded-xl p-4">
-          <Text className="font-bold text-gray-800 mb-3">Order Summary</Text>
-          <View className="flex-row justify-between mb-2">
-            <Text className="text-gray-500">Subtotal</Text>
-            <Text className="font-medium">{formatCurrency(cartTotals.subtotal)}</Text>
-          </View>
-          {/* Show applied offers/discounts */}
-          {cartTotals.totalDiscount > 0 && (
-            <View className="flex-row justify-between mb-2">
-              <Text className="text-green-600">Discount</Text>
-              <Text className="font-medium text-green-600">
-                -{formatCurrency(cartTotals.totalDiscount)}
-              </Text>
-            </View>
-          )}
-          {/* Show individual applied offers */}
-          {cartTotals.appliedOffers.map((offer, index) => (
-            <View key={index} className="flex-row justify-between mb-1 pl-4">
-              <Text className="text-gray-400 text-sm">{offer.offerName}</Text>
-              <Text className="text-green-600 text-sm">
-                -{formatCurrency(offer.discountAmount)}
-              </Text>
-            </View>
-          ))}
-          <View className="flex-row justify-between mb-2">
-            <Text className="text-gray-500">Delivery Fee</Text>
-            <Text className={`font-medium ${deliveryResult.isFree ? 'text-primary' : 'text-gray-800'}`}>
-              {deliveryResult.isFree ? 'Free' : formatCurrency(deliveryResult.finalCharge)}
-            </Text>
-          </View>
-          {/* Show delivery zone info if applicable */}
-          {deliveryResult.zone && !deliveryResult.isFree && (
-            <View className="flex-row items-center mb-2">
-              <Info size={14} color="#6B7280" />
-              <Text className="text-gray-500 text-sm ml-1">
-                Zone: {deliveryResult.zone.name}
-              </Text>
-            </View>
-          )}
-          {/* Show free delivery message */}
-          {!deliveryResult.isFree && deliveryResult.zone?.freeDeliveryThreshold && cartTotals.total < deliveryResult.zone.freeDeliveryThreshold && (
-            <View className="bg-green-50 rounded-lg p-2 mb-2">
-              <Text className="text-green-700 text-sm">
-                Add {formatCurrency(deliveryResult.zone.freeDeliveryThreshold - cartTotals.total)} for free delivery
-              </Text>
-            </View>
-          )}
-          <View className="flex-row justify-between pt-3 border-t border-gray-100">
-            <Text className="text-lg font-bold text-gray-800">Total</Text>
-            <Text className="text-lg font-bold text-primary">
-              {formatCurrency(totalAmount)}
-            </Text>
-          </View>
-        </View>
-      </View>
-    </ScrollView>
-  );
-
-  const renderCurrentStep = () => {
-    switch (currentStep) {
-      case "address":
-        return renderAddressStep();
-      case "payment":
-        return renderPaymentStep();
-      case "review":
-        return renderReviewStep();
-      default:
-        return null;
-    }
-  };
-
-  const handleNext = () => {
-    if (currentStep === "address") {
-      if (!address.firstname || !address.phone || !address.street || !address.city) {
-        Toast.show({
-          type: "error",
-          text1: "Missing Information",
-          text2: "Please fill all required fields",
-        });
-        return;
-      }
-      setCurrentStep("payment");
-    } else if (currentStep === "payment") {
-      setCurrentStep("review");
-    }
-  };
-
-  const handleBack = () => {
-    if (currentStep === "payment") {
-      setCurrentStep("address");
-    } else if (currentStep === "review") {
-      setCurrentStep("payment");
-    } else {
-      router.back();
-    }
-  };
-
   if (cart.length === 0) {
     return (
-      <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
-        <View className="flex-row items-center px-4 py-4 bg-primary border-b border-primaryDark">
+      <SafeAreaView className="flex-1 bg-[#F1F8E9]">
+        <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
+        <View className="flex-1 items-center justify-center px-5">
+          <Text className="text-xl font-semibold text-gray-800 mb-2">
+            Your Cart is Empty
+          </Text>
+          <Text className="text-gray-600 text-center mb-8">
+            Add items to your cart to proceed with checkout
+          </Text>
           <Pressable
             onPress={() => router.back()}
-            className="w-10 h-10 bg-white rounded-full items-center justify-center mr-3"
+            className="bg-[#1D5A34] px-8 py-3 rounded-lg"
           >
-            <ChevronLeft size={24} color="#1D5C45" />
-          </Pressable>
-          <Text className="text-xl font-bold text-white">Checkout</Text>
-        </View>
-        <View className="flex-1 items-center justify-center px-4">
-          <ShoppingBag size={64} color="#9CA3AF" />
-          <Text className="text-xl font-semibold text-gray-800 mt-4">Cart is empty</Text>
-          <Text className="text-gray-500 mt-2">Add items to proceed with checkout</Text>
-          <Pressable
-            onPress={() => router.push("/(customer)/(tabs)/shop")}
-            className="bg-primary px-6 py-3 rounded-xl mt-6"
-          >
-            <Text className="text-white font-semibold">Browse Products</Text>
+            <Text className="text-white font-semibold">Continue Shopping</Text>
           </Pressable>
         </View>
       </SafeAreaView>
     );
   }
 
+  const selectedAddress = addresses.find(
+    (addr) => addr.id === state.selectedAddressId
+  );
+
+  const subtotal = cartTotal;
+  const deliveryCharge =
+    subtotal >= 500 ? 0 : DELIVERY_CHARGES; // Free delivery on orders >= 500
+  const total = subtotal + deliveryCharge;
+
+  const handlePlaceOrder = async () => {
+    if (!selectedAddress) {
+      Alert.alert("Error", "Please select a delivery address");
+      return;
+    }
+
+    if (total < MIN_ORDER_AMOUNT) {
+      Alert.alert(
+        "Error",
+        `Minimum order amount is ₹${MIN_ORDER_AMOUNT}. Current total: ₹${total.toFixed(2)}`
+      );
+      return;
+    }
+
+    if (state.paymentMethod === "cod") {
+      await handleCODOrder();
+    } else {
+      setState((prev) => ({ ...prev, showPaymentModal: true }));
+    }
+  };
+
+  const handleCODOrder = async () => {
+    try {
+      setState((prev) => ({ ...prev, isProcessing: true, error: null }));
+
+      const orderData = {
+        userId: user?.uid,
+        items: cart.map((item) => ({
+          productId: item.productId,
+          name: item.name,
+          quantity: item.quantity,
+          price: item.price,
+          weight: item.selectedWeight || "default",
+        })),
+        deliveryAddressId: state.selectedAddressId,
+        paymentMethod: "cod" as const,
+        subtotal,
+        deliveryCharge,
+        total,
+        status: "pending",
+        createdAt: serverTimestamp(),
+      };
+
+      if (user?.uid) {
+        await addDoc(collection(db, `users/${user.uid}/orders`), orderData);
+      }
+
+      Alert.alert(
+        "Success",
+        "Your order has been placed successfully!",
+        [
+          {
+            text: "OK",
+            onPress: async () => {
+              await clearCart();
+              router.push("/(customer)/orders");
+            },
+          },
+        ]
+      );
+    } catch (error) {
+      console.error("Order creation error:", error);
+      setState((prev) => ({
+        ...prev,
+        error: "An error occurred while placing your order",
+      }));
+    } finally {
+      setState((prev) => ({ ...prev, isProcessing: false }));
+    }
+  };
+
+  const handlePaymentSuccess = async (response: RazorpayResponse) => {
+    try {
+      setState((prev) => ({
+        ...prev,
+        isProcessing: true,
+        showPaymentModal: false,
+        error: null,
+      }));
+
+      const orderData = {
+        userId: user?.uid,
+        items: cart.map((item) => ({
+          productId: item.productId,
+          name: item.name,
+          quantity: item.quantity,
+          price: item.price,
+          weight: item.selectedWeight || "default",
+        })),
+        deliveryAddressId: state.selectedAddressId,
+        paymentMethod: "online" as const,
+        razorpayPaymentId: response.razorpay_payment_id,
+        razorpayOrderId: response.razorpay_order_id,
+        razorpaySignature: response.razorpay_signature,
+        subtotal,
+        deliveryCharge,
+        total,
+        status: "confirmed",
+        createdAt: serverTimestamp(),
+      };
+
+      if (user?.uid) {
+        await addDoc(collection(db, `users/${user.uid}/orders`), orderData);
+      }
+
+      Alert.alert("Success", "Payment successful! Order placed.", [
+        {
+          text: "OK",
+          onPress: async () => {
+            await clearCart();
+            router.push("/(customer)/orders");
+          },
+        },
+      ]);
+    } catch (error) {
+      console.error("Payment order error:", error);
+      setState((prev) => ({
+        ...prev,
+        error: "Failed to process order after payment",
+        showPaymentModal: false,
+      }));
+    } finally {
+      setState((prev) => ({ ...prev, isProcessing: false }));
+    }
+  };
+
+  const handlePaymentFailure = (error: string) => {
+    console.error("Payment failed:", error);
+    setState((prev) => ({
+      ...prev,
+      showPaymentModal: false,
+      error: `Payment failed: ${error}`,
+    }));
+  };
+
+  const handlePaymentClose = () => {
+    setState((prev) => ({ ...prev, showPaymentModal: false }));
+  };
+
+  const paymentOptions: RazorpayOptions = {
+    key: "",
+    amount: Math.round(total * 100), // Convert to paise
+    currency: "INR",
+    name: "Supermarket",
+    description: `Order of ${cart.length} items`,
+    theme: { color: "#1D5A34" },
+    prefill: {
+      name: user?.displayName || "",
+      email: user?.email || "",
+      contact: "",
+    },
+  };
+
   return (
-    <SafeAreaView className="flex-1 bg-[#F1F8E9]" edges={["top","bottom"]}>
-      {/* Header */}
-      <View className="flex-row items-center justify-between px-4 py-4 bg-primary border-b border-primaryDark">
-        <View className="flex-row items-center">
+    <SafeAreaView className="flex-1 bg-[#F1F8E9]">
+      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
+
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* Header */}
+        <View className="bg-[#1D5A34] px-5 pt-4 pb-6">
           <Pressable
-            onPress={handleBack}
-            className="w-10 h-10 bg-white rounded-full items-center justify-center mr-3"
+            onPress={() => router.back()}
+            className="mb-3"
           >
-            <ChevronLeft size={24} color="#1D5C45" />
+            <Text className="text-white text-lg font-semibold">Checkout</Text>
           </Pressable>
-          <Text className="text-xl font-bold text-white">Checkout</Text>
         </View>
-        <Image source={Logo} style={{ width: 40, height: 40 }} resizeMode="contain" />
-      </View>
 
-      {/* Offline Banner */}
-      {isOffline && <OfflineBanner />}
+        <View className="flex-1 px-4 py-4">
+          {/* Error Banner */}
+          {state.error && (
+            <View className="bg-red-100 border border-red-300 rounded-lg p-3 mb-4">
+              <Text className="text-red-800 text-sm">{state.error}</Text>
+            </View>
+          )}
 
-      {/* Step Indicator */}
-      {renderStepIndicator()}
+          {/* Delivery Address Section */}
+          <View className="mb-6">
+            <View className="flex-row items-center mb-3">
+              <MapPin size={20} color="#1D5A34" />
+              <Text className="text-lg font-semibold text-gray-800 ml-2">
+                Delivery Address
+              </Text>
+            </View>
 
-      {/* Current Step Content */}
-      {renderCurrentStep()}
+            {addressLoading ? (
+              <ActivityIndicator color="#1D5A34" size="large" />
+            ) : addresses.length === 0 ? (
+              <View className="bg-blue-100 p-4 rounded-lg mb-3">
+                <Text className="text-blue-800 text-sm mb-3">
+                  No saved addresses found. Please add one.
+                </Text>
+                <Pressable
+                  onPress={() => router.push("/(customer)/addresses/add")}
+                  className="bg-blue-600 px-4 py-2 rounded-lg self-start"
+                >
+                  <Text className="text-white font-semibold text-sm">
+                    Add Address
+                  </Text>
+                </Pressable>
+              </View>
+            ) : (
+              <View className="border border-gray-300 rounded-lg overflow-hidden">
+                {addresses.map((address, index) => (
+                  <Pressable
+                    key={address.id}
+                    onPress={() =>
+                      setState((prev) => ({
+                        ...prev,
+                        selectedAddressId: address.id,
+                      }))
+                    }
+                    className={`p-4 ${
+                      index !== addresses.length - 1
+                        ? "border-b border-gray-300"
+                        : ""
+                    } ${
+                      state.selectedAddressId === address.id
+                        ? "bg-green-50"
+                        : "bg-white"
+                    }`}
+                  >
+                    <View className="flex-row items-start">
+                      <View
+                        className={`w-5 h-5 rounded-full border-2 mr-3 mt-0.5 ${
+                          state.selectedAddressId === address.id
+                            ? "bg-[#1D5A34] border-[#1D5A34]"
+                            : "border-gray-300"
+                        }`}
+                      />
+                      <View className="flex-1">
+                        <Text className="font-semibold text-gray-800">
+                          {address.label || address.firstname}
+                        </Text>
+                        <Text className="text-gray-600 text-sm mt-1">
+                          {address.address}, {address.city}, {address.state} {address.zip}
+                        </Text>
+                        {address.phone && (
+                          <Text className="text-gray-600 text-sm mt-1">
+                            {address.phone}
+                          </Text>
+                        )}
+                      </View>
+                    </View>
+                  </Pressable>
+                ))}
+              </View>
+            )}
 
-      {/* Bottom Button */}
-      <View
-        className="bg-white px-4 pt-4 border-t border-gray-100"
-        style={{ paddingBottom: Math.max(insets.bottom, 16) }}
-      >
-        <Pressable
-          onPress={currentStep === "review" ? handlePlaceOrder : handleNext}
-          disabled={loading}
-          className="py-4 rounded-xl"
-          style={{
-            backgroundColor: currentStep === "review" && paymentMethod === "whatsapp" ? "#25D366" : "#1D5C45",
-            shadowColor: currentStep === "review" && paymentMethod === "whatsapp" ? "#25D366" : "#1D5C45",
-            shadowOffset: { width: 0, height: 4 },
-            shadowOpacity: 0.3,
-            shadowRadius: 8,
-            elevation: 8,
-          }}
-        >
-          {loading ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <Text className="text-white text-center font-bold text-lg">
-              {currentStep === "review"
-                ? paymentMethod === "whatsapp"
-                  ? "Order via WhatsApp"
-                  : `Place Order - ${formatCurrency(totalAmount)}`
-                : "Continue"}
+            {addresses.length > 0 && (
+              <Pressable
+                onPress={() => router.push("/(customer)/addresses/add")}
+                className="mt-3"
+              >
+                <Text className="text-[#1D5A34] font-semibold text-sm">
+                  + Add New Address
+                </Text>
+              </Pressable>
+            )}
+          </View>
+
+          {/* Payment Method Section */}
+          <View className="mb-6">
+            <Text className="text-lg font-semibold text-gray-800 mb-3">
+              Payment Method
             </Text>
+
+            <View className="border border-gray-300 rounded-lg overflow-hidden">
+              {/* Online Payment */}
+              <Pressable
+                onPress={() =>
+                  setState((prev) => ({ ...prev, paymentMethod: "online" }))
+                }
+                className={`p-4 border-b border-gray-300 ${
+                  state.paymentMethod === "online"
+                    ? "bg-green-50"
+                    : "bg-white"
+                }`}
+              >
+                <View className="flex-row items-center">
+                  <View
+                    className={`w-5 h-5 rounded-full border-2 mr-3 ${
+                      state.paymentMethod === "online"
+                        ? "bg-[#1D5A34] border-[#1D5A34]"
+                        : "border-gray-300"
+                    }`}
+                  />
+                  <View className="flex-1">
+                    <Text className="font-semibold text-gray-800">
+                      Online Payment
+                    </Text>
+                    <Text className="text-gray-600 text-sm">
+                      Pay via Razorpay (Cards, UPI, Wallets)
+                    </Text>
+                  </View>
+                </View>
+              </Pressable>
+
+              {/* Cash on Delivery */}
+              <Pressable
+                onPress={() =>
+                  setState((prev) => ({ ...prev, paymentMethod: "cod" }))
+                }
+                className={state.paymentMethod === "cod" ? "bg-green-50" : "bg-white"}
+              >
+                <View className="p-4 flex-row items-center">
+                  <View
+                    className={`w-5 h-5 rounded-full border-2 mr-3 ${
+                      state.paymentMethod === "cod"
+                        ? "bg-[#1D5A34] border-[#1D5A34]"
+                        : "border-gray-300"
+                    }`}
+                  />
+                  <View className="flex-1">
+                    <Text className="font-semibold text-gray-800">
+                      Cash on Delivery
+                    </Text>
+                    <Text className="text-gray-600 text-sm">
+                      Pay when order is delivered
+                    </Text>
+                  </View>
+                </View>
+              </Pressable>
+            </View>
+          </View>
+
+          {/* Order Summary */}
+          <View className="bg-white rounded-lg p-4 mb-6 border border-gray-200">
+            <Text className="text-lg font-semibold text-gray-800 mb-4">
+              Order Summary
+            </Text>
+
+            {/* Cart Items Summary */}
+            <View className="mb-4 pb-4 border-b border-gray-200">
+              <Text className="text-gray-600 font-medium mb-2">
+                Items ({cart.length})
+              </Text>
+              {cart.map((item) => (
+                <View
+                  key={item.id}
+                  className="flex-row justify-between items-center mb-2"
+                >
+                  <View className="flex-1">
+                    <Text className="text-gray-800 font-medium">
+                      {item.name}
+                    </Text>
+                    <Text className="text-gray-600 text-sm">
+                      {item.quantity} x ₹{item.price.toFixed(2)}
+                    </Text>
+                  </View>
+                  <Text className="font-semibold text-gray-800">
+                    ₹{(item.price * item.quantity).toFixed(2)}
+                  </Text>
+                </View>
+              ))}
+            </View>
+
+            {/* Pricing Breakdown */}
+            <View className="space-y-2">
+              <View className="flex-row justify-between">
+                <Text className="text-gray-600">Subtotal</Text>
+                <Text className="text-gray-800 font-medium">
+                  ₹{subtotal.toFixed(2)}
+                </Text>
+              </View>
+
+              <View className="flex-row justify-between">
+                <Text className="text-gray-600">
+                  Delivery
+                  {deliveryCharge === 0 && (
+                    <Text className="text-green-600"> (Free)</Text>
+                  )}
+                </Text>
+                <Text
+                  className={`font-medium ${
+                    deliveryCharge === 0
+                      ? "text-green-600"
+                      : "text-gray-800"
+                  }`}
+                >
+                  ₹{deliveryCharge.toFixed(2)}
+                </Text>
+              </View>
+
+              {subtotal < 500 && (
+                <Text className="text-xs text-gray-500 mt-1">
+                  Free delivery on orders above ₹500
+                </Text>
+              )}
+
+              <View className="flex-row justify-between pt-3 border-t border-gray-200">
+                <Text className="text-lg font-semibold text-gray-800">
+                  Total
+                </Text>
+                <Text className="text-lg font-bold text-[#1D5A34]">
+                  ₹{total.toFixed(2)}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+
+      {/* Place Order Button */}
+      <View className="px-4 py-4 bg-white border-t border-gray-200">
+        <Pressable
+          onPress={handlePlaceOrder}
+          disabled={state.isProcessing || !selectedAddress}
+          className={`py-3 rounded-lg flex-row items-center justify-center ${
+            state.isProcessing || !selectedAddress
+              ? "bg-gray-400"
+              : "bg-[#1D5A34]"
+          }`}
+        >
+          {state.isProcessing ? (
+            <ActivityIndicator color="white" />
+          ) : (
+            <>
+              <Text className="text-white font-semibold text-center flex-1">
+                Place Order
+              </Text>
+              <ChevronRight size={20} color="white" />
+            </>
           )}
         </Pressable>
       </View>
 
-      {/* Address Picker Modal */}
-      <Modal
-        visible={showAddressPicker}
-        transparent
-        animationType="slide"
-        onRequestClose={() => setShowAddressPicker(false)}
-      >
-        <Pressable
-          className="flex-1 bg-black/50"
-          onPress={() => setShowAddressPicker(false)}
-        >
-          <Pressable
-            className="absolute bottom-0 left-0 right-0 bg-white rounded-t-3xl"
-            style={{ maxHeight: "80%" }}
-            onPress={(e) => e.stopPropagation()}
-          >
-            {/* Handle */}
-            <View className="items-center py-3">
-              <View className="w-10 h-1 bg-gray-300 rounded-full" />
-            </View>
-
-            {/* Header */}
-            <View className="flex-row items-center justify-between px-5 pb-4 border-b border-gray-100">
-              <Text className="text-xl font-bold text-gray-800">Select Address</Text>
-              <Pressable onPress={() => setShowAddressPicker(false)}>
-                <X size={24} color="#6B7280" />
-              </Pressable>
-            </View>
-
-            {/* Search Bar */}
-            <View className="px-4 py-3">
-              <View className="flex-row items-center bg-gray-100 rounded-xl px-4 py-3">
-                <Search size={20} color="#9CA3AF" />
-                <TextInput
-                  value={searchQuery}
-                  onChangeText={setSearchQuery}
-                  placeholder="Search by name, address, phone..."
-                  placeholderTextColor="#9CA3AF"
-                  style={{ flex: 1, marginLeft: 12, fontSize: 15, color: "#1F2937" }}
-                />
-                {searchQuery.length > 0 && (
-                  <Pressable onPress={() => setSearchQuery("")}>
-                    <X size={18} color="#9CA3AF" />
-                  </Pressable>
-                )}
-              </View>
-            </View>
-
-            {/* Address List */}
-            <ScrollView className="px-4" showsVerticalScrollIndicator={false}>
-              {addressesLoading ? (
-                <View className="items-center py-8">
-                  <ActivityIndicator size="large" color="#1D5C45" />
-                </View>
-              ) : filteredAddresses.length === 0 ? (
-                <View className="items-center py-8">
-                  <MapPin size={40} color="#9CA3AF" />
-                  <Text className="text-gray-500 mt-2">
-                    {searchQuery ? "No addresses found" : "No saved addresses"}
-                  </Text>
-                </View>
-              ) : (
-                filteredAddresses.map((addr, index) => {
-                  const LabelIcon = getLabelIcon(addr.label);
-                  const isSelected = selectedAddressId === addr.id;
-
-                  return (
-                    <Pressable
-                      key={`${addr.id}-${index}`}
-                      onPress={() => selectAddress(addr)}
-                      className={`flex-row items-start p-4 mb-3 rounded-xl border-2 ${
-                        isSelected ? "border-primary bg-primary/5" : "border-gray-100 bg-white"
-                      }`}
-                    >
-                      <View
-                        className={`w-10 h-10 rounded-full items-center justify-center ${
-                          isSelected ? "bg-primary/20" : "bg-gray-100"
-                        }`}
-                      >
-                        <LabelIcon size={18} color={isSelected ? "#1D5C45" : "#6B7280"} />
-                      </View>
-
-                      <View className="flex-1 ml-3">
-                        <View className="flex-row items-center">
-                          <Text className={`font-bold ${isSelected ? "text-primary" : "text-gray-800"}`}>
-                            {addr.label || "Address"}
-                          </Text>
-                          {addr.isDefault && (
-                            <View className="flex-row items-center ml-2 bg-primary/10 px-2 py-0.5 rounded-full">
-                              <CheckCircle size={10} color="#1D5C45" />
-                              <Text className="text-primary text-xs ml-1">Default</Text>
-                            </View>
-                          )}
-                        </View>
-                        <Text className="text-gray-700 font-medium mt-1">
-                          {addr.firstname} {addr.lastname}
-                        </Text>
-                        <Text className="text-gray-500 text-sm">{addr.phone}</Text>
-                        <Text className="text-gray-500 text-sm mt-1" numberOfLines={2}>
-                          {addr.address}, {addr.city}, {addr.state} - {addr.zip}
-                        </Text>
-                      </View>
-
-                      {isSelected && (
-                        <View className="w-6 h-6 bg-primary rounded-full items-center justify-center">
-                          <Check size={14} color="#fff" />
-                        </View>
-                      )}
-                    </Pressable>
-                  );
-                })
-              )}
-
-              {/* Add New Address Button */}
-              <Pressable
-                onPress={() => {
-                  setShowAddressPicker(false);
-                  router.push("/(customer)/addresses/add");
-                }}
-                className="flex-row items-center justify-center py-4 mb-6 border-2 border-dashed border-gray-300 rounded-xl"
-              >
-                <Plus size={20} color="#6B7280" />
-                <Text className="text-gray-600 font-semibold ml-2">Add New Address</Text>
-              </Pressable>
-            </ScrollView>
-          </Pressable>
-        </Pressable>
-      </Modal>
-
-      {/* Razorpay Checkout Modal */}
-      {showRazorpay && (
-        <RazorpayCheckout
-          visible={showRazorpay}
-          options={getRazorpayOptions()}
-          onSuccess={handlePaymentSuccess}
-          onFailure={handlePaymentFailure}
-          onClose={handlePaymentClose}
-        />
-      )}
+      {/* Razorpay Payment Modal */}
+      <RazorpayCheckout
+        visible={state.showPaymentModal}
+        options={paymentOptions}
+        onSuccess={handlePaymentSuccess}
+        onFailure={handlePaymentFailure}
+        onClose={handlePaymentClose}
+      />
     </SafeAreaView>
   );
 }
