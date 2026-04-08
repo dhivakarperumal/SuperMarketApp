@@ -273,8 +273,8 @@ export default function HomeScreen() {
           </View>
         ) : (
           <>
-            {/* Banner Carousel */}
-            <View className="pt-4 pb-2">
+                {/* Banner Carousel */}
+            <View className="pt-4 pb-4">
               <ScrollView
                 ref={bannerScrollRef}
                 horizontal
@@ -290,66 +290,162 @@ export default function HomeScreen() {
                   <Pressable
                     key={banner.id}
                     onPress={() => router.push("/(customer)/(tabs)/shop")}
-                    style={{ width: BANNER_WIDTH, marginRight: index < banners.length - 1 ? 12 : 0 }}
+                    style={{
+                      width: BANNER_WIDTH,
+                      marginRight: index < banners.length - 1 ? 12 : 0,
+                    }}
                   >
                     <View
                       style={{
-                        height: 150,
-                        borderRadius: 20,
-                        padding: 20,
+                        height: 180,
+                        borderRadius: 24,
+                        padding: 24,
                         flexDirection: "row",
                         alignItems: "center",
+                        justifyContent: "space-between",
                         overflow: "hidden",
+                        backgroundColor: banner.bgColors[0],
+                        shadowColor: banner.bgColors[0],
+                        shadowOffset: { width: 0, height: 8 },
+                        shadowOpacity: 0.35,
+                        shadowRadius: 16,
+                        elevation: 12,
                       }}
                     >
-                      <View className="flex-1">
-                        <Text className="text-white/90 text-sm font-medium">Limited Time</Text>
-                        <Text className="text-white text-2xl font-bold mt-1">{banner.title}</Text>
-                        <Text className="text-white/90 text-sm mt-1">{banner.subtitle}</Text>
-                        <View className="bg-white px-4 py-2 rounded-full self-start mt-3">
-                          <Text className="font-bold text-sm" style={{ color: banner.bgColors[0] }}>
+                      {/* Background gradient effect */}
+                      <View
+                        style={{
+                          position: "absolute",
+                          top: -50,
+                          right: -50,
+                          width: 200,
+                          height: 200,
+                          borderRadius: 100,
+                          backgroundColor: banner.bgColors[1],
+                          opacity: 0.3,
+                        }}
+                      />
+                      <View
+                        style={{
+                          position: "absolute",
+                          bottom: -30,
+                          left: -30,
+                          width: 150,
+                          height: 150,
+                          borderRadius: 75,
+                          backgroundColor: "#FFFFFF",
+                          opacity: 0.1,
+                        }}
+                      />
+
+                      {/* Content */}
+                      <View className="flex-1 z-10">
+                        <Text className="text-white/80 text-xs font-semibold tracking-widest">
+                          ⏱️ LIMITED TIME OFFER
+                        </Text>
+                        <Text className="text-white text-28 font-bold mt-2">
+                          {banner.title}
+                        </Text>
+                        <Text className="text-white/90 text-sm font-medium mt-2">
+                          {banner.subtitle}
+                        </Text>
+                        <Pressable
+                          onPress={() => router.push("/(customer)/(tabs)/shop")}
+                          className="mt-4 bg-white px-6 py-2.5 rounded-full self-start flex-row items-center justify-center"
+                          style={{
+                            shadowColor: "#000",
+                            shadowOffset: { width: 0, height: 4 },
+                            shadowOpacity: 0.15,
+                            shadowRadius: 8,
+                            elevation: 6,
+                          }}
+                        >
+                          <Text
+                            className="font-bold text-sm"
+                            style={{ color: banner.bgColors[0] }}
+                          >
                             Shop Now
                           </Text>
-                        </View>
+                          <ChevronRight size={16} color={banner.bgColors[0]} />
+                        </Pressable>
                       </View>
-                      <Text style={{ fontSize: 70 }}>{banner.emoji}</Text>
+
+                      {/* Emoji */}
+                      <View
+                        style={{
+                          fontSize: 80,
+                          marginLeft: 12,
+                          opacity: 0.95,
+                        }}
+                      >
+                        <Text style={{ fontSize: 80 }}>{banner.emoji}</Text>
+                      </View>
                     </View>
                   </Pressable>
                 ))}
               </ScrollView>
 
-              {/* Dots */}
-              <View className="flex-row justify-center mt-3">
+              {/* Enhanced Indicator Dots */}
+              <View className="flex-row justify-center items-center mt-6 gap-1.5">
                 {banners.map((_, index) => (
-                  <View
-                    key={index}
-                    className="mx-1 rounded-full"
-                    style={{
-                      width: activeBanner === index ? 24 : 8,
-                      height: 8,
-                      backgroundColor: activeBanner === index ? "#4FAD21" : "#D1D5DB",
-                    }}
-                  />
+                  <View key={index} className="items-center">
+                    <View
+                      className="rounded-full transition-all"
+                      style={{
+                        width: activeBanner === index ? 28 : 8,
+                        height: 8,
+                        backgroundColor:
+                          activeBanner === index ? "#4FAD21" : "#D1D5DB",
+                        borderRadius: 4,
+                      }}
+                    />
+                  </View>
                 ))}
               </View>
             </View>
 
             {/* Features Strip */}
-            <View className="flex-row justify-between px-4 py-4">
-              {features.map((feature, index) => {
-                const IconComp = feature.icon;
-                return (
-                  <View key={index} className="items-center">
+            <View
+              className="mx-4 bg-white rounded-xl p-4 my-6"
+              style={{
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.08,
+                shadowRadius: 6,
+                elevation: 4,
+              }}
+            >
+              <View className="flex-row justify-between items-center">
+                {features.map((feature, index) => {
+                  const IconComp = feature.icon;
+                  return (
                     <View
-                      className="p-3 rounded-full mb-2"
-                      style={{ backgroundColor: `${feature.color}15` }}
+                      key={index}
+                      className="flex-1 items-center"
+                      style={{
+                        paddingHorizontal: index !== features.length - 1 ? 8 : 0,
+                      }}
                     >
-                      <IconComp size={20} color={feature.color} />
+                      <View
+                        className="p-2.5 rounded-xl mb-2"
+                        style={{
+                          backgroundColor: `${feature.color}10`,
+                          borderWidth: 1.5,
+                          borderColor: `${feature.color}20`,
+                        }}
+                      >
+                        <IconComp size={22} color={feature.color} />
+                      </View>
+                      <Text
+                        className="text-gray-700 text-xs font-semibold text-center"
+                        numberOfLines={2}
+                      >
+                        {feature.title}
+                      </Text>
                     </View>
-                    <Text className="text-gray-700 text-xs font-medium">{feature.title}</Text>
-                  </View>
-                );
-              })}
+                  );
+                })}
+              </View>
             </View>
 
             {/* Quick Categories */}
@@ -406,61 +502,175 @@ export default function HomeScreen() {
             </View>
 
             {/* Offer Banners */}
-            <View className="px-4 pt-6 pb-3">
-              {/* Offer 1 */}
-              <Pressable onPress={() => router.push("/(customer)/(tabs)/shop")} className="mb-3">
+            <View className="px-4 pt-4 pb-2">
+              {/* Offer 1 - Vegetables */}
+              <Pressable
+                onPress={() => router.push("/(customer)/(tabs)/shop")}
+                className="mb-3 overflow-hidden rounded-2xl"
+              >
                 <View
                   style={{
-                    borderRadius: 16,
-                    padding: 16,
+                    borderRadius: 20,
+                    padding: 20,
                     flexDirection: "row",
                     alignItems: "center",
+                    justifyContent: "space-between",
+                    backgroundColor: "#4FAD21",
+                    shadowColor: "#4FAD21",
+                    shadowOffset: { width: 0, height: 6 },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 12,
+                    elevation: 8,
+                    overflow: "hidden",
                   }}
                 >
-                  <View className="flex-1">
-                    <Text className="text-white text-xs font-semibold opacity-90">TODAY ONLY</Text>
-                    <Text className="text-white text-lg font-bold">Get 30% Off</Text>
-                    <Text className="text-white/80 text-xs">On all fresh vegetables</Text>
+                  {/* Background decoration */}
+                  <View
+                    style={{
+                      position: "absolute",
+                      top: -40,
+                      right: -20,
+                      width: 120,
+                      height: 120,
+                      borderRadius: 60,
+                      backgroundColor: "#FFFFFF",
+                      opacity: 0.1,
+                    }}
+                  />
+
+                  {/* Content */}
+                  <View className="flex-1 z-10">
+                    <Text className="text-white/85 text-xs font-bold tracking-wider">
+                      🎯 TODAY ONLY
+                    </Text>
+                    <Text className="text-white text-22 font-bold mt-1.5">
+                      Get 30% Off
+                    </Text>
+                    <Text className="text-white/90 text-sm mt-1">
+                      Fresh vegetables
+                    </Text>
+                    <View className="mt-3 bg-white/25 py-1 px-3 rounded-full self-start">
+                      <Text className="text-white text-xs font-semibold">
+                        Shop Now →
+                      </Text>
+                    </View>
                   </View>
-                  <Text style={{ fontSize: 40 }}>🥬</Text>
+
+                  {/* Emoji */}
+                  <Text style={{ fontSize: 60, marginLeft: 12 }}>🥬</Text>
                 </View>
               </Pressable>
 
-              {/* Offer 2 */}
-              <Pressable onPress={() => router.push("/(customer)/(tabs)/shop")} className="mb-3">
+              {/* Offer 2 - Dairy */}
+              <Pressable
+                onPress={() => router.push("/(customer)/(tabs)/shop")}
+                className="mb-3 rounded-2xl overflow-hidden"
+              >
                 <View
                   style={{
-                    borderRadius: 16,
-                    padding: 16,
+                    borderRadius: 20,
+                    padding: 20,
                     flexDirection: "row",
                     alignItems: "center",
+                    justifyContent: "space-between",
+                    backgroundColor: "#3B82F6",
+                    shadowColor: "#3B82F6",
+                    shadowOffset: { width: 0, height: 6 },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 12,
+                    elevation: 8,
+                    overflow: "hidden",
                   }}
                 >
-                  <View className="flex-1">
-                    <Text className="text-white text-xs font-semibold opacity-90">WEEKEND SPECIAL</Text>
-                    <Text className="text-white text-lg font-bold">Buy 1 Get 1 Free</Text>
-                    <Text className="text-white/80 text-xs">On selected dairy products</Text>
+                  {/* Background decoration */}
+                  <View
+                    style={{
+                      position: "absolute",
+                      bottom: -30,
+                      left: -30,
+                      width: 140,
+                      height: 140,
+                      borderRadius: 70,
+                      backgroundColor: "#FFFFFF",
+                      opacity: 0.1,
+                    }}
+                  />
+
+                  {/* Content */}
+                  <View className="flex-1 z-10">
+                    <Text className="text-white/85 text-xs font-bold tracking-wider">
+                      ⚡ WEEKEND SPECIAL
+                    </Text>
+                    <Text className="text-white text-22 font-bold mt-1.5">
+                      Buy 1 Get 1 Free
+                    </Text>
+                    <Text className="text-white/90 text-sm mt-1">
+                      Dairy products
+                    </Text>
+                    <View className="mt-3 bg-white/25 py-1 px-3 rounded-full self-start">
+                      <Text className="text-white text-xs font-semibold">
+                        Shop Now →
+                      </Text>
+                    </View>
                   </View>
-                  <Text style={{ fontSize: 40 }}>🥛</Text>
+
+                  {/* Emoji */}
+                  <Text style={{ fontSize: 60, marginLeft: 12 }}>🥛</Text>
                 </View>
               </Pressable>
 
-              {/* Offer 3 */}
+              {/* Offer 3 - Delivery */}
               <Pressable onPress={() => router.push("/(customer)/(tabs)/shop")}>
                 <View
                   style={{
-                    borderRadius: 16,
-                    padding: 16,
+                    borderRadius: 20,
+                    padding: 20,
                     flexDirection: "row",
                     alignItems: "center",
+                    justifyContent: "space-between",
+                    backgroundColor: "#8B5CF6",
+                    shadowColor: "#8B5CF6",
+                    shadowOffset: { width: 0, height: 6 },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 12,
+                    elevation: 8,
+                    overflow: "hidden",
                   }}
                 >
-                  <View className="flex-1">
-                    <Text className="text-white text-xs font-semibold opacity-90">FREE DELIVERY</Text>
-                    <Text className="text-white text-lg font-bold">Orders Above ₹500</Text>
-                    <Text className="text-white/80 text-xs">No minimum order for members</Text>
+                  {/* Background decoration */}
+                  <View
+                    style={{
+                      position: "absolute",
+                      top: -30,
+                      right: -40,
+                      width: 130,
+                      height: 130,
+                      borderRadius: 65,
+                      backgroundColor: "#FFFFFF",
+                      opacity: 0.1,
+                    }}
+                  />
+
+                  {/* Content */}
+                  <View className="flex-1 z-10">
+                    <Text className="text-white/85 text-xs font-bold tracking-wider">
+                      🎁 FREE SHIPPING
+                    </Text>
+                    <Text className="text-white text-22 font-bold mt-1.5">
+                      Orders Above ₹500
+                    </Text>
+                    <Text className="text-white/90 text-sm mt-1">
+                      No minimum for members
+                    </Text>
+                    <View className="mt-3 bg-white/25 py-1 px-3 rounded-full self-start">
+                      <Text className="text-white text-xs font-semibold">
+                        Learn More →
+                      </Text>
+                    </View>
                   </View>
-                  <Text style={{ fontSize: 40 }}>🚚</Text>
+
+                  {/* Emoji */}
+                  <Text style={{ fontSize: 60, marginLeft: 12 }}>🚚</Text>
                 </View>
               </Pressable>
             </View>
