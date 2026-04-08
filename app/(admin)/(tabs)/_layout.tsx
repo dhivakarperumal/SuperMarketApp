@@ -26,12 +26,12 @@ export default function AdminTabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#FFFFFF",
+        tabBarActiveTintColor: "#1d5c45",
         tabBarInactiveTintColor: "#BBF7D0",
         tabBarStyle: {
           backgroundColor: "#1D5C45",
           borderTopWidth: 1,
-          borderTopColor: "#16482F",
+          borderTopColor: "#E5E7EB",
           paddingBottom: Math.max(insets.bottom, 9),
           paddingTop: 8,
           height: 60 + Math.max(insets.bottom, 9),

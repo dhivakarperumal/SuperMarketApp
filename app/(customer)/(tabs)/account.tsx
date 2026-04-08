@@ -1,26 +1,25 @@
-import { useState } from "react";
-import { View, Text, Pressable, ScrollView, Image, StatusBar } from "react-native";
-const Logo = require("../../../assets/images/logo.png");
-import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
 import {
-  User,
-  Package,
-  MapPin,
-  CreditCard,
   Bell,
+  ChevronLeft,
+  ChevronRight,
+  CreditCard,
+  FileText,
   HelpCircle,
   LogOut,
-  ChevronRight,
-  ChevronLeft,
+  MapPin,
+  Package,
+  RotateCcw,
   Settings,
   Shield,
-  FileText,
-  Truck,
-  RotateCcw,
+  Truck
 } from "lucide-react-native";
-import { router } from "expo-router";
-import { useAuth } from "../../../src/context/AuthContext";
+import { useState } from "react";
+import { Image, Pressable, ScrollView, StatusBar, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { ConfirmationModal } from "../../../src/components/ConfirmationModal";
+import { useAuth } from "../../../src/context/AuthContext";
+const Logo = require("../../../assets/images/logo.png");
 
 export default function AccountScreen() {
   const { user, logout } = useAuth();
@@ -102,31 +101,34 @@ export default function AccountScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-[#1D5A34]" edges={["top","bottom"]}>
-      <StatusBar barStyle="light-content" backgroundColor="#1D5A34" />
-      <ScrollView showsVerticalScrollIndicator={false} className="bg-[#F1F8E9]">
-        {/* Header */}
-        <View
-          style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 16 }}
-        >
-          <View className="flex-row items-center justify-between">
-            <View className="flex-row items-center">
-              <Pressable
-                onPress={() => router.back()}
-                className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-3"
-              >
-                <ChevronLeft size={24} color="#FFFFFF" />
-              </Pressable>
-              <Text className="text-2xl font-bold text-white">My Account</Text>
-            </View>
-            <Image
-              source={Logo}
-              style={{ width: 45, height: 45, tintColor: '#FFFFFF' }}
-              resizeMode="contain"
-            />
-          </View>
-        </View>
+    <SafeAreaView className="flex-1 bg-[#1D5C45]" edges={["top","bottom"]}>
+      <StatusBar barStyle="light-content" backgroundColor="#1D5C45" />
 
+      {/* Header */}
+      <View className="px-4 pt-4 pb-5 bg-[#1D5C45]">
+        <View className="flex-row items-center justify-between">
+          <View className="flex-row items-center">
+            <Pressable
+              onPress={() => router.back()}
+              className="w-10 h-10 bg-white/20 rounded-full items-center justify-center mr-3"
+            >
+              <ChevronLeft size={24} color="#FFFFFF" />
+            </Pressable>
+            <Text className="text-2xl font-bold text-white">My Account</Text>
+          </View>
+          <Image
+            source={Logo}
+            style={{ width: 45, height: 45, tintColor: '#FFFFFF' }}
+            resizeMode="contain"
+          />
+        </View>
+      </View>
+
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        className="bg-[#F1F8E9]"
+        contentContainerStyle={{ paddingBottom: 24 }}
+      >
         {/* Profile Section */}
         <View className="bg-white mx-4 my-4 p-4 rounded-xl">
           <View className="flex-row items-center">
@@ -165,7 +167,7 @@ export default function AccountScreen() {
               }`}
             >
               <View className="w-10 h-10 bg-primary/10 rounded-full items-center justify-center">
-                <item.icon size={20} color="#1D5A34" />
+                <item.icon size={20} color="#1D5C45" />
               </View>
               <View className="flex-1 ml-4">
                 <Text className="text-gray-800 font-semibold">{item.label}</Text>

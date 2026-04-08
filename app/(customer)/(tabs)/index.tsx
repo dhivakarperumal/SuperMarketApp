@@ -1,41 +1,41 @@
-import { useState, useEffect, useRef } from "react";
+import { router } from "expo-router";
 import {
-  View,
-  Text,
-  ScrollView,
-  TextInput,
-  Pressable,
-  RefreshControl,
-  StatusBar,
+  Bell,
+  ChevronRight,
+  Clock,
+  Gift,
+  Heart,
+  Search,
+  Shield,
+  ShoppingBag,
+  ShoppingCart,
+  Truck,
+  X,
+} from "lucide-react-native";
+import { useEffect, useRef, useState } from "react";
+import {
   ActivityIndicator,
   Dimensions,
   Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  Pressable,
+  RefreshControl,
+  ScrollView,
+  StatusBar,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  Search,
-  Bell,
-  Heart,
-  ShoppingCart,
-  ChevronRight,
-  X,
-  ShoppingBag,
-  Truck,
-  Clock,
-  Shield,
-  Gift,
-} from "lucide-react-native";
-import { router } from "expo-router";
-import { useProducts } from "../../../src/hooks/useProducts";
-import { useCategories } from "../../../src/hooks/useCategories";
-import { useCart } from "../../../src/context/CartContext";
-import { useFavorites } from "../../../src/hooks/useFavorites";
-import { useAuth } from "../../../src/context/AuthContext";
-import { useOffline } from "../../../src/context/OfflineContext";
 import { ProductCard } from "../../../src/components/cards/ProductCard";
 import { OfflineBanner } from "../../../src/components/OfflineBanner";
+import { useAuth } from "../../../src/context/AuthContext";
+import { useCart } from "../../../src/context/CartContext";
+import { useOffline } from "../../../src/context/OfflineContext";
+import { useCategories } from "../../../src/hooks/useCategories";
+import { useFavorites } from "../../../src/hooks/useFavorites";
+import { useProducts } from "../../../src/hooks/useProducts";
 import { formatCurrency } from "../../../src/utils/formatters";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");

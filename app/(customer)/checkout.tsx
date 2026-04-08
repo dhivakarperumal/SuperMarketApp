@@ -1,4 +1,12 @@
+import { RazorpayCheckout } from "@/src/components/RazorpayCheckout";
+import { useAuth } from "@/src/context/AuthContext";
+import { useCart } from "@/src/context/CartContext";
+import { useAddresses } from "@/src/hooks/useAddresses";
+import { db } from "@/src/services/firebase/config";
+import { RazorpayOptions, RazorpayResponse } from "@/src/services/razorpay/config";
 import { router } from "expo-router";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { ChevronRight, MapPin } from "lucide-react-native";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -10,14 +18,6 @@ import {
   Text,
   View,
 } from "react-native";
-import { ChevronRight, MapPin } from "lucide-react-native";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { useCart } from "@/src/context/CartContext";
-import { useAddresses } from "@/src/hooks/useAddresses";
-import { RazorpayCheckout } from "@/src/components/RazorpayCheckout";
-import { RazorpayOptions, RazorpayResponse } from "@/src/services/razorpay/config";
-import { useAuth } from "@/src/context/AuthContext";
-import { db } from "@/src/services/firebase/config";
 
 const DELIVERY_CHARGES = 50; // Fixed delivery charges in INR
 const MIN_ORDER_AMOUNT = 50; // Minimum order amount in INR
